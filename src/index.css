@@ -1,13 +1,128 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* * Font */
+
+@import url(https://db.onlinewebfonts.com/c/235b71a9b409e684e865eb4a996e925e?family=IRANYekan);
+
+.iranyekan-very-light {
+  font-family: "IRANYekan";
+  font-optical-sizing: auto;
+  font-size: 12px;
+  font-weight: lighter;
+  font-style: normal;
+  color: rgb(145, 145, 147);
+
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+
+.iranyekan-very-light-white {
+  font-family: "IRANYekan";
+  font-optical-sizing: auto;
+  font-size: 12px;
+  font-weight: 200;
+  font-style: normal;
+
+ 
+
+}
+.iranyekan-light {
+  font-family: "IRANYekan";
+  font-optical-sizing: auto;
+  font-size: 16px;
+  font-weight: lighter;
+  font-style: normal;
+  color: rgb(145, 145, 147);
+
+}
+.iranyekan-very-medium {
+  font-family: "IRANYekan";
+  font-optical-sizing: auto;
+  font-size: 20px;
+  font-weight: 200;
+  font-style: normal;
+}
+
+.iranyekan-medium {
+  font-family: "IRANYekan";
+  font-optical-sizing: auto;
+  font-size: 24px;
+  font-weight: 200;
+  font-style: normal;
+}
+
+.iranyekan-low-bold {
+  font-family: "IRANYekan";
+  font-optical-sizing: auto;
+  font-size: 14px;
+  font-weight: 100;
+  font-style: normal;
+ 
+
+}
+
+.iranyekan-bold {
+  font-family: "IRANYekan";
+  font-optical-sizing: auto;
+  font-size: 16px;
+  font-weight: 100;
+  font-style: normal;
+ 
+
+}
+
+.iranyekan-very-bold {
+  font-family: "IRANYekan";
+  font-optical-sizing: auto;
+  font-size: 32px;
+  font-weight: 500;
+  font-style: normal;
+}
+
+
+
+
+
+.vazir-light{
+  font-family: "Vazirmatn", sans-serif;
+  font-optical-sizing: auto;
+  font-size: 18px;
+  font-weight: 200;
+  font-style: normal;
+}
+
+.vazir-regular {
+  font-family: "Vazirmatn", sans-serif;
+  font-optical-sizing: auto;
+  font-size: 16px;
+  font-weight: 200;
+  font-style: normal;
+}
+.vazir-medium {
+  font-family: "Vazirmatn", sans-serif;
+  font-optical-sizing: auto;
+  font-size: 20px;
+  font-weight: 300;
+  font-style: normal;
+}
+
+
+
+.vazir-very-bold {
+  font-family: "Vazirmatn", sans-serif;
+  font-size: 38px;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
+}
+
+
+/* * End Font */
+
+.main{
+  width: 94%;
+}
+.side-bar{
+  width: 6%;
 }
