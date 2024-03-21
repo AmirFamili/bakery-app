@@ -1,33 +1,39 @@
 import React, { useContext, useState } from "react";
-import Logo from "../images/logo.png";
-import HomeIcon from "../images/icons/home.png";
-import HomeWhiteIcon from "../images/icons/home-white.png";
-import ElementIcon from "../images/icons/element.png";
-import ElementWhiteIcon from "../images/icons/element-white.png";
-import CallWhiteIcon from "../images/icons/call-white.png";
-import CallIcon from "../images/icons/call-gray.png";
-import ProfileIcon from "../images/icons/profile.png";
-import ProfileWhiteIcon from "../images/icons/profile-white.png";
+import Logo from "../../images/logo.png";
+import HomeIcon from "../../images/icons/home.png";
+import HomeWhiteIcon from "../../images/icons/home-white.png";
+import ElementIcon from "../../images/icons/element.png";
+import ElementWhiteIcon from "../../images/icons/element-white.png";
+import CallWhiteIcon from "../../images/icons/call-white.png";
+import CallIcon from "../../images/icons/call-gray.png";
+import ProfileIcon from "../../images/icons/profile.png";
+import ProfileWhiteIcon from "../../images/icons/profile-white.png";
+import TaskSquareIcon from "../../images/icons/task-square.png";
+import TaskSquareWhiteIcon from "../../images/icons/task-square-white.png";
+import ShoppingCartIcon from "../../images/icons/shopping-cart.png";
+import ShoppingCartWhiteIcon from "../../images/icons/shopping-cart-white.png";
 import { Link } from "react-router-dom";
-import { GlobalContext } from "../context/ContextWrapper";
+import { GlobalContext } from "../../context/ContextWrapper";
 
-export const Sidebar = () => {
+export const SidebarUser = () => {
   const [home, setHome] = useState("");
   const [category, setCategory] = useState("");
   const [call, setCall] = useState("");
   const [profile, setProfile] = useState("");
+  const [history, setHistory] = useState("");
+  const [cart, setCart] = useState("");
 
   const { page, setPage } = useContext(GlobalContext);
   return (
     <section className="side-bar p-2 h-screen flex justify-center ">
       <div className="fixed ">
-        <Link to="/" onClick={() => setPage("home")}>
+        <Link to="/home" onClick={() => setPage("home")}>
           <img src={Logo} alt="logo" className="w-20 mt-3" />
         </Link>
         <div className=" flex flex-col justify-center items-center ">
           <div className="h-20  mt-5 text-center">
             <Link
-              to="#"
+              to="/home"
               onMouseEnter={() => {
                 if (page !== "home") {
                   setHome("خانه");
@@ -105,6 +111,70 @@ export const Sidebar = () => {
 
           <span className="border-t mb-3  w-12"></span>
 
+
+
+
+          <div className="h-20 mt-5  text-center  ">
+            <Link
+              to="#"
+              onMouseEnter={() => {
+                if (page !== "history") {
+                  setHistory("تاریخچه خرید");
+                }
+              }}
+              onMouseLeave={() => setHistory("")}
+              onClick={() => setPage("history")}
+            >
+              <div
+                className={` rounded-full p-3 inline-block  m-auto ${
+                  page === "history" ? "bg-primary  " : "bg-gray-main "
+                }`}
+              >
+                {page === "history" ? (
+                  <img src={TaskSquareWhiteIcon} alt="تاریخچه خرید" className="w-7" />
+                ) : (
+                  <img src={TaskSquareIcon} alt="تاریخچه خرید" className="w-6" />
+                )}
+              </div>
+            </Link>
+            <p className="iranyekan-very-light-white">{history}</p>
+          </div>
+
+
+
+
+
+
+
+          <div className="h-20 mt-5  text-center  ">
+            <Link
+              to="#"
+              onMouseEnter={() => {
+                if (page !== "cart") {
+                  setCart("سبد خرید");
+                }
+              }}
+              onMouseLeave={() => setCart("")}
+              onClick={() => setPage("cart")}
+            >
+              <div
+                className={` rounded-full p-3 inline-block  m-auto ${
+                  page === "cart" ? "bg-primary  " : "bg-gray-main "
+                }`}
+              >
+                {page === "cart" ? (
+                  <img src={ShoppingCartWhiteIcon} alt="سبد خرید " className="w-7" />
+                ) : (
+                  <img src={ShoppingCartIcon} alt="سبد خرید" className="w-6" />
+                )}
+              </div>
+            </Link>
+            <p className="iranyekan-very-light-white">{cart}</p>
+          </div>
+
+
+
+
           <div className="h-20 mt-5  text-center  ">
             <Link
               to="#"
@@ -122,14 +192,16 @@ export const Sidebar = () => {
                 }`}
               >
                 {page === "profile" ? (
-                  <img src={ProfileWhiteIcon} alt="حساب کاربری" className="w-7" />
+                  <img src={ProfileWhiteIcon} alt="Profile" className="w-7" />
                 ) : (
-                  <img src={ProfileIcon} alt="حساب کاربری" className="w-6" />
+                  <img src={ProfileIcon} alt="Profile" className="w-6" />
                 )}
               </div>
             </Link>
             <p className="iranyekan-very-light-white">{profile}</p>
           </div>
+
+
         </div>
       </div>
     </section>

@@ -8,7 +8,7 @@ import EmailIcon from "../images/icons/email-simple.png";
 
 export const Footer = () => {
   return (
-    <div className="bg-primary w-full h-80 rounded-t-2xl py-5 ">
+    <footer className="bg-primary w-full  rounded-t-2xl py-5  ">
       <img
         src={Logo}
         alt="logo"
@@ -28,6 +28,6 @@ export const Footer = () => {
        <a href="tel:+989106646279" className="flex mx-6 cursor-pointer  "><img src={CallIcon} alt="location" className="w-6 p-1 " /> 09106646279</a>
        <a  href="mailto:Raanasheykhi08@gmail.com" className="flex mx-6 cursor-pointer "><img src={EmailIcon} alt="location" className="w-6 p-1 " /> Raanasheykhi08@gmail.com</a>
       </div>
-    </div>
+    </footer>
   );
 };

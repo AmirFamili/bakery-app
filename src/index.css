@@ -2,7 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+
+
 /* * Font */
+@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+
+.Lato-light {
+  font-family: "Lato", sans-serif;
+  font-optical-sizing: auto;
+  font-size: 16px;
+  font-weight: lighter;
+  font-style: normal;
+
+}
 
 @import url(https://db.onlinewebfonts.com/c/235b71a9b409e684e865eb4a996e925e?family=IRANYekan);
 
@@ -13,9 +33,7 @@
   font-weight: lighter;
   font-style: normal;
   color: rgb(145, 145, 147);
-
 }
-
 
 .iranyekan-very-light-white {
   font-family: "IRANYekan";
@@ -23,9 +41,13 @@
   font-size: 12px;
   font-weight: 200;
   font-style: normal;
-
- 
-
+}
+.iranyekan-little-light {
+  font-family: "IRANYekan";
+  font-optical-sizing: auto;
+  font-size: 14px;
+  font-weight: 200;
+  font-style: normal;
 }
 .iranyekan-light {
   font-family: "IRANYekan";
@@ -34,7 +56,6 @@
   font-weight: lighter;
   font-style: normal;
   color: rgb(145, 145, 147);
-
 }
 .iranyekan-very-medium {
   font-family: "IRANYekan";
@@ -58,8 +79,6 @@
   font-size: 14px;
   font-weight: 100;
   font-style: normal;
- 
-
 }
 
 .iranyekan-bold {
@@ -68,8 +87,6 @@
   font-size: 16px;
   font-weight: 100;
   font-style: normal;
- 
-
 }
 
 .iranyekan-very-bold {
@@ -80,11 +97,14 @@
   font-style: normal;
 }
 
-
-
-
-
-.vazir-light{
+.vazir-very-light {
+  font-family: "Vazirmatn", sans-serif;
+  font-optical-sizing: auto;
+  font-size: 16px;
+  font-weight: 200;
+  font-style: normal;
+}
+.vazir-light {
   font-family: "Vazirmatn", sans-serif;
   font-optical-sizing: auto;
   font-size: 18px;
@@ -107,8 +127,13 @@
   font-style: normal;
 }
 
-
-
+.vazir-bold {
+  font-family: "Vazirmatn", sans-serif;
+  font-size: 22px;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
 .vazir-very-bold {
   font-family: "Vazirmatn", sans-serif;
   font-size: 38px;
@@ -117,12 +142,37 @@
   font-style: normal;
 }
 
-
 /* * End Font */
 
-.main{
-  width: 94%;
+.main {
+  width: 92%;
 }
-.side-bar{
-  width: 6%;
+
+/* * Hero */
+
+.bg-hero{
+  background-image: radial-gradient(#dde8ef 44%, #fafafa, #fafafa);
+
 }
+/* * End Hero */
+
+
+/* * Sidebar */
+.side-bar {
+  width: 8%;
+}
+/* * End Sidebar */
+
+
+
+
+
+
+
+
+/* * Footert User */
+.trapezoid {
+	border-bottom: 70px solid #184977;
+	border-right: 140px solid transparent;
+}
+/* * End Footert User */
