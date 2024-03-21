@@ -24,7 +24,7 @@ export const Sidebar = () => {
         <Link to="/" onClick={() => setPage("home")}>
           <img src={Logo} alt="logo" className="w-20 mt-3" />
         </Link>
-        <div className=" flex flex-col justify-center items-center ">
+        <div className="mt-3 flex flex-col justify-center items-center ">
           <div className="h-20  mt-5 text-center">
             <Link
               to="#"

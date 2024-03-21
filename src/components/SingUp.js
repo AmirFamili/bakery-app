@@ -1,10 +1,11 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import Logo from "../images/logo.png";
 import EmailGrayIcon from "../images/icons/email-gray.png";
 import KeyIcon from "../images/icons/key.png";
 import EyeIcon from "../images/icons/eye.png";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 export const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -17,7 +18,7 @@ export const SignUp = () => {
   };
   return (
     <section className="bg-gray-main h-screen w-full flex justify-center items-center">
-      <div className=" bg-white border w-2/5 h-5/6 rounded-2xl p-5">
+      <div className=" bg-white border w-2/5  rounded-2xl p-5 pb-28">
         <div className="flex justify-center items-center p-2">
           <img src={Logo} alt="بلو کیک" className="w-24 " />
         </div>
@@ -32,10 +33,20 @@ export const SignUp = () => {
             rePassword: "",
           }}
           onSubmit={(values) => {
+            axios
+            .post("http://onlinelbakery.pythonanywhere.com/auth/register/", {
+              email: values.email,
+              password: values.password,
+              confirm_password:values.rePassword
+            })
+            .then((response) => {
+              handleNext();
+            })
+            .catch((err) => console.log(err));
             values.email = "";
             values.password = "";
             values.rePassword = "";
-            handleNext();
+           
           }}
           validate={(values) => {
             const errors = {};
@@ -68,7 +79,7 @@ export const SignUp = () => {
           <Form
             className=" mx-auto my-7 w-3/5  max-sm:text-sm"
             action="index.html"
-            enctype="multipart/form-data"
+            // enctype="multipart/form-data"
           >
             <div className="pb-3">
               <div className="flex relative">

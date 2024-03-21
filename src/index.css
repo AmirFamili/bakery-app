@@ -57,6 +57,13 @@
   font-style: normal;
   color: rgb(145, 145, 147);
 }
+.iranyekan {
+  font-family: "IRANYekan";
+  font-optical-sizing: auto;
+  font-size: 16px;
+  font-weight: 200;
+  font-style: normal;
+}
 .iranyekan-very-medium {
   font-family: "IRANYekan";
   font-optical-sizing: auto;

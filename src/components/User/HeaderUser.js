@@ -10,6 +10,25 @@ import { GlobalContext } from "../../context/ContextWrapper";
 
 export const HeaderUser = () => {
   const { addCart } = useContext(GlobalContext);
+  const farsiDigits = {
+    0: '۰',
+    1: '۱',
+    2: '۲',
+    3: '۳',
+    4: '۴',
+    5: '۵',
+    6: '۶',
+    7: '۷',
+    8: '۸',
+    9: '۹',
+  };
+
+  const convertNumberToFarsi = (num) => {
+    return String(num)
+      .split('')
+      .map((digit) => farsiDigits[digit] || digit) 
+      .join('');
+  };
 
   return (
     <header className=" iranyekan-light flex justify-between items-center bg-white p-2  border-r-2 border-gray-main ">
@@ -30,7 +49,7 @@ export const HeaderUser = () => {
           className="flex  border-l gray-100 my-3 Lato-light"
           href="tel:+989106646279"
         >
-          <span className="my-3 ">09106646279</span>
+          <span className="my-3 iranyekan ">۰۹۱۰۶۶۴۶۲۷۹</span>
           <img
             className="icon my-3 mx-4 w-6"
             src={CallIcon}
@@ -43,7 +62,7 @@ export const HeaderUser = () => {
           <img className=" my-6 mx-2 w-6" src={EmailIcon} alt="Email" />
         </a>
         <Link to="#" className="flex justify-center items-center m-4  p-1 rounded-3xl bg-blue-little-light">
-          <p className="bg-white p-1 rounded-full w-8 text-primary text-center">{addCart }</p>
+          <p className="bg-white p-1 rounded-full w-8 text-primary text-center iranyekan ">{convertNumberToFarsi(addCart)}</p>
           <img src={ShoppingCartWhiteIcon} alt="سبدخرید" className="w-6 mx-2"/>
         </Link>
 

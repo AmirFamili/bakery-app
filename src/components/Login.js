@@ -1,21 +1,21 @@
-import React, { useState,useContext } from "react";
+import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import Logo from "../images/logo.png";
 import EmailGrayIcon from "../images/icons/email-gray.png";
 import KeyIcon from "../images/icons/key.png";
 import EyeIcon from "../images/icons/eye.png";
 import { Link } from "react-router-dom";
-
+import axios from "axios";
 
 export const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleNext = () => {
-   window.location.href = "http://localhost:3000/home";
-}
+    window.location.href = "http://localhost:3000/home";
+  };
   return (
     <section className="bg-gray-main h-screen w-full flex justify-center items-center">
-      <div className=" bg-white border w-2/5 h-5/6 rounded-2xl p-5">
+      <div className=" bg-white border w-2/5  rounded-2xl p-5 pb-28">
         <div className="flex justify-center items-center p-2">
           <img src={Logo} alt="بلو کیک" className="w-24 " />
         </div>
@@ -29,10 +29,17 @@ export const Login = () => {
             password: "",
           }}
           onSubmit={(values) => {
-            values.email="";
-            values.password="";
-            handleNext();
-
+            axios
+              .post("http://onlinelbakery.pythonanywhere.com/auth/login/", {
+                email: values.email,
+                password: values.password,
+              })
+              .then((response) => {
+                handleNext();
+              })
+              .catch((err) => console.log(err));
+            values.email = "";
+            values.password = "";
           }}
           validate={(values) => {
             const errors = {};
@@ -57,7 +64,7 @@ export const Login = () => {
           <Form
             className=" mx-auto my-7 w-3/5  max-sm:text-sm"
             action="index.html"
-            enctype="multipart/form-data"
+            // enctype="multipart/form-data"
           >
             <div className="pb-3">
               <div className="flex relative">
@@ -110,14 +117,21 @@ export const Login = () => {
                 )}
               </ErrorMessage>
             </div>
-            <h4 className=" text-center"><Link to="/change-password" className="iranyekan-very-light-white  text-gray-700 ">رمز عبور خود را فراموش کرده اید؟</Link></h4>
+            <h4 className=" text-center">
+              <Link
+                to="/change-password"
+                className="iranyekan-very-light-white  text-gray-700 "
+              >
+                رمز عبور خود را فراموش کرده اید؟
+              </Link>
+            </h4>
 
             <div className="flex justify-center items-center mt-10">
               <button
                 className=" vazir-very-light  shadow-lg  bg-primary text-white py-3 px-14 rounded-2xl  "
                 type="submit"
               >
-               ورود
+                ورود
               </button>
             </div>
           </Form>

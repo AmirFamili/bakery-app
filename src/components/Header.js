@@ -28,7 +28,7 @@ export const Header = () => {
       <div className="flex items-start text-black ">
         
       <a className="flex  border-l gray-100 my-3 Lato-light" href="tel:+989106646279">
-      <span className="my-3 ">09106646279</span>
+      <span className="my-3 iranyekan">۰۹۱۰۶۶۴۶۲۷۹</span>
           <img className="icon my-3 mx-4 w-6" src={CallIcon} alt="phone-number" />
          
         </a>

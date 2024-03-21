@@ -30,7 +30,7 @@ export const SidebarUser = () => {
         <Link to="/home" onClick={() => setPage("home")}>
           <img src={Logo} alt="logo" className="w-20 mt-3" />
         </Link>
-        <div className=" flex flex-col justify-center items-center ">
+        <div className="mt-3 flex flex-col justify-center items-center ">
           <div className="h-20  mt-5 text-center">
             <Link
               to="/home"
@@ -43,7 +43,7 @@ export const SidebarUser = () => {
               onClick={() => setPage("home")}
             >
               <div
-                className={` rounded-full p-3 inline-block shadow-sm  m-auto ${
+                className={` rounded-full p-3.5 inline-block shadow-sm  m-auto ${
                   page === "home" ? "bg-primary  " : "bg-gray-main "
                 }`}
               >
@@ -69,7 +69,7 @@ export const SidebarUser = () => {
               onClick={() => setPage("category")}
             >
               <div
-                className={` rounded-full p-3 shadow-sm  inline-block m-auto ${
+                className={` rounded-full p-3.5 shadow-sm  inline-block m-auto ${
                   page === "category" ? "bg-primary  " : "bg-gray-main "
                 }`}
               >
@@ -95,7 +95,7 @@ export const SidebarUser = () => {
               onClick={() => setPage("call")}
             >
               <div
-                className={` rounded-full p-3 shadow-sm  inline-block m-auto ${
+                className={` rounded-full p-3.5 shadow-sm  inline-block m-auto ${
                   page === "call" ? "bg-primary  " : "bg-gray-main "
                 }`}
               >
@@ -114,7 +114,7 @@ export const SidebarUser = () => {
 
 
 
-          <div className="h-20 mt-5  text-center  ">
+          <div className="h-20 mt-3  text-center  ">
             <Link
               to="#"
               onMouseEnter={() => {
@@ -126,7 +126,7 @@ export const SidebarUser = () => {
               onClick={() => setPage("history")}
             >
               <div
-                className={` rounded-full p-3 inline-block  m-auto ${
+                className={` rounded-full p-3.5 inline-block  m-auto ${
                   page === "history" ? "bg-primary  " : "bg-gray-main "
                 }`}
               >
@@ -146,7 +146,7 @@ export const SidebarUser = () => {
 
 
 
-          <div className="h-20 mt-5  text-center  ">
+          <div className="h-20 mt-3  text-center  ">
             <Link
               to="#"
               onMouseEnter={() => {
@@ -158,7 +158,7 @@ export const SidebarUser = () => {
               onClick={() => setPage("cart")}
             >
               <div
-                className={` rounded-full p-3 inline-block  m-auto ${
+                className={` rounded-full p-3.5 inline-block  m-auto ${
                   page === "cart" ? "bg-primary  " : "bg-gray-main "
                 }`}
               >
@@ -175,7 +175,7 @@ export const SidebarUser = () => {
 
 
 
-          <div className="h-20 mt-5  text-center  ">
+          <div className="h-20 mt-3  text-center  ">
             <Link
               to="#"
               onMouseEnter={() => {
@@ -187,7 +187,7 @@ export const SidebarUser = () => {
               onClick={() => setPage("profile")}
             >
               <div
-                className={` rounded-full p-3 inline-block  m-auto ${
+                className={` rounded-full p-3.5 inline-block  m-auto ${
                   page === "profile" ? "bg-primary  " : "bg-gray-main "
                 }`}
               >
