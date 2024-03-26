@@ -2,15 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
 }
-
-
 
 /* * Font */
 @import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
@@ -21,7 +17,12 @@
   font-size: 16px;
   font-weight: lighter;
   font-style: normal;
+}
+@media (max-width: 500px) {
+  .Lato-light {
+    font-size: 12px;
 
+  }
 }
 
 @import url(https://db.onlinewebfonts.com/c/235b71a9b409e684e865eb4a996e925e?family=IRANYekan);
@@ -80,6 +81,7 @@
   font-style: normal;
 }
 
+
 .iranyekan-low-bold {
   font-family: "IRANYekan";
   font-optical-sizing: auto;
@@ -96,11 +98,89 @@
   font-style: normal;
 }
 
+
 .iranyekan-very-bold {
   font-family: "IRANYekan";
   font-optical-sizing: auto;
   font-size: 32px;
   font-weight: 500;
+  font-style: normal;
+}
+
+
+
+@media (max-width: 1000px) {
+  .iranyekan-medium{
+    font-size: 19px;
+  } 
+  .iranyekan-light{
+    font-size: 15px;
+  }
+  .iranyekan-very-bold {
+    font-size: 20px;
+  }   
+  
+ 
+}
+
+@media (max-width: 800px) {
+  .iranyekan-medium{
+    font-size: 18px;
+  } 
+  .iranyekan-light{
+    font-size: 13px;
+
+  }
+  .iranyekan-bold{
+    font-size: 13px;
+  } 
+  .iranyekan-very-light{
+    font-size: 10px;
+  }
+  .iranyekan-low-bold{
+    font-size: 11px;
+  }
+  .iranyekan-very-medium{
+    font-size: 11px;
+    font-weight: 300;
+  }
+  .iranyekan-very-bold {
+    font-size: 17px;
+  }   
+ 
+}
+@media (max-width: 500px) {
+  .iranyekan-medium{
+    font-size: 14px;
+  } 
+  .iranyekan-light{
+    font-size: 11px;
+
+  }
+  .iranyekan-little-light{
+    font-size: 10px;
+  }
+  .iranyekan-bold{
+    font-size: 10.4px;
+   
+  } 
+   .iranyekan-very-light{
+      font-size: 7.8px;
+    }
+  .iranyekan-low-bold{
+    font-size: 9.1px;
+  }
+  .iranyekan{
+    font-size: 11px;
+  }
+}
+
+
+.vazir-very-little {
+  font-family: "Vazirmatn", sans-serif;
+  font-optical-sizing: auto;
+  font-size: 12px;
+  font-weight: 400;
   font-style: normal;
 }
 
@@ -126,6 +206,13 @@
   font-weight: 200;
   font-style: normal;
 }
+.vazir-regular-bold {
+  font-family: "Vazirmatn", sans-serif;
+  font-optical-sizing: auto;
+  font-size: 16px;
+  font-weight: 500;
+  font-style: normal;
+}
 .vazir-medium {
   font-family: "Vazirmatn", sans-serif;
   font-optical-sizing: auto;
@@ -148,21 +235,63 @@
   font-weight: 800;
   font-style: normal;
 }
+@media (max-width: 850px) {
+  .vazir-medium {
+    font-size: 15px;
+  }
+  .vazir-regular {
+    font-size: 13px;
+  }
+  .vazir-regular-bold{
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 680px) {
+  .vazir-medium {
+    font-size: 14px;
+  }
+  .vazir-regular {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 550px) {
+  .vazir-medium {
+    font-size: 10px;
+  }
+  .vazir-regular {
+    font-size: 9px;
+  }
+  .vazir-regular-bold{
+    font-size: 11px;
+  }
+  .vazir-very-light {
+    font-size: 11px;
+  }
+  .iranyekan-very-light-white{
+    font-size: 10px;
+  }
+}
 
 /* * End Font */
 
 .main {
   width: 92%;
 }
+@media (max-width: 1023px) {
+  .main {
+    width: 100%;
+  }
+}
+
 
 /* * Hero */
 
-.bg-hero{
+.bg-hero {
   background-image: radial-gradient(#dde8ef 44%, #fafafa, #fafafa);
-
 }
 /* * End Hero */
-
 
 /* * Sidebar */
 .side-bar {
@@ -170,16 +299,39 @@
 }
 /* * End Sidebar */
 
+/* * Category */
+.border-bottom {
+  width: 0;
+  height: 0;
+  border: 40px solid transparent;
+  border-bottom: 0;
+  border-top: 6px solid #184977;
+}
+@media (max-width: 800px) {
+  .border-bottom{
+    width: 0;
+    height: 0;
+    border: 29px solid transparent;
+    border-bottom: 0;
+    border-top: 6px solid #184977;
+  }
 
-
-
-
-
-
+  
+}
+@media (max-width: 500px) {
+    .border-bottom{
+      width: 0;
+      height: 0;
+      border: 25px solid transparent;
+      border-bottom: 0;
+      border-top: 6px solid #184977;
+    }
+  }
+/* * End Category */
 
 /* * Footert User */
 .trapezoid {
-	border-bottom: 70px solid #184977;
-	border-right: 140px solid transparent;
+  border-bottom: 70px solid #184977;
+  border-right: 140px solid transparent;
 }
 /* * End Footert User */

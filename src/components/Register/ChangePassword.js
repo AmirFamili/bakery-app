@@ -1,40 +1,39 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import Logo from "../images/logo.png";
-import EmailGrayIcon from "../images/icons/email-gray.png";
-import ArrowRightIcon from "../images/icons/arrow-right.png";
+import Logo from "../../images/logo.png";
+import EmailGrayIcon from "../../images/icons/email-gray.png";
+import ArrowRightIcon from "../../images/icons/arrow-right.png";
 import { Link } from "react-router-dom";
+import axios from "../../api/axios";
 
 export const ChangePassword = () => {
 
-    const handleNext = () => {
-        window.location.href = "http://localhost:3000/login";
-    }
   return (
     <section className="bg-gray-main h-screen w-full flex justify-center items-center">
-      <div className=" bg-white border w-2/5 h-5/6 rounded-2xl p-5 relative">
+      <div className=" bg-white border w-2/5 rounded-2xl p-5 relative max-md:w-4/5 pb-20">
         <Link to="/login">
-          {" "}
           <img
             src={ArrowRightIcon}
             alt="Arrow Right"
-            className="w-7 absolute top-7 right-7 "
+            className="w-7 absolute top-7 right-7 max-md:w-5"
           />
         </Link>
         <div className="flex justify-center items-center p-2">
-          <img src={Logo} alt="بلو کیک" className="w-24 " />
+          <img src={Logo} alt="بلو کیک" className="w-24 max-md:w-20" />
         </div>
         <h1 className="iranyekan-medium text-center mt-10">بازیابی رمز عبور</h1>
         <h2 className="iranyekan-light text-center mt-3">
-          ایمیل خود را جهت بازیابی رمزعبور وارد کنید.{" "}
+          ایمیل خود را جهت بازیابی رمزعبور وارد کنید.
         </h2>
         <Formik
           initialValues={{
             email: "",
           }}
-          onSubmit={(values) => {
-            values.email="";
-            handleNext();
+          onSubmit={async (values) => {
+         
+            await axios.post("/auth/verify_email/",{
+              email:values.email
+            }).then(response=>console.log(response));
           }}
           validate={(values) => {
             const errors = {};
@@ -46,20 +45,18 @@ export const ChangePassword = () => {
                 /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
               )
             ) {
-              errors.email = "  ایمیل نادرست است.";
+              errors.email =  "لطفا ایمیل معتبر وارد کنید.";
             }
 
-            if (values.password === "") {
-              errors.password = "لطفا این قسمت را خالی نگذارید.";
-            }
+           
 
             return errors;
           }}
         >
           <Form
-            className=" mx-auto my-7 w-3/5  max-sm:text-sm"
+            className=" mx-auto my-7 w-3/5  max-sm:text-sm max-md:w-4/5"
             action="index.html"
-            enctype="multipart/form-data"
+            // enctype="multipart/form-data"
           >
             <div className="pb-3">
               <div className="flex relative">
@@ -86,7 +83,7 @@ export const ChangePassword = () => {
 
             <div className="flex justify-center items-center mt-6">
               <button
-                className=" vazir-very-light  shadow-lg  bg-primary text-white py-3 px-14 rounded-2xl  "
+                className=" vazir-very-light  shadow-lg  bg-primary text-white py-3 px-14 rounded-2xl max-md:px-10 max-md:py-3 "
                 type="submit"
               >
                 تایید

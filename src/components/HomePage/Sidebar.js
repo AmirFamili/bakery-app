@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState,useEffect } from "react";
 import Logo from "../../images/logo.png";
 import HomeIcon from "../../images/icons/home.png";
 import HomeWhiteIcon from "../../images/icons/home-white.png";
@@ -15,7 +15,7 @@ import ShoppingCartWhiteIcon from "../../images/icons/shopping-cart-white.png";
 import { Link } from "react-router-dom";
 import { GlobalContext } from "../../context/ContextWrapper";
 
-export const SidebarUser = () => {
+export const Sidebar = () => {
   const [home, setHome] = useState("");
   const [category, setCategory] = useState("");
   const [call, setCall] = useState("");
@@ -23,17 +23,27 @@ export const SidebarUser = () => {
   const [history, setHistory] = useState("");
   const [cart, setCart] = useState("");
 
-  const { page, setPage } = useContext(GlobalContext);
+  useEffect(() => {
+    window.location.pathname === "/"
+      ? setPage("home")
+      :window.location.pathname.includes('/category')
+      ?setPage("category")
+      :setPage("");
+  }, []);
+
+  const { page, setPage,loggedIn } = useContext(GlobalContext);
+
+  
   return (
-    <section className="side-bar p-2 h-screen flex justify-center ">
+    <section className="side-bar p-2 h-screen flex justify-center z-50 max-lg:hidden ">
       <div className="fixed ">
-        <Link to="/home" onClick={() => setPage("home")}>
+        <Link to="/" onClick={() => setPage("home")}>
           <img src={Logo} alt="logo" className="w-20 mt-3" />
         </Link>
         <div className="mt-3 flex flex-col justify-center items-center ">
           <div className="h-20  mt-5 text-center">
             <Link
-              to="/home"
+              to="/"
               onMouseEnter={() => {
                 if (page !== "home") {
                   setHome("خانه");
@@ -43,7 +53,7 @@ export const SidebarUser = () => {
               onClick={() => setPage("home")}
             >
               <div
-                className={` rounded-full p-3.5 inline-block shadow-sm  m-auto ${
+                className={` rounded-full p-3 inline-block shadow-sm  m-auto ${
                   page === "home" ? "bg-primary  " : "bg-gray-main "
                 }`}
               >
@@ -59,7 +69,7 @@ export const SidebarUser = () => {
 
           <div className="h-20  mt-3 text-center ">
             <Link
-              to="#"
+              to="/category"
               onMouseEnter={() => {
                 if (page !== "category") {
                   setCategory("دسته‌بندی");
@@ -69,7 +79,7 @@ export const SidebarUser = () => {
               onClick={() => setPage("category")}
             >
               <div
-                className={` rounded-full p-3.5 shadow-sm  inline-block m-auto ${
+                className={` rounded-full p-3 shadow-sm  inline-block m-auto ${
                   page === "category" ? "bg-primary  " : "bg-gray-main "
                 }`}
               >
@@ -95,7 +105,7 @@ export const SidebarUser = () => {
               onClick={() => setPage("call")}
             >
               <div
-                className={` rounded-full p-3.5 shadow-sm  inline-block m-auto ${
+                className={` rounded-full p-3 shadow-sm  inline-block m-auto ${
                   page === "call" ? "bg-primary  " : "bg-gray-main "
                 }`}
               >
@@ -111,10 +121,10 @@ export const SidebarUser = () => {
 
           <span className="border-t mb-3  w-12"></span>
 
+          
 
 
-
-          <div className="h-20 mt-3  text-center  ">
+          {loggedIn &&  <div className="h-20 mt-5  text-center  ">
             <Link
               to="#"
               onMouseEnter={() => {
@@ -138,7 +148,7 @@ export const SidebarUser = () => {
               </div>
             </Link>
             <p className="iranyekan-very-light-white">{history}</p>
-          </div>
+          </div>}
 
 
 
@@ -146,7 +156,7 @@ export const SidebarUser = () => {
 
 
 
-          <div className="h-20 mt-3  text-center  ">
+          {loggedIn &&  <div className="h-20 mt-3  text-center  ">
             <Link
               to="#"
               onMouseEnter={() => {
@@ -170,12 +180,9 @@ export const SidebarUser = () => {
               </div>
             </Link>
             <p className="iranyekan-very-light-white">{cart}</p>
-          </div>
+          </div>}
 
-
-
-
-          <div className="h-20 mt-3  text-center  ">
+          <div className={loggedIn?'h-20 mt-5  text-center ':'h-20 mt-3  text-center '}>
             <Link
               to="#"
               onMouseEnter={() => {
@@ -187,19 +194,20 @@ export const SidebarUser = () => {
               onClick={() => setPage("profile")}
             >
               <div
-                className={` rounded-full p-3.5 inline-block  m-auto ${
+                className={` rounded-full p-3 inline-block  m-auto ${
                   page === "profile" ? "bg-primary  " : "bg-gray-main "
                 }`}
               >
                 {page === "profile" ? (
-                  <img src={ProfileWhiteIcon} alt="Profile" className="w-7" />
+                  <img src={ProfileWhiteIcon} alt="حساب کاربری" className="w-7" />
                 ) : (
-                  <img src={ProfileIcon} alt="Profile" className="w-6" />
+                  <img src={ProfileIcon} alt="حساب کاربری" className="w-6" />
                 )}
               </div>
             </Link>
             <p className="iranyekan-very-light-white">{profile}</p>
           </div>
+
 
 
         </div>

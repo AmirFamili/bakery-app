@@ -1,12 +1,13 @@
 import React, { useState ,useContext} from "react";
-import CupCake from "../images/cup-cake.png";
-import AddIcon from "../images/icons/add.png";
-import MinusIcon from "../images/icons/minus.png";
-import { GlobalContext } from "../context/ContextWrapper";
+import CupCake from "../../images/cup-cake.png";
+import AddIcon from "../../images/icons/add.png";
+import MinusIcon from "../../images/icons/minus.png";
+import { GlobalContext } from "../../context/ContextWrapper";
 
 export const NewProduct = () => {
   const [count, setCount] = useState(0);
-  const { addCart, setAddCart } = useContext(GlobalContext);
+  const { cart, setCart,convertNumberToFarsi } = useContext(GlobalContext);
+  
 
   const handlerCheckCount = () => {
 if (count > 0) {
@@ -16,19 +17,19 @@ if (count > 0) {
  
 
   const handlerIncrease = () => {
-    setAddCart(addCart+1)
+    setCart(cart+1)
     setCount(count + 1);
   };
 
   const handlerDecrease = () => {
     if (count > 0) {
-      setAddCart(addCart-1)
+      setCart(cart-1)
       setCount(count - 1);
     }
   };
 
   return (
-    <div className=" group p-6 ml-5 my-5 w-56 bg-white shadow-lg rounded-2xl  hover:bg-primary hover:text-white">
+    <div className=" group p-6 ml-5 my-10 w-56 bg-white shadow-lg rounded-2xl  hover:bg-primary hover:text-white max-md:w-48">
       <img
         src={CupCake}
         alt="cup cake"
@@ -46,14 +47,14 @@ if (count > 0) {
         <div className="flex">
           <button
             onClick={handlerDecrease}
-            className={`minus rounded-full w-7 bg-blue-light hidden  ${handlerCheckCount()} `}
+            className={`minus rounded-full w-7 bg-blue-light hidden max-md:w-6 ${handlerCheckCount()} `}
           >
             <img src={MinusIcon} alt="minus" />
           </button>
-          <p className={`px-3 hidden ${handlerCheckCount()}`}>{count}</p>
+          <p className={`px-3 hidden iranyekan ${handlerCheckCount()}`}>{convertNumberToFarsi(count)}</p>
           <button
             onClick={handlerIncrease}
-            className="bg-primary rounded-full w-7 group-hover:bg-blue-light "
+            className="bg-primary rounded-full w-7 group-hover:bg-blue-light max-md:w-6"
           >
             <img src={AddIcon} alt="plus" />
           </button>

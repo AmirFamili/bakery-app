@@ -1,65 +1,88 @@
-import React from "react";
-import { Header } from "./components/Header";
-import { Sidebar } from "./components/Sidebar";
-import { Hero } from "./components/Hero";
-import { News } from "./components/News";
-import { Discount } from "./components/Discount";
-import { Grouping } from "./components/Grouping";
-import { Footer } from "./components/Footer";
-import { Routes, Route } from "react-router-dom";
-import { Login } from "./components/Login";
-import { SignUp } from "./components/SingUp";
-import { ChangePassword } from "./components/ChangePassword";
-import { HeaderUser } from "./components/User/HeaderUser";
-import { SidebarUser } from "./components/User/SidebarUser";
-import { FooterUser } from "./components/User/FooterUser";
+import React, { useEffect, useContext } from "react";
+import { Routes, Route, Outlet,useNavigate } from "react-router-dom";
+import { Login } from "./components/Register/Login";
+import { SignUp } from "./components/Register/SingUp";
+import { ChangePassword } from "./components/Register/ChangePassword";
+import { Category } from "./components/Customer/Category";
+import { Header } from "./components/HomePage/Header";
+import { HeaderMobile } from "./components/HomePage/Mobile/HeaderMobile";
+import { Sidebar } from "./components/HomePage/Sidebar";
+import { Home } from "./components/HomePage/Home";
+import { AfternoonCake } from "./components/Customer/AfternoonCake";
+import axios from "./api/axios";
+import { GlobalContext } from "./context/ContextWrapper";
+import { Footer } from "./components/HomePage/Footer";
 
 function App() {
+  const { setLoggedIn } = useContext(GlobalContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const refreshTokens = () => {
+      if (localStorage.refresh) {
+        axios
+          .post("/auth/refresh/", {
+            refresh_token: localStorage.refresh.split('"')[1],
+          })
+          .then((response) => {
+            if(response.data.success){
+              localStorage.setItem(
+              "access",
+              JSON.stringify(response.data.message.access_token)
+            );
+            localStorage.setItem(
+              "refresh",
+              JSON.stringify(response.data.message.refresh_token)
+            );
+            setLoggedIn(true);
+            }else{
+              localStorage.removeItem("access");
+              localStorage.removeItem("refresh");
+              navigate("/login");
+
+            }
+            
+          });
+      }
+    };
+    refreshTokens();
+    const minute = 1000 * 60;
+    setInterval(refreshTokens, minute * 3);
+  }, []);
+
   return (
     <div dir="rtl" className="App ">
       <Routes>
         <Route
-          path="/"
+          path="/*"
           element={
-            <div>
+            <div className="">
               <div className="flex ">
                 <Sidebar />
-                <div className="main">
+                <div className="main  ">
                   <Header />
+                  <HeaderMobile/>
                   <main className="bg-gray-main ">
-                    <Hero />
-                    <News />
-                    <Grouping />
-                    <Discount />
+                    <Outlet />
                   </main>
+                    
                 </div>
+               
               </div>
-              <Footer />
+                 <Footer />
+              
+              
             </div>
           }
-        ></Route>
+        >
+          <Route path="" element={<Home />}></Route>
+          <Route path="category/*" element={<Category />}>
+            <Route path="" element={<AfternoonCake />}></Route>
+          </Route>
+        </Route>
         <Route path="/singup" element={<SignUp />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/change-password" element={<ChangePassword />}></Route>
-        <Route
-          path="/home"
-          element={
-            <div className="flex ">
-              <SidebarUser />
-              <div className="main">
-                <HeaderUser />
-                <div className="bg-gray-main ">
-                  <Hero />
-                  <News />
-                  <Grouping />
-                  <Discount />
-
-                  <FooterUser />
-                </div>
-              </div>
-            </div>
-          }
-        ></Route>
       </Routes>
     </div>
   );
