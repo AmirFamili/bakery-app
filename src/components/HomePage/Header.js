@@ -20,10 +20,8 @@ export const Header = () => {
     navigate("/");
   };
 
-  
-
   return (
-    <header className=" iranyekan-light flex justify-between items-center bg-white p-2  border-r-2 border-gray-main max-lg:hidden">
+    <header className="fixed w-11/12 z-40 iranyekan-light flex justify-between items-center bg-white px-2 py-4 border-r-2 border-gray-main max-lg:hidden">
       <div className="mr-5 w-1/2 max-xl:w-2/5 ">
         <div  className=" border rounded-3xl flex items-center w-5/6 bg-gray-main h-11  ">
            <input
@@ -41,7 +39,7 @@ export const Header = () => {
 
       <div className="flex items-start text-black ">
         <a
-          className="flex border-l gray-100 my-3 Lato-light"
+          className="flex border-l gray-100 my-3  "
           href="tel:+989106646279"
         >
           <span className="my-3 iranyekan">۰۹۱۰۶۶۴۶۲۷۹</span>
@@ -66,11 +64,11 @@ export const Header = () => {
         )}
         {loggedIn && (
           <Link
-            to="#"
+             to="cart"
             className="flex justify-center items-center m-4 max-xl:mx-1  p-1 rounded-3xl bg-blue-little-light"
           >
             <p className="bg-white p-1 rounded-full w-8 text-primary text-center iranyekan ">
-              {convertNumberToFarsi(cart)}
+              {convertNumberToFarsi(cart.length)}
             </p>
             <img
               src={ShoppingCartWhiteIcon}

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import Logo from "../../images/logo.png";
 import EmailGrayIcon from "../../images/icons/email-gray.png";
@@ -8,7 +8,6 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import { GlobalContext } from "../../context/ContextWrapper";
 
 export const Login = () => {
@@ -18,7 +17,7 @@ export const Login = () => {
   const { setLoggedIn } = useContext(GlobalContext);
 
   const notify = () =>
-    toast.error("ایمیل یا رمز عبور نامعتبر نمی باشد", {
+    toast.error("ایمیل یا رمز عبور نامعتبر می باشد", {
       position: "top-center",
       autoClose: 5000,
       hideProgressBar: false,
@@ -182,7 +181,7 @@ export const Login = () => {
         newestOnTop={false}
         closeOnClick
         bodyStyle={{fontFamily: "iranyekan",fontSize:'12px'} }
-        rtl={false}
+        rtl={true}
         pauseOnFocusLoss
         draggable
         pauseOnHover

@@ -6,11 +6,25 @@ import KeyIcon from "../../images/icons/key.png";
 import EyeIcon from "../../images/icons/eye.png";
 import { Link,useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showRePassword, setShowRePassword] = useState(false);
   const navigate=useNavigate();
+
+  const notify = () =>
+    toast.error("شما قبلا با این ایمیل ثبت نام کردید.", {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
 
   return (
     <section className="bg-gray-main h-screen w-full flex justify-center items-center">
@@ -40,7 +54,7 @@ export const SignUp = () => {
                   navigate('/login');
                 
                 }else{
-                  alert('شما قبلا ثبت نام کردید.');
+                  notify();
                 }
               })
               .catch((err) => console.log(err));
@@ -176,6 +190,19 @@ export const SignUp = () => {
           </Link>
         </h3>
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        bodyStyle={{fontFamily: "iranyekan",fontSize:'12px'} }
+        rtl={true}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </section>
   );
 };

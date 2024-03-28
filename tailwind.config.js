@@ -5,10 +5,15 @@ module.exports = {
     extend: {
       colors: {
         'primary': '#184977',
-        'font-white':'#fefefe',
+        'secondry':'#FDA56F',
         'gray-main':'#fafafa',
         'blue-light':'#8499A7',
-        'blue-little-light':'#6F899B'
+        'blue-little-light':'#6F899B',
+        'blue-very-light':'#BFD6E7',
+
+        'font-white':'#fefefe',
+        'font-green':'#038C00',
+
        
       },
     },

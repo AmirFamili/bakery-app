@@ -9,6 +9,15 @@
 }
 
 /* * Font */
+/* @font-face{
+  font-family: vazir;
+  src: url('./fonts/Vazir.ttf');
+} */
+/* @font-face{
+  font-family: IRANYekan;
+  src: url('./fonts/IranYekan.ttf');
+} */
+
 @import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
 
 .Lato-light {
@@ -21,14 +30,20 @@
 @media (max-width: 500px) {
   .Lato-light {
     font-size: 12px;
-
   }
 }
 
-@import url(https://db.onlinewebfonts.com/c/235b71a9b409e684e865eb4a996e925e?family=IRANYekan);
-
+@import url(https://db.onlinewebfonts.com/c/1510aa80463174b1d0847ab936a70e8e?family=IRANYekanWeb);
+.iranyekan-very-light-small {
+  font-family: "IRANYekanWeb";
+  font-optical-sizing: auto;
+  font-size: 10px;
+  font-weight: lighter;
+  font-style: normal;
+  color: rgb(145, 145, 147);
+}
 .iranyekan-very-light {
-  font-family: "IRANYekan";
+  font-family: "IRANYekanWeb";
   font-optical-sizing: auto;
   font-size: 12px;
   font-weight: lighter;
@@ -37,21 +52,21 @@
 }
 
 .iranyekan-very-light-white {
-  font-family: "IRANYekan";
+  font-family: "IRANYekanWeb";
   font-optical-sizing: auto;
   font-size: 12px;
   font-weight: 200;
   font-style: normal;
 }
 .iranyekan-little-light {
-  font-family: "IRANYekan";
+  font-family: "IRANYekanWeb";
   font-optical-sizing: auto;
   font-size: 14px;
   font-weight: 200;
   font-style: normal;
 }
 .iranyekan-light {
-  font-family: "IRANYekan";
+  font-family: "IRANYekanWeb";
   font-optical-sizing: auto;
   font-size: 16px;
   font-weight: lighter;
@@ -59,14 +74,14 @@
   color: rgb(145, 145, 147);
 }
 .iranyekan {
-  font-family: "IRANYekan";
+  font-family: "IRANYekanWeb";
   font-optical-sizing: auto;
   font-size: 16px;
   font-weight: 200;
   font-style: normal;
 }
 .iranyekan-very-medium {
-  font-family: "IRANYekan";
+  font-family: "IRANYekanWeb";
   font-optical-sizing: auto;
   font-size: 20px;
   font-weight: 200;
@@ -74,16 +89,15 @@
 }
 
 .iranyekan-medium {
-  font-family: "IRANYekan";
+  font-family: "IRANYekanWeb";
   font-optical-sizing: auto;
   font-size: 24px;
   font-weight: 200;
   font-style: normal;
 }
 
-
 .iranyekan-low-bold {
-  font-family: "IRANYekan";
+  font-family: "IRANYekanWeb";
   font-optical-sizing: auto;
   font-size: 14px;
   font-weight: 100;
@@ -91,90 +105,80 @@
 }
 
 .iranyekan-bold {
-  font-family: "IRANYekan";
+  font-family: "IRANYekanWeb";
   font-optical-sizing: auto;
   font-size: 16px;
   font-weight: 100;
   font-style: normal;
 }
 
-
 .iranyekan-very-bold {
-  font-family: "IRANYekan";
+  font-family: "IRANYekanWeb";
   font-optical-sizing: auto;
   font-size: 32px;
   font-weight: 500;
   font-style: normal;
 }
 
-
-
 @media (max-width: 1000px) {
-  .iranyekan-medium{
+  .iranyekan-medium {
     font-size: 19px;
-  } 
-  .iranyekan-light{
+  }
+  .iranyekan-light {
     font-size: 15px;
   }
   .iranyekan-very-bold {
     font-size: 20px;
-  }   
-  
- 
+  }
 }
 
 @media (max-width: 800px) {
-  .iranyekan-medium{
+  .iranyekan-medium {
     font-size: 18px;
-  } 
-  .iranyekan-light{
-    font-size: 13px;
-
   }
-  .iranyekan-bold{
+  .iranyekan-light {
     font-size: 13px;
-  } 
-  .iranyekan-very-light{
+  }
+  .iranyekan-bold {
+    font-size: 13px;
+  }
+  .iranyekan-very-light {
     font-size: 10px;
   }
-  .iranyekan-low-bold{
+  .iranyekan-low-bold {
     font-size: 11px;
   }
-  .iranyekan-very-medium{
+  .iranyekan-very-medium {
     font-size: 11px;
     font-weight: 300;
   }
   .iranyekan-very-bold {
     font-size: 17px;
-  }   
- 
+  }
 }
 @media (max-width: 500px) {
-  .iranyekan-medium{
+  .iranyekan-medium {
     font-size: 14px;
-  } 
-  .iranyekan-light{
-    font-size: 11px;
-
   }
-  .iranyekan-little-light{
+  .iranyekan-light {
+    font-size: 11px;
+  }
+  .iranyekan-little-light {
     font-size: 10px;
   }
-  .iranyekan-bold{
+  .iranyekan-bold {
     font-size: 10.4px;
-   
-  } 
-   .iranyekan-very-light{
-      font-size: 7.8px;
-    }
-  .iranyekan-low-bold{
+  }
+  .iranyekan-very-light {
+    font-size: 7.8px;
+  }
+  .iranyekan-low-bold {
     font-size: 9.1px;
   }
-  .iranyekan{
+  .iranyekan {
     font-size: 11px;
   }
 }
-
 
 .vazir-very-little {
   font-family: "Vazirmatn", sans-serif;
@@ -242,7 +246,7 @@
   .vazir-regular {
     font-size: 13px;
   }
-  .vazir-regular-bold{
+  .vazir-regular-bold {
     font-size: 13px;
   }
 }
@@ -263,13 +267,13 @@
   .vazir-regular {
     font-size: 9px;
   }
-  .vazir-regular-bold{
+  .vazir-regular-bold {
     font-size: 11px;
   }
   .vazir-very-light {
     font-size: 11px;
   }
-  .iranyekan-very-light-white{
+  .iranyekan-very-light-white {
     font-size: 10px;
   }
 }
@@ -284,7 +288,6 @@
     width: 100%;
   }
 }
-
 
 /* * Hero */
 
@@ -308,25 +311,23 @@
   border-top: 6px solid #184977;
 }
 @media (max-width: 800px) {
-  .border-bottom{
+  .border-bottom {
     width: 0;
     height: 0;
     border: 29px solid transparent;
     border-bottom: 0;
     border-top: 6px solid #184977;
   }
-
-  
 }
 @media (max-width: 500px) {
-    .border-bottom{
-      width: 0;
-      height: 0;
-      border: 25px solid transparent;
-      border-bottom: 0;
-      border-top: 6px solid #184977;
-    }
+  .border-bottom {
+    width: 0;
+    height: 0;
+    border: 25px solid transparent;
+    border-bottom: 0;
+    border-top: 6px solid #184977;
   }
+}
 /* * End Category */
 
 /* * Footert User */
@@ -335,3 +336,12 @@
   border-right: 140px solid transparent;
 }
 /* * End Footert User */
+
+/* * Checkbox */
+.checkbox {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -o-appearance: none;
+ 
+}
+/* * End Checkbox */

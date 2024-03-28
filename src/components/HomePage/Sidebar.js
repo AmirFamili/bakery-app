@@ -68,7 +68,7 @@ export const Sidebar = () => {
           </div>
 
           <div className="h-20  mt-3 text-center ">
-            <Link
+            <Link  
               to="/category"
               onMouseEnter={() => {
                 if (page !== "category") {
@@ -78,7 +78,7 @@ export const Sidebar = () => {
               onMouseLeave={() => setCategory("")}
               onClick={() => setPage("category")}
             >
-              <div
+              <div  
                 className={` rounded-full p-3 shadow-sm  inline-block m-auto ${
                   page === "category" ? "bg-primary  " : "bg-gray-main "
                 }`}
@@ -158,7 +158,7 @@ export const Sidebar = () => {
 
           {loggedIn &&  <div className="h-20 mt-3  text-center  ">
             <Link
-              to="#"
+              to="cart"
               onMouseEnter={() => {
                 if (page !== "cart") {
                   setCart("سبد خرید");

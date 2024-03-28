@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route, Outlet, Link } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
 
 export const Category = () => {
   const [categoryPage, setCategoryPage] = useState(1);
@@ -7,7 +7,7 @@ export const Category = () => {
   useEffect(() => {
     window.location.pathname === "/category"
       ? setCategoryPage(1)
-      : window.location.pathname === "/category/happybirthday-cake"
+      : window.location.pathname === "/category/birthday-cake"
       ? setCategoryPage(2)
       : window.location.pathname === "/"
       ? setCategoryPage(3)
@@ -15,7 +15,7 @@ export const Category = () => {
   }, []);
 
   return (
-    <div className="py-6 px-10 max-md:px-5">
+    <div className="py-6 px-10 mt-28 max-md:px-5 max-lg:mt-0 ">
       <h1 className="py-5 iranyekan-very-bold ">دسته بندی محصولات</h1>
       <div className="flex border-b pt-3 mb-10 ">
         <div className="relative">
@@ -29,15 +29,16 @@ export const Category = () => {
             کیک عصرانه
           </Link>
           <div
-            className={`absolute z-10  ${categoryPage === 1 && "border-bottom"}`}
+            className={`absolute z-10  ${
+              categoryPage === 1 && "border-bottom"
+            }`}
           ></div>
         </div>
-
 
         <div className="relative">
           <Link
             onClick={() => setCategoryPage(2)}
-            to="happybirthday-cake"
+            to="birthday-cake"
             className={`px-8 py-3 inline-block max-md:px-6 max-sm:px-3 ${
               categoryPage === 2 ? "vazir-regular-bold" : "vazir-regular"
             }`}
@@ -85,7 +86,6 @@ export const Category = () => {
           ></div>
         </div>
 
-
         <div className="relative">
           <Link
             onClick={() => setCategoryPage(5)}
@@ -102,7 +102,6 @@ export const Category = () => {
             }`}
           ></div>
         </div>
-
 
         <div className="relative">
           <Link

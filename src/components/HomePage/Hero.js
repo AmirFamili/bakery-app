@@ -5,7 +5,7 @@ import ArrowLeftICon from "../../images/icons/arrow-circle-left.png";
 import { Link } from "react-router-dom";
 export const Hero = () => {
   return (
-    <section className="bg-hero flex p-5 pb-20 relative ">
+    <section className="bg-hero mt-28 flex p-5 pb-20 relative max-lg:mt-0">
       <div className="px-1 ">
         <img src={CakeImg} alt="assortment-pieces-cake" className=" " />
         <div className="absolute top-20 right-16 z-10 max-lg:hidden">

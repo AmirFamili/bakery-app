@@ -41,7 +41,7 @@ if (count > 0) {
       </h4>
       <div className="flex justify-between items-center">
         <h5 className="my-2 iranyekan-low-bold">
-          ۱۲.۰۰۰{" "}
+          ۱۲.۰۰۰
           <span className="text-gray-400  group-hover:text-white">تومان</span>{" "}
         </h5>
         <div className="flex">

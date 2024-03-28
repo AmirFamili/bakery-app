@@ -11,7 +11,7 @@ const farsiDigits = {
   6: "۶",
   7: "۷",
   8: "۸",
-  9: "۹",
+  9: "۹", 
 };
 
 const convertNumberToFarsi = (num) => {
@@ -25,35 +25,36 @@ const savedCartReduser = (state, { type, payload }) => {
   switch (type) {
     case "add":
       return [...state, payload];
-    case "delete":
-      return state.filter((evt) => evt.id !== payload.id);
-    default:
-      throw new Error();
+      case "update":
+        return state.map((evt) => (evt.id === payload.id ? payload : evt));
+      case "delete":
+        return state.filter((evt) => evt.id !== payload.id);
+      default:
+        throw new Error();
   }
 };
 
 const initCart = () => {
   const storageCart = localStorage.getItem("cart");
-  const parsedCart = Number(storageCart) ? storageCart : 0;
+  const parsedCart = storageCart ? JSON.parse(storageCart) : [];
   return parsedCart;
 };
 
 const ContextWrapper = (props) => {
   // const [addCart, setAddCart] = useReducer(savedCartReduser, [], initCart);
   const [loggedIn, setLoggedIn] = useState(localStorage.access?true:false);
-  const [cart, setCart] = useState(initCart);
   const [page, setPage] = useState("home");
- 
+  const [cart,  dispatchCalCart] = useReducer(savedCartReduser, [], initCart);
 
   useEffect(() => {
-    localStorage.setItem("cart", cart);
+    localStorage.setItem("cart",JSON.stringify(cart));
   }, [cart]);
 
   return (
     <GlobalContext.Provider
       value={{
         cart,
-        setCart,
+        dispatchCalCart,
         page,
         setPage,
         convertNumberToFarsi,
