@@ -54,11 +54,11 @@ export const Login = () => {
                 if (response.data.status === 200) {
                   localStorage.setItem(
                     "access",
-                    JSON.stringify(response.data.message.data.access_token)
+                    JSON.stringify(response.data.message.data.access)
                   );
                   localStorage.setItem(
                     "refresh",
-                    JSON.stringify(response.data.message.data.refresh_token)
+                    JSON.stringify(response.data.message.data.refresh)
                   );
                   setLoggedIn(true);
                   navigate("/");

@@ -24,30 +24,28 @@ function App() {
       if (localStorage.refresh) {
         axios
           .post("/auth/refresh/", {
-            refresh_token: localStorage.refresh.split('"')[1],
+            refresh: localStorage.refresh.split('"')[1],
           })
           .then((response) => {
-            if (response.data.success) {
+            if (response.data.access) {
               localStorage.setItem(
                 "access",
-                JSON.stringify(response.data.message.access_token)
-              );
-              localStorage.setItem(
-                "refresh",
-                JSON.stringify(response.data.message.refresh_token)
+                JSON.stringify(response.data.access)
               );
               setLoggedIn(true);
-            } else {
+            } 
+          }).catch(
+            err=>{
               localStorage.removeItem("access");
               localStorage.removeItem("refresh");
               navigate("/login");
             }
-          });
+          );
       }
     };
     refreshTokens();
     const minute = 1000 * 60;
-    setInterval(refreshTokens, minute * 3);
+    setInterval(refreshTokens, minute * 1);
   }, []);
 
   return (

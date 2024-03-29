@@ -8,7 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { GlobalContext } from "../../context/ContextWrapper";
 
 export const Header = () => {
-  const { cart, convertNumberToFarsi, loggedIn, setLoggedIn } =
+  const {setPage, cart, convertNumberToFarsi, loggedIn, setLoggedIn } =
     useContext(GlobalContext);
   const navigate = useNavigate();
   const [showLogOut, setShowLogOut] = useState(false);
@@ -65,6 +65,7 @@ export const Header = () => {
         {loggedIn && (
           <Link
              to="cart"
+             onClick={() => setPage("cart")}
             className="flex justify-center items-center m-4 max-xl:mx-1  p-1 rounded-3xl bg-blue-little-light"
           >
             <p className="bg-white p-1 rounded-full w-8 text-primary text-center iranyekan ">
