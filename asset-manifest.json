@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/bakery-app/static/css/main.67d4d099.css",
+    "main.js": "/bakery-app/static/js/main.b19d0117.js",
+    "static/media/assortment-pieces-cake.png": "/bakery-app/static/media/assortment-pieces-cake.e2fb23f5e2fa9356fdb8.png",
+    "static/media/muffin.png": "/bakery-app/static/media/muffin.021e551eca5469e8a0ed.png",
+    "static/media/another-cake.png": "/bakery-app/static/media/another-cake.24e386cfe32cd059ad12.png",
+    "static/media/afternon-cake.png": "/bakery-app/static/media/afternon-cake.182c9fc8b0de621b5464.png",
+    "static/media/donut-cake.png": "/bakery-app/static/media/donut-cake.653a87c4771ef3318fd9.png",
+    "static/media/cup-cake.png": "/bakery-app/static/media/cup-cake.2fc3ae77385f0f4f7eda.png",
+    "static/media/birthday-cake.png": "/bakery-app/static/media/birthday-cake.9c24dbe5cbc8af8fdbe3.png",
+    "static/media/jar-cake.png": "/bakery-app/static/media/jar-cake.edfb8baa883ff4e8c447.png",
+    "static/media/logo.png": "/bakery-app/static/media/logo.a31209457e22881562fb.png",
+    "index.html": "/bakery-app/index.html",
+    "main.67d4d099.css.map": "/bakery-app/static/css/main.67d4d099.css.map",
+    "main.b19d0117.js.map": "/bakery-app/static/js/main.b19d0117.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.67d4d099.css",
+    "static/js/main.b19d0117.js"
+  ]
+}
