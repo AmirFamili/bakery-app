@@ -24,9 +24,9 @@ export const Sidebar = () => {
   const [cart, setCart] = useState("");
 
   useEffect(() => {
-    window.location.pathname === "/"
+    window.location.pathname === "/bakery-app/"
       ? setPage("home")
-      :window.location.pathname.includes('/category')
+      :window.location.pathname.includes('bakery-app/category')
       ?setPage("category")
       :setPage("");
   }, []);
@@ -37,13 +37,13 @@ export const Sidebar = () => {
   return (
     <section className="side-bar p-2 h-screen flex justify-center z-50 max-lg:hidden ">
       <div className="fixed ">
-        <Link to="/" onClick={() => setPage("home")}>
+        <Link to="bakery-app/" onClick={() => setPage("home")}>
           <img src={Logo} alt="logo" className="w-20 mt-3" />
         </Link>
         <div className="mt-3 flex flex-col justify-center items-center ">
           <div className="h-20  mt-5 text-center">
             <Link
-              to="/"
+              to="bakery-app/"
               onMouseEnter={() => {
                 if (page !== "home") {
                   setHome("خانه");
@@ -69,7 +69,7 @@ export const Sidebar = () => {
 
           <div className="h-20  mt-3 text-center ">
             <Link  
-              to="/category/:0"
+              to="bakery-app/category/:0"
               onMouseEnter={() => {
                 if (page !== "category") {
                   setCategory("دسته‌بندی");
