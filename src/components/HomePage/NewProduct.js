@@ -4,9 +4,9 @@ import AddIcon from "../../images/icons/add.png";
 import MinusIcon from "../../images/icons/minus.png";
 import { GlobalContext } from "../../context/ContextWrapper";
 
-export const NewProduct = () => {
+export const NewProduct = ({product}) => {
   const [count, setCount] = useState(0);
-  const { cart, setCart,convertNumberToFarsi } = useContext(GlobalContext);
+  const { cart,  dispatchCalCart,convertNumberToFarsi, } = useContext(GlobalContext);
   
 
   const handlerCheckCount = () => {
@@ -17,13 +17,13 @@ if (count > 0) {
  
 
   const handlerIncrease = () => {
-    setCart(cart+1)
+    dispatchCalCart(cart+1)
     setCount(count + 1);
   };
 
   const handlerDecrease = () => {
     if (count > 0) {
-      setCart(cart-1)
+      dispatchCalCart(cart-1)
       setCount(count - 1);
     }
   };
@@ -31,11 +31,11 @@ if (count > 0) {
   return (
     <div className=" group p-6 ml-5 my-10 w-56 bg-white shadow-lg rounded-2xl  hover:bg-primary hover:text-white max-md:w-48">
       <img
-        src={CupCake}
+        src={product.image}
         alt="cup cake"
-        className="-mt-16 w-28 mx-auto shadow-md rounded-full"
+        className="-mt-16 w-28 h-28 mx-auto shadow-md rounded-full"
       />
-      <h3 className="iranyekan-bold my-5">کاپ کیک کدوحلوایی</h3>
+      <h3 className="iranyekan-bold my-5">{product.title}  </h3>
       <h4 className=" my-4 iranyekan-very-light   group-hover:text-white ">
         هر اسلایس:
       </h4>

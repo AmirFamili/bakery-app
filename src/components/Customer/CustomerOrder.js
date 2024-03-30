@@ -6,7 +6,7 @@ import SuccessIcon from "../../images/icons/success.png";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { GlobalContext } from "../../context/ContextWrapper";
 
-export const BirthDayCake = () => {
+export const CustomerOrder = () => {
   const [birthDayStep, setBirthDayStep] = useState(1);
   const [showSuccess, setShowSucccess] = useState(false);
   const [fileName, setFileName] = useState("");

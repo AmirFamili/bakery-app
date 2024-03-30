@@ -44,6 +44,7 @@ const ContextWrapper = (props) => {
   // const [addCart, setAddCart] = useReducer(savedCartReduser, [], initCart);
   const [loggedIn, setLoggedIn] = useState(localStorage.access?true:false);
   const [page, setPage] = useState("home");
+  const [categoryPage, setCategoryPage] = useState(1);
   const [cart,  dispatchCalCart] = useReducer(savedCartReduser, [], initCart);
 
   useEffect(() => {
@@ -59,7 +60,7 @@ const ContextWrapper = (props) => {
         setPage,
         convertNumberToFarsi,
         loggedIn,
-        setLoggedIn,
+        setLoggedIn,categoryPage, setCategoryPage
       }}
     >
       {props.children}

@@ -69,7 +69,7 @@ export const Sidebar = () => {
 
           <div className="h-20  mt-3 text-center ">
             <Link  
-              to="/category"
+              to="/category/:1"
               onMouseEnter={() => {
                 if (page !== "category") {
                   setCategory("دسته‌بندی");

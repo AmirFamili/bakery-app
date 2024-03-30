@@ -8,11 +8,10 @@ import { Header } from "./components/HomePage/Header";
 import { HeaderMobile } from "./components/HomePage/Mobile/HeaderMobile";
 import { Sidebar } from "./components/HomePage/Sidebar";
 import { Home } from "./components/HomePage/Home";
-import { AfternoonCake } from "./components/Customer/AfternoonCake";
+import { Products } from "./components/Customer/Products";
 import axios from "./api/axios";
 import { GlobalContext } from "./context/ContextWrapper";
 import { Footer } from "./components/HomePage/Footer";
-import { BirthDayCake } from "./components/Customer/BirthDayCake";
 import { Cart } from "./components/Customer/Cart/Cart";
 
 function App() {
@@ -33,14 +32,13 @@ function App() {
                 JSON.stringify(response.data.access)
               );
               setLoggedIn(true);
-            } 
-          }).catch(
-            err=>{
-              localStorage.removeItem("access");
-              localStorage.removeItem("refresh");
-              navigate("/login");
             }
-          );
+          })
+          .catch((err) => {
+            localStorage.removeItem("access");
+            localStorage.removeItem("refresh");
+            navigate("/login");
+          });
       }
     };
     refreshTokens();
@@ -71,12 +69,10 @@ function App() {
         >
           <Route path="" element={<Home />}></Route>
           <Route path="category/*" element={<Category />}>
-            <Route path="" element={<AfternoonCake />}></Route>
-            <Route path="birthday-cake" element={<BirthDayCake />}></Route>
-          </Route> 
-          <Route path="cart/*" element={<Cart/>}></Route>
+            <Route path=":id" element={<Products />}></Route>
+          </Route>
+          <Route path="cart/*" element={<Cart />}></Route>
         </Route>
-       
         <Route path="/singup" element={<SignUp />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/change-password" element={<ChangePassword />}></Route>
