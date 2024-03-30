@@ -1,7 +1,6 @@
 import React from "react";
 import Tag from "../../images/icons/tag.png";
 import ArrowCircleLeftPrimary from "../../images/icons/arrow-circle-left-primary.png";
-import { NewProduct } from "./NewProduct";
 
 export const News = () => {
   return (
@@ -22,19 +21,7 @@ export const News = () => {
       </div>
 
       <div className=" grid grid-flow-col overflow-x-auto justify-start overscroll-x-auto py-6 mt-10 ">
-        <NewProduct />
-        <NewProduct />
-        <NewProduct />
-        <NewProduct />
-        <NewProduct />
-        <NewProduct />
-        <NewProduct />
-        <NewProduct />
-        <NewProduct />
-        <NewProduct />
-        <NewProduct />
-        <NewProduct />
-        <NewProduct />
+        
       </div>
     </section>
   );

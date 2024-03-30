@@ -1,5 +1,5 @@
 import React, { useEffect, useState,useContext } from "react";
-import { NewProduct } from "../HomePage/NewProduct";
+import { Product } from "../Product/Product";
 import ArrowLeftBlack from "../../images/icons/arrow-circle-left-black.png";
 import ArrowRightBlack from "../../images/icons/arrow-circle-right-gray.png";
 import axios from "../../api/axios";
@@ -26,9 +26,9 @@ const [products,setProducts]=useState();
 
   return (
     <div className="p-5 max-md:p-1">
-      <div className="flex justify-around items-center flex-wrap">
+      <div className="flex justify-start items-center flex-wrap">
      {products && products.map(product =>(
-       <NewProduct key={product.id} product={product}/>
+       <Product key={product.id} product={product}/>
       ))}
        
         
