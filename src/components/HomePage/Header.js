@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState ,useEffect} from "react";
 import EmailIcon from "../../images/icons/email.png";
 import CallIcon from "../../images/icons/call.png";
 import SearchIcon from "../../images/icons/search-normal.png";
@@ -6,12 +6,27 @@ import ProfileIcon from "../../images/icons/profile.png";
 import ShoppingCartWhiteIcon from "../../images/icons/shopping-cart-white.png";
 import { Link, useNavigate } from "react-router-dom";
 import { GlobalContext } from "../../context/ContextWrapper";
+import axios from "../../api/axios";
 
 export const Header = () => {
   const {setPage, cart, convertNumberToFarsi, loggedIn, setLoggedIn } =
     useContext(GlobalContext);
   const navigate = useNavigate();
   const [showLogOut, setShowLogOut] = useState(false);
+  const [info,setInfo]=useState();
+
+  useEffect(() => {
+    
+    async function getData() {
+      await axios
+        .get("/settings/")
+        .then((response) => setInfo(response.data[0]));
+    }
+
+    getData();
+  }, []);
+
+
 
   const handlerLogOut = () => {
     localStorage.removeItem("access");
@@ -40,9 +55,9 @@ export const Header = () => {
       <div className="flex items-start text-black ">
         <a
           className="flex border-l gray-100 my-3  "
-          href="tel:+989106646279"
+          href={`tel:${info &&  info.phone_number}`}
         >
-          <span className="my-3 iranyekan">۰۹۱۰۶۶۴۶۲۷۹</span>
+          <span className="my-3 iranyekan">  {info &&  convertNumberToFarsi(info.phone_number)}</span>
           <img
             className="icon my-3 mx-4 w-6"
             src={CallIcon}
@@ -50,8 +65,8 @@ export const Header = () => {
           />
         </a>
 
-        <a className="flex pr-2 " href="mailto:Raanasheykhi08@gmail.com">
-          <span className="my-6 mx-2 Lato-light  max-xl:mx-1">Raanasheykhi08@gmail.com</span>
+        <a className="flex pr-2 "   href={`mailto:${info &&  info.email}`}>
+          <span className="my-6 mx-2 Lato-light  max-xl:mx-1">   {info &&  info.email}</span>
           <img className=" my-6 mx-2 w-6 max-xl:mx-1" src={EmailIcon} alt="Email" />
         </a>
         {!loggedIn && (

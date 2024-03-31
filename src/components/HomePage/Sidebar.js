@@ -1,5 +1,4 @@
 import React, { useContext, useState,useEffect } from "react";
-import Logo from "../../images/logo.png";
 import HomeIcon from "../../images/icons/home.png";
 import HomeWhiteIcon from "../../images/icons/home-white.png";
 import ElementIcon from "../../images/icons/element.png";
@@ -14,6 +13,7 @@ import ShoppingCartIcon from "../../images/icons/shopping-cart.png";
 import ShoppingCartWhiteIcon from "../../images/icons/shopping-cart-white.png";
 import { Link } from "react-router-dom";
 import { GlobalContext } from "../../context/ContextWrapper";
+import axios from "../../api/axios";
 
 export const Sidebar = () => {
   const [home, setHome] = useState("");
@@ -22,6 +22,18 @@ export const Sidebar = () => {
   const [profile, setProfile] = useState("");
   const [history, setHistory] = useState("");
   const [cart, setCart] = useState("");
+  const [info,setInfo]=useState();
+
+  useEffect(() => {
+    
+    async function getData() {
+      await axios
+        .get("/settings/")
+        .then((response) => setInfo(response.data[0]));
+    }
+
+    getData();
+  }, []);
 
   useEffect(() => {
     window.location.pathname === "/"
@@ -38,7 +50,7 @@ export const Sidebar = () => {
     <section className="side-bar p-2 h-screen flex justify-center z-50 max-lg:hidden ">
       <div className="fixed ">
         <Link to="/" onClick={() => setPage("home")}>
-          <img src={Logo} alt="logo" className="w-20 mt-3" />
+          <img  src={info &&  info.logo} alt="logo" className="w-20 mt-3" />
         </Link>
         <div className="mt-3 flex flex-col justify-center items-center ">
           <div className="h-20  mt-5 text-center">
@@ -69,7 +81,7 @@ export const Sidebar = () => {
 
           <div className="h-20  mt-3 text-center ">
             <Link  
-              to="/category/:0"
+              to="/category/:1"
               onMouseEnter={() => {
                 if (page !== "category") {
                   setCategory("دسته‌بندی");

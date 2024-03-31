@@ -44,7 +44,7 @@ const ContextWrapper = (props) => {
   // const [addCart, setAddCart] = useReducer(savedCartReduser, [], initCart);
   const [loggedIn, setLoggedIn] = useState(localStorage.access?true:false);
   const [page, setPage] = useState("home");
-  const [categoryPage, setCategoryPage] = useState(1);
+  const [categoryPage, setCategoryPage] = useState(null);
   const [cart,  dispatchCalCart] = useReducer(savedCartReduser, [], initCart);
 
   useEffect(() => {

@@ -9,9 +9,9 @@ export const Home = () => {
   return (
           <main className="bg-gray-main ">
             <Hero />
-            {/* <News /> */}
+            <News />
             <Grouping />
-            {/* <Discount /> */}
+            <Discount />
             <Footer/>
           </main>
   );

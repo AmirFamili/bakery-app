@@ -1,13 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import Logo from "../../images/logo.png";
 import EmailGrayIcon from "../../images/icons/email-gray.png";
 import ArrowRightIcon from "../../images/icons/arrow-right.png";
 import { Link } from "react-router-dom";
 import axios from "../../api/axios";
 
 export const ChangePassword = () => {
+  const [logo,setlogo]=useState();
 
+  useEffect(() => {
+    
+    async function getData() {
+      await axios
+        .get("/settings/")
+        .then((response) => setlogo(response.data[0].logo));
+    }
+
+    getData();
+  }, []);
   return (
     <section className="bg-gray-main h-screen w-full flex justify-center items-center">
       <div className=" bg-white border w-2/5 rounded-2xl p-5 relative max-md:w-4/5 pb-20">
@@ -19,7 +29,7 @@ export const ChangePassword = () => {
           />
         </Link>
         <div className="flex justify-center items-center p-2">
-          <img src={Logo} alt="بلو کیک" className="w-24 max-md:w-20" />
+          <img src={logo} alt="بلو کیک" className="w-24 max-md:w-20" />
         </div>
         <h1 className="iranyekan-medium text-center mt-10">بازیابی رمز عبور</h1>
         <h2 className="iranyekan-light text-center mt-3">

@@ -15,8 +15,8 @@ const [products,setProducts]=useState();
 
   useEffect(() => {
   async function getData(){
-   await  axios.get("/bakery/category/")
-    .then(response=>setProducts(response.data[params.id.split(':')[1]].cakemodel_set))
+   await  axios.get(`/bakery/category/${params.id.split(':')[1]}`)
+    .then(response=>setProducts(response.data))
   }
      
   getData();

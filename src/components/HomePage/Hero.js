@@ -1,9 +1,14 @@
-import React from "react";
+import React,{useEffect,useState} from "react";
 import CakeImg from "../../images/assortment-pieces-cake.png";
 import MuffinImg from "../../images/muffin.png";
 import ArrowLeftICon from "../../images/icons/arrow-circle-left.png";
 import { Link } from "react-router-dom";
+import axios from "../../api/axios";
+
 export const Hero = () => {
+
+
+
   return (
     <section className="bg-hero mt-28 flex p-5 pb-20 relative max-lg:mt-0">
       <div className="px-1 ">

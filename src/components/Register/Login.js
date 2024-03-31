@@ -1,6 +1,5 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import Logo from "../../images/logo.png";
 import EmailGrayIcon from "../../images/icons/email-gray.png";
 import KeyIcon from "../../images/icons/key.png";
 import EyeIcon from "../../images/icons/eye.png";
@@ -13,9 +12,20 @@ import { GlobalContext } from "../../context/ContextWrapper";
 export const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-
   const { setLoggedIn } = useContext(GlobalContext);
+  const [logo,setlogo]=useState();
 
+  useEffect(() => {
+    
+    async function getData() {
+      await axios
+        .get("/settings/")
+        .then((response) => setlogo(response.data[0].logo));
+    }
+
+    getData();
+  }, []);
+  
   const notify = () =>
     toast.error("ایمیل یا رمز عبور نامعتبر می باشد", {
       position: "top-center",
@@ -33,7 +43,7 @@ export const Login = () => {
     <section className="bg-gray-main h-screen w-full flex justify-center items-center">
       <div className=" bg-white border w-2/5  rounded-2xl p-5 relative max-md:w-4/5 pb-20">
         <div className="flex justify-center items-center p-2">
-          <img src={Logo} alt="بلو کیک" className="w-24 max-md:w-20 " />
+          <img src={logo} alt="بلو کیک" className="w-24 max-md:w-20 " />
         </div>
         <h1 className="iranyekan-medium text-center mt-10">ورود</h1>
         <h2 className="iranyekan-light text-center mt-3">

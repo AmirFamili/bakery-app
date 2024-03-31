@@ -1,6 +1,4 @@
-
 import React, { useState, useContext } from "react";
-import CupCake from "../../images/cup-cake.png";
 import AddIcon from "../../images/icons/add.png";
 import MinusIcon from "../../images/icons/minus.png";
 import { GlobalContext } from "../../context/ContextWrapper";
@@ -42,24 +40,31 @@ export const Product = ({ product }) => {
       </h4>
 
       <div className="flex justify-between items-center">
-        <div>
-          {product.pricemodel_set[0].price_with_discount && (
-            <s className="">
+       
+          {product.pricemodel_set[0].price_with_discount?(
+            <div> <s className="">
               <h5 className="my-1 iranyekan-low-bold ">
-              {convertNumberToFarsi(product.pricemodel_set[0].price_with_discount)}
+              {convertNumberToFarsi(product.pricemodel_set[0].price_per_unit)}
+            
                  <span className="text-gray-400 group-hover:text-white "> تومان</span>
               </h5>
             </s>
-          )}
-          <h5 className="my-2 iranyekan-low-bold">
-            {convertNumberToFarsi(product.pricemodel_set[0].price_per_unit)}
+            <h5 className="my-2 iranyekan-low-bold">
+          {convertNumberToFarsi(product.pricemodel_set[0].price_with_discount)}
             <span className="text-gray-400  group-hover:text-white">
-              {" "}
               تومان
             </span>
           </h5>
         </div>
-
+         ):
+          <h5 className="my-2 iranyekan-low-bold">
+          {convertNumberToFarsi(product.pricemodel_set[0].price_per_unit)}
+            <span className="text-gray-400  group-hover:text-white">
+             
+              تومان
+            </span>
+          </h5>
+ }
         <div className="flex">
           <button
             onClick={handlerDecrease}

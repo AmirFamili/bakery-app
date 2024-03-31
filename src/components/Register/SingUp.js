@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import Logo from "../../images/logo.png";
 import EmailGrayIcon from "../../images/icons/email-gray.png";
 import KeyIcon from "../../images/icons/key.png";
 import EyeIcon from "../../images/icons/eye.png";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -12,7 +11,18 @@ import "react-toastify/dist/ReactToastify.css";
 export const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showRePassword, setShowRePassword] = useState(false);
-  const navigate=useNavigate();
+  const navigate = useNavigate();
+  const [logo, setlogo] = useState();
+
+  useEffect(() => {
+    async function getData() {
+      await axios
+        .get("/settings/")
+        .then((response) => setlogo(response.data[0].logo));
+    }
+
+    getData();
+  }, []);
 
   const notify = () =>
     toast.error("شما قبلا با این ایمیل ثبت نام کردید.", {
@@ -30,7 +40,7 @@ export const SignUp = () => {
     <section className="bg-gray-main h-screen w-full flex justify-center items-center">
       <div className=" bg-white border w-2/5  rounded-2xl p-5 relative max-lg:w-4/5 pb-20">
         <div className="flex justify-center items-center p-2">
-          <img src={Logo} alt="بلو کیک" className="w-24 max-md:w-20" />
+          <img src={logo} alt="بلو کیک" className="w-24 max-md:w-20" />
         </div>
         <h1 className="iranyekan-medium text-center mt-10">ثبت نام</h1>
         <h2 className="iranyekan-light text-center mt-3">
@@ -51,14 +61,12 @@ export const SignUp = () => {
               })
               .then((response) => {
                 if (response.data.status === 201) {
-                  navigate('/login');
-                
-                }else{
+                  navigate("/login");
+                } else {
                   notify();
                 }
               })
               .catch((err) => console.log(err));
-
           }}
           validate={(values) => {
             const errors = {};
@@ -70,7 +78,7 @@ export const SignUp = () => {
                 /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
               )
             ) {
-              errors.email =  "لطفا ایمیل معتبر وارد کنید.";
+              errors.email = "لطفا ایمیل معتبر وارد کنید.";
             }
 
             if (values.password === "") {
@@ -196,7 +204,7 @@ export const SignUp = () => {
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
-        bodyStyle={{fontFamily: "iranyekan",fontSize:'12px'} }
+        bodyStyle={{ fontFamily: "iranyekan", fontSize: "12px" }}
         rtl={true}
         pauseOnFocusLoss
         draggable

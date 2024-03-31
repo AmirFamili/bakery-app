@@ -1,9 +1,21 @@
-import React from "react";
+import React,{ useEffect,useState} from "react";
 import DiscountIcon from "../../images/icons/discount.png";
 import ArrowCircleLeftPrimary from "../../images/icons/arrow-circle-left-primary.png";
-import { DiscountProduct } from "./DiscountProduct";
+import axios from "../../api/axios";
+import { Product } from "../Product/Product";
 
 export const Discount = () => {
+  const [products,setProducts]=useState();
+
+  useEffect(() => {
+    async function getData(){
+     await  axios.get('/bakery/recent_promotion/')
+      .then(response=>setProducts(response.data))
+    }
+       
+    getData();
+     
+    }, []);
   return (
     <section className="p-6  pb-24">
       <div className="flex justify-between items-center">
@@ -22,11 +34,10 @@ export const Discount = () => {
       </div>
 
       <div className=" grid grid-flow-col justify-start overflow-x-auto overscroll-x-auto py-6 mt-10 ">
+      {products && products.map(product =>(
+       <Product key={product.id} product={product}/>
+      ))}
        
-        <DiscountProduct />
-        <DiscountProduct />
-        <DiscountProduct />
-        <DiscountProduct />
       </div>
     </section>
   );
