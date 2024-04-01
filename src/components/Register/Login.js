@@ -13,10 +13,9 @@ export const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const { setLoggedIn } = useContext(GlobalContext);
-  const [logo,setlogo]=useState();
+  const [logo, setlogo] = useState();
 
   useEffect(() => {
-    
     async function getData() {
       await axios
         .get("/settings/")
@@ -25,7 +24,7 @@ export const Login = () => {
 
     getData();
   }, []);
-  
+
   const notify = () =>
     toast.error("ایمیل یا رمز عبور نامعتبر می باشد", {
       position: "top-center",
@@ -37,7 +36,6 @@ export const Login = () => {
       progress: undefined,
       theme: "light",
     });
-   
 
   return (
     <section className="bg-gray-main h-screen w-full flex justify-center items-center">
@@ -101,80 +99,88 @@ export const Login = () => {
             return errors;
           }}
         >
-          <Form
-            className=" mx-auto my-7 w-3/5  max-sm:text-sm max-md:w-4/5"
-            // action="index.html"
-            // enctype="multipart/form-data"
-          >
-            <div className="pb-3">
-              <div className="flex relative">
-                <img
-                  src={EmailGrayIcon}
-                  alt="email"
-                  className="absolute w-4 top-4 mr-2"
-                />
-                <Field
-                  type="text"
-                  name="email"
-                  placeholder="ایمیل"
-                  className=" border w-full rounded-md h-10 mt-1  py-2 px-8 outline-none iranyekan-very-light "
-                />
+          {({ errors, touched }) => (
+            <Form
+              className=" mx-auto my-7 w-3/5  max-sm:text-sm max-md:w-4/5"
+              // action="index.html"
+              // enctype="multipart/form-data"
+            >
+              <div className="pb-3">
+                <div className="flex relative">
+                  <img
+                    src={EmailGrayIcon}
+                    alt="email"
+                    className="absolute w-4 top-4 mr-2"
+                  />
+                  <Field
+                    type="text"
+                    name="email"
+                    placeholder="ایمیل"
+                    className={` border w-full rounded-md h-10 mt-1  py-2 px-8 outline-none iranyekan-very-light ${
+                      errors.email && touched.email ? "border-red-500" : ""
+                    }`}
+                  />
+                </div>
+                <ErrorMessage name="email">
+                  {(errorMsg) => (
+                    <div className="error text-red-600 iranyekan-very-light-white">
+                      {errorMsg}
+                    </div>
+                  )}
+                </ErrorMessage>
               </div>
-              <ErrorMessage name="email">
-                {(errorMsg) => (
-                  <div className="error text-red-600 iranyekan-very-light-white">
-                    {errorMsg}
-                  </div>
-                )}
-              </ErrorMessage>
-            </div>
 
-            <div className="pb-3">
-              <div className="flex relative">
-                <img
-                  src={KeyIcon}
-                  alt="key"
-                  className="absolute w-4 top-4 mr-2"
-                />
-                <Field
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  placeholder="رمز عبور"
-                  className=" border w-full rounded-md h-10 mt-1  py-2 px-8 outline-none iranyekan-very-light "
-                />
-                <img
-                  onClick={() => setShowPassword(!showPassword)}
-                  src={EyeIcon}
-                  alt="key"
-                  className="absolute w-4 left-4 top-4 cursor-pointer "
-                />
+              <div className="pb-3">
+                <div className="flex relative">
+                  <img
+                    src={KeyIcon}
+                    alt="key"
+                    className="absolute w-4 top-4 mr-2"
+                  />
+                  <Field
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    placeholder="رمز عبور"
+                    className={` border w-full rounded-md h-10 mt-1  py-2 px-8 outline-none iranyekan-very-light ${
+                      errors.password && touched.password
+                        ? "border-red-500"
+                        : ""
+                    }`}
+                  />
+                  <img
+                    onClick={() => setShowPassword(!showPassword)}
+                    src={EyeIcon}
+                    alt="key"
+                    className="absolute w-4 left-4 top-4 cursor-pointer "
+                  />
+                </div>
+                <ErrorMessage name="password">
+                  {(errorMsg) => (
+                    <div className="error text-red-600 iranyekan-very-light-white">
+                      {errorMsg}
+                    </div>
+                  )}
+                </ErrorMessage>
               </div>
-              <ErrorMessage name="password">
-                {(errorMsg) => (
-                  <div className="error text-red-600 iranyekan-very-light-white">
-                    {errorMsg}
-                  </div>
-                )}
-              </ErrorMessage>
-            </div>
-            <h4 className=" text-center">
-              <Link
-                to="/change-password"
-                className="iranyekan-very-light-white  text-gray-700 "
-              >
-                رمز عبور خود را فراموش کرده اید؟
-              </Link>
-            </h4>
+              <h4 className=" text-center">
+                <Link
+                  to="/change-password"
+                  className="iranyekan-very-light-white  text-gray-700 "
+                >
+                  رمز عبور خود را فراموش کرده اید؟
+                </Link>
+              </h4>
 
-            <div className="flex justify-center items-center mt-10">
-              <button
-                className=" vazir-very-light  shadow-lg  bg-primary text-white py-3 px-14 rounded-2xl max-md:px-10 max-md:py-3 "
-                type="submit"
-              >
-                ورود
-              </button>
-            </div>
-          </Form>
+              <div className="flex justify-center items-center mt-10">
+                <button
+                  className=" vazir-very-light  shadow-lg  bg-primary text-white py-3 px-14 rounded-2xl max-md:px-10 max-md:py-3 "
+                  type="submit"
+                >
+                  ورود
+                </button>
+              </div>
+            </Form>
+          )}
         </Formik>
         <h3 className="iranyekan-little-light text-center mt-10">
           حساب کاربری ندارید؟{" "}
@@ -190,7 +196,7 @@ export const Login = () => {
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
-        bodyStyle={{fontFamily: "iranyekan",fontSize:'12px'} }
+        bodyStyle={{ fontFamily: "iranyekan", fontSize: "12px" }}
         rtl={true}
         pauseOnFocusLoss
         draggable

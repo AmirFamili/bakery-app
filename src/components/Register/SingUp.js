@@ -96,100 +96,112 @@ export const SignUp = () => {
             return errors;
           }}
         >
-          <Form
-            className=" mx-auto my-7 w-3/5  max-sm:text-sm max-md:w-4/5 "
-            // action="index.html"
-            // enctype="multipart/form-data"
-          >
-            <div className="pb-3">
-              <div className="flex relative">
-                <img
-                  src={EmailGrayIcon}
-                  alt="email"
-                  className="absolute w-4 top-4 mr-2"
-                />
-                <Field
-                  type="text"
-                  name="email"
-                  placeholder="ایمیل"
-                  className=" border w-full rounded-md h-10 mt-1  py-2 px-8 outline-none iranyekan-very-light "
-                />
+          {({ errors, touched }) => (
+            <Form
+              className=" mx-auto my-7 w-3/5  max-sm:text-sm max-md:w-4/5 "
+              // action="index.html"
+              // enctype="multipart/form-data"
+            >
+              <div className="pb-3">
+                <div className="flex relative">
+                  <img
+                    src={EmailGrayIcon}
+                    alt="email"
+                    className="absolute w-4 top-4 mr-2"
+                  />
+                  <Field
+                    type="text"
+                    name="email"
+                    placeholder="ایمیل"
+                    className={` border w-full rounded-md h-10 mt-1  py-2 px-8 outline-none iranyekan-very-light ${
+                      errors.email && touched.email ? "border-red-500" : ""
+                    }`}
+                  />
+                </div>
+                <ErrorMessage name="email">
+                  {(errorMsg) => (
+                    <div className="error text-red-600 iranyekan-very-light-white">
+                      {errorMsg}
+                    </div>
+                  )}
+                </ErrorMessage>
               </div>
-              <ErrorMessage name="email">
-                {(errorMsg) => (
-                  <div className="error text-red-600 iranyekan-very-light-white">
-                    {errorMsg}
-                  </div>
-                )}
-              </ErrorMessage>
-            </div>
 
-            <div className="pb-3">
-              <div className="flex relative">
-                <img
-                  src={KeyIcon}
-                  alt="key"
-                  className="absolute w-4 top-4 mr-2"
-                />
-                <Field
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  placeholder="رمز عبور"
-                  className=" border w-full rounded-md h-10 mt-1  py-2 px-8 outline-none iranyekan-very-light "
-                />
-                <img
-                  onClick={() => setShowPassword(!showPassword)}
-                  src={EyeIcon}
-                  alt="key"
-                  className="absolute w-4 left-4 top-4 cursor-pointer "
-                />
+              <div className="pb-3">
+                <div className="flex relative">
+                  <img
+                    src={KeyIcon}
+                    alt="key"
+                    className="absolute w-4 top-4 mr-2"
+                  />
+                  <Field
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    placeholder="رمز عبور"
+                    className={` border w-full rounded-md h-10 mt-1  py-2 px-8 outline-none iranyekan-very-light ${
+                      errors.password && touched.password
+                        ? "border-red-500"
+                        : ""
+                    }`}
+                  />
+                  <img
+                    onClick={() => setShowPassword(!showPassword)}
+                    src={EyeIcon}
+                    alt="key"
+                    className="absolute w-4 left-4 top-4 cursor-pointer "
+                  />
+                </div>
+                <ErrorMessage name="password">
+                  {(errorMsg) => (
+                    <div className="error text-red-600 iranyekan-very-light-white">
+                      {errorMsg}
+                    </div>
+                  )}
+                </ErrorMessage>
               </div>
-              <ErrorMessage name="password">
-                {(errorMsg) => (
-                  <div className="error text-red-600 iranyekan-very-light-white">
-                    {errorMsg}
-                  </div>
-                )}
-              </ErrorMessage>
-            </div>
 
-            <div className="pb-3">
-              <div className="flex relative">
-                <img
-                  src={KeyIcon}
-                  alt="key"
-                  className="absolute w-4 top-4 mr-2"
-                />
-                <Field
-                  type={showRePassword ? "text" : "password"}
-                  name="rePassword"
-                  placeholder="رمز عبور"
-                  className=" border w-full rounded-md h-10 mt-1  py-2 px-8 outline-none iranyekan-very-light "
-                />
-                <img
-                  onClick={() => setShowRePassword(!showRePassword)}
-                  src={EyeIcon}
-                  alt="key"
-                  className="absolute w-4 left-4 top-4 cursor-pointer "
-                />
+              <div className="pb-3">
+                <div className="flex relative">
+                  <img
+                    src={KeyIcon}
+                    alt="key"
+                    className="absolute w-4 top-4 mr-2"
+                  />
+                  <Field
+                    type={showRePassword ? "text" : "password"}
+                    name="rePassword"
+                    placeholder="رمز عبور"
+                    className={` border w-full rounded-md h-10 mt-1  py-2 px-8 outline-none iranyekan-very-light ${
+                      errors.rePassword && touched.rePassword
+                        ? "border-red-500"
+                        : ""
+                    }`}
+                  />
+                  <img
+                    onClick={() => setShowRePassword(!showRePassword)}
+                    src={EyeIcon}
+                    alt="key"
+                    className="absolute w-4 left-4 top-4 cursor-pointer "
+                  />
+                </div>
+                <ErrorMessage name="rePassword">
+                  {(errorMsg) => (
+                    <div className="error text-red-600 iranyekan-very-light-white ">
+                      {errorMsg}
+                    </div>
+                  )}
+                </ErrorMessage>
               </div>
-              <ErrorMessage name="rePassword">
-                {(errorMsg) => (
-                  <div className="error text-red-600 iranyekan-very-light-white ">
-                    {errorMsg}
-                  </div>
-                )}
-              </ErrorMessage>
-            </div>
-            <div className="flex justify-center items-center mt-5 ">
-              <button
-                className=" vazir-very-light  shadow-lg  bg-primary text-white py-3 px-14 rounded-2xl max-md:px-10 max-md:py-3 "
-                type="submit"
-              >
-                ثبت نام
-              </button>
-            </div>
-          </Form>
+              <div className="flex justify-center items-center mt-5 ">
+                <button
+                  className=" vazir-very-light  shadow-lg  bg-primary text-white py-3 px-14 rounded-2xl max-md:px-10 max-md:py-3 "
+                  type="submit"
+                >
+                  ثبت نام
+                </button>
+              </div>
+            </Form>
+          )}
         </Formik>
         <h3 className="iranyekan-little-light text-center mt-10">
           حساب کاربری دارید؟{" "}

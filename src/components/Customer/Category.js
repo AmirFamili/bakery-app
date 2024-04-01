@@ -18,7 +18,7 @@ export const Category = () => {
     getData();
     if(params.id){
        setCategoryPage(params.id.split(":")[1]);
-    }else{
+     }  else{
       navigate("/");
     }
    
