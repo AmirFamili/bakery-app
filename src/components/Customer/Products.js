@@ -16,7 +16,8 @@ const [products,setProducts]=useState();
   useEffect(() => {
   async function getData(){
    await  axios.get(`/bakery/category/${params.id.split(':')[1]}`)
-    .then(response=>setProducts(response.data))
+    .then(response=>setProducts(response.data)) 
+    .catch(err=>console.log(err))
   }
      
   getData();

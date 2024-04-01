@@ -13,7 +13,8 @@ export const Category = () => {
     async function getData() {
       await axios
         .get("/bakery/category/")
-        .then((response) => setGroupsData(response.data));
+        .then((response) => setGroupsData(response.data)) 
+        .catch(err=>console.log(err));
     }
     getData();
     if(params.id){
@@ -25,7 +26,7 @@ export const Category = () => {
   }, []);
 
   return (
-    <div className="py-6 px-10 pt-28 max-md:px-5 max-lg:mt-0 h-screen max-lg:pt-5">
+    <section className="py-6 px-10 pt-28 max-md:px-5 max-lg:mt-0 h-screen max-lg:pt-5">
       <h1 className="py-5 iranyekan-very-bold ">دسته بندی محصولات</h1>
       {categoryPage && (
         <div className="flex border-b pt-3 mb-10 ">
@@ -57,6 +58,6 @@ export const Category = () => {
       <div className="mt-5">
         <Outlet />
       </div>
-    </div>
+    </section>
   );
 };

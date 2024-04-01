@@ -14,7 +14,8 @@ export const Footer = () => {
     async function getData() {
       await axios
         .get("/settings/")
-        .then((response) => setInfo(response.data[0]));
+        .then((response) => setInfo(response.data[0]))
+        .catch(err=>console.log(err));
     }
 
     getData();

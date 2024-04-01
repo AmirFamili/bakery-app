@@ -19,7 +19,8 @@ export const Login = () => {
     async function getData() {
       await axios
         .get("/settings/")
-        .then((response) => setlogo(response.data[0].logo));
+        .then((response) => setlogo(response.data[0].logo))
+        .catch(err=>console.log(err));
     }
 
     getData();

@@ -10,7 +10,8 @@ export const Discount = () => {
   useEffect(() => {
     async function getData(){
      await  axios.get('/bakery/recent_promotion/')
-      .then(response=>setProducts(response.data))
+      .then(response=>setProducts(response.data)) 
+      .catch(err=>console.log(err));
     }
        
     getData();

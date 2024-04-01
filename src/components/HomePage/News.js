@@ -11,7 +11,8 @@ export const News = () => {
     async function getData() {
       await axios
         .get("/bakery/recent_cake/")
-        .then((response) => setProducts(response.data));
+        .then((response) => setProducts(response.data))
+        .catch(err=>console.log(err));
     }
 
     getData();

@@ -33,7 +33,8 @@ export const Sidebar = () => {
         .then((response) => setInfo(response.data[0]));
         await axios
         .get("/bakery/category/")
-        .then((response) => setCategoryPage(response.data[0].id));
+        .then((response) => setCategoryPage(response.data[0].id))
+        .catch(err=>console.log(err));
     }
 
     getData();

@@ -6,7 +6,17 @@ import { Link } from "react-router-dom";
 import axios from "../../api/axios";
 
 export const Hero = () => {
+  const [images, setImages] = useState([]);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
+  useEffect(()=>{
+   async function getData(){
+    await axios.get('/bakery/promotion/')
+    .then(response=> setImages(response.data))
+    .catch(err=>console.log(err))
+   }
+   getData();
+  },[])
 
 
   return (

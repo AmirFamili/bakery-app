@@ -9,7 +9,8 @@ export const Grouping = () => {
     async function getData() {
       await axios
         .get("/bakery/category/")
-        .then((response) => setGroupsData(response.data));
+        .then((response) => setGroupsData(response.data))
+        .catch(err=>console.log(err));
     }
 
     getData();
