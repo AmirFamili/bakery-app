@@ -290,9 +290,14 @@
 }
 
 /* * Hero */
-
+.hero{
+  height: 32rem;
+}
 .bg-hero {
   background-image: radial-gradient(#dde8ef 44%, #fafafa, #fafafa);
+}
+.dark{
+  background: linear-gradient(to top,#000000,#3a3a3b,#4545469e,#ffffff00);
 }
 /* * End Hero */
 
