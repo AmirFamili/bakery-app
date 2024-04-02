@@ -5,28 +5,16 @@ import LocationIcon from "../../images/icons/location-tick.png";
 import CallIcon from "../../images/icons/call-simple.png";
 import EmailIcon from "../../images/icons/email-simple.png";
 import { GlobalContext } from "../../context/ContextWrapper";
-import axios from "../../api/axios";
+
 
 export const Footer = () => {
-  const { loggedIn, convertNumberToFarsi } = useContext(GlobalContext);
-  const [info,setInfo]=useState();
-
-  useEffect(() => {
-    async function getData() {
-      await axios
-        .get("/settings/")
-        .then((response) => setInfo(response.data[0]))
-        .catch(err=>console.log(err));
-    }
-
-    getData();
-  }, []);
-
+  const { loggedIn, convertNumberToFarsi,logo,info } = useContext(GlobalContext);
+  
 if(!loggedIn){
  return (
     <footer className="bg-primary w-full  rounded-t-2xl py-5  ">
       <img
-        src= {info &&  info.logo}
+        src= {logo}
         alt="logo"
         className="w-20 mt-3  border-2 rounded-full mx-auto my-5"
       />

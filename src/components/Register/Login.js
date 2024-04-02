@@ -12,20 +12,8 @@ import { GlobalContext } from "../../context/ContextWrapper";
 export const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-  const { setLoggedIn } = useContext(GlobalContext);
-  const [logo, setlogo] = useState();
-
-  useEffect(() => {
-    async function getData() {
-      await axios
-        .get("/settings/")
-        .then((response) => setlogo(response.data[0].logo))
-        .catch(err=>console.log(err));
-    }
-
-    getData();
-  }, []);
-
+  const { setLoggedIn,logo } = useContext(GlobalContext);
+  
   const notify = () =>
     toast.error("ایمیل یا رمز عبور نامعتبر می باشد", {
       position: "top-center",

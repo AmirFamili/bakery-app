@@ -1,24 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import EmailGrayIcon from "../../images/icons/email-gray.png";
 import ArrowRightIcon from "../../images/icons/arrow-right.png";
 import { Link } from "react-router-dom";
 import axios from "../../api/axios";
+import { GlobalContext } from "../../context/ContextWrapper";
 
 export const ChangePassword = () => {
-  const [logo,setlogo]=useState();
+  const { logo } = useContext(GlobalContext);
 
-  useEffect(() => {
-    
-    async function getData() {
-      await axios
-        .get("/settings/")
-        .then((response) => setlogo(response.data[0].logo)) 
-        .catch(err=>console.log(err));
-    }
-
-    getData();
-  }, []);
   return (
     <section className="bg-gray-main h-screen w-full flex justify-center items-center">
       <div className=" bg-white border w-2/5 rounded-2xl p-5 relative max-md:w-4/5 pb-20">

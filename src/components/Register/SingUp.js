@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import EmailGrayIcon from "../../images/icons/email-gray.png";
 import KeyIcon from "../../images/icons/key.png";
@@ -7,22 +7,13 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { GlobalContext } from "../../context/ContextWrapper";
 
 export const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showRePassword, setShowRePassword] = useState(false);
   const navigate = useNavigate();
-  const [logo, setlogo] = useState();
-
-  useEffect(() => {
-    async function getData() {
-      await axios
-        .get("/settings/")
-        .then((response) => setlogo(response.data[0].logo));
-    }
-
-    getData();
-  }, []);
+  const { logo } = useContext(GlobalContext);
 
   const notify = () =>
     toast.error("شما قبلا با این ایمیل ثبت نام کردید.", {

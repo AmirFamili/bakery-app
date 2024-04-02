@@ -1,4 +1,5 @@
 import React, { useState, useReducer, useEffect } from "react";
+import axios from "../api/axios";
 
 export const GlobalContext = React.createContext();
 const farsiDigits = {
@@ -40,9 +41,6 @@ const initCart = () => {
   return parsedCart;
 };
 
-
-
-
 const ContextWrapper = (props) => {
   // const [addCart, setAddCart] = useReducer(savedCartReduser, [], initCart);
   const [loggedIn, setLoggedIn] = useState(localStorage.access ? true : false);
@@ -50,11 +48,19 @@ const ContextWrapper = (props) => {
   const [showProductModel, setShowProductModel] = useState(false);
   const [categoryPage, setCategoryPage] = useState(null);
   const [cart, dispatchCalCart] = useReducer(savedCartReduser, [], initCart);
+  const [logo, setlogo] = useState();
+  const [info, setInfo] = useState();
 
+  useEffect(() => {
+    async function getData() {
+      await axios.get("/settings/").then((response) => {
+        setlogo(response.data[0].logo);
+        setInfo(response.data[0]);
+      });
+    }
 
-  
-
-
+    getData();
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
@@ -63,21 +69,19 @@ const ContextWrapper = (props) => {
   const togglePopup = () => {
     setShowProductModel(!showProductModel);
   };
-  
+
   useEffect(() => {
-    
     const handleScroll = () => {
       if (showProductModel) {
         setShowProductModel(false);
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, [showProductModel]);
-
 
   return (
     <GlobalContext.Provider
@@ -92,8 +96,10 @@ const ContextWrapper = (props) => {
         categoryPage,
         setCategoryPage,
         showProductModel,
-        setShowProductModel,togglePopup ,
-       
+        setShowProductModel,
+        togglePopup,
+        logo,
+        info,
       }}
     >
       {props.children}

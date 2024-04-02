@@ -6,29 +6,13 @@ import ProfileIcon from "../../images/icons/profile.png";
 import ShoppingCartWhiteIcon from "../../images/icons/shopping-cart-white.png";
 import { Link, useNavigate } from "react-router-dom";
 import { GlobalContext } from "../../context/ContextWrapper";
-import axios from "../../api/axios";
 
 export const Header = () => {
-  const {setPage, cart, convertNumberToFarsi, loggedIn, setLoggedIn } =
+  const {setPage, cart, convertNumberToFarsi, loggedIn, setLoggedIn,info } =
     useContext(GlobalContext);
   const navigate = useNavigate();
   const [showLogOut, setShowLogOut] = useState(false);
-  const [info,setInfo]=useState();
-
-  useEffect(() => {
-    
-    async function getData() {
-      await axios
-        .get("/settings/")
-        .then((response) => setInfo(response.data[0]))
-        .catch(err=>console.log(err));
-    }
-
-    getData();
-  }, []);
-
-
-
+ 
   const handlerLogOut = () => {
     localStorage.removeItem("access");
     localStorage.removeItem("refresh");

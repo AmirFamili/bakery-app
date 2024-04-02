@@ -22,15 +22,12 @@ export const Sidebar = () => {
   const [profile, setProfile] = useState("");
   const [history, setHistory] = useState("");
   const [cart, setCart] = useState("");
-  const [info, setInfo] = useState();
 
  
 
   useEffect(() => {
     async function getData() {
-      await axios
-        .get("/settings/")
-        .then((response) => setInfo(response.data[0]));
+     
         await axios
         .get("/bakery/category/")
         .then((response) => setCategoryPage(response.data[0].id))
@@ -46,13 +43,13 @@ export const Sidebar = () => {
       : setPage("");
   }, []);
 
-  const { page, setPage, loggedIn,setCategoryPage,categoryPage  } = useContext(GlobalContext);
+  const { page, setPage, loggedIn,setCategoryPage,categoryPage,logo  } = useContext(GlobalContext);
 
   return (
     <section className="side-bar p-2 h-screen flex justify-center z-50 max-lg:hidden ">
       <div className="fixed ">
         <Link to="/" onClick={() => setPage("home")}>
-          <img src={info && info.logo} alt="logo" className="w-20 mt-3" />
+          <img src={logo} alt="logo" className="w-20 mt-3" />
         </Link>
         <div className="mt-3 flex flex-col justify-center items-center ">
           <div className="h-20  mt-5 text-center">
