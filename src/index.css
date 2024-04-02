@@ -290,9 +290,7 @@
 }
 
 /* * Hero */
-.hero{
-  height: 32rem;
-}
+
 .bg-hero {
   background-image: radial-gradient(#dde8ef 44%, #fafafa, #fafafa);
 }

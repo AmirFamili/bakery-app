@@ -11,7 +11,7 @@ const farsiDigits = {
   6: "۶",
   7: "۷",
   8: "۸",
-  9: "۹", 
+  9: "۹",
 };
 
 const convertNumberToFarsi = (num) => {
@@ -25,12 +25,12 @@ const savedCartReduser = (state, { type, payload }) => {
   switch (type) {
     case "add":
       return [...state, payload];
-      case "update":
-        return state.map((evt) => (evt.id === payload.id ? payload : evt));
-      case "delete":
-        return state.filter((evt) => evt.id !== payload.id);
-      default:
-        throw new Error();
+    case "update":
+      return state.map((evt) => (evt.id === payload.id ? payload : evt));
+    case "delete":
+      return state.filter((evt) => evt.id !== payload.id);
+    default:
+      throw new Error();
   }
 };
 
@@ -40,16 +40,44 @@ const initCart = () => {
   return parsedCart;
 };
 
+
+
+
 const ContextWrapper = (props) => {
   // const [addCart, setAddCart] = useReducer(savedCartReduser, [], initCart);
-  const [loggedIn, setLoggedIn] = useState(localStorage.access?true:false);
+  const [loggedIn, setLoggedIn] = useState(localStorage.access ? true : false);
   const [page, setPage] = useState("home");
+  const [showProductModel, setShowProductModel] = useState(false);
   const [categoryPage, setCategoryPage] = useState(null);
-  const [cart,  dispatchCalCart] = useReducer(savedCartReduser, [], initCart);
+  const [cart, dispatchCalCart] = useReducer(savedCartReduser, [], initCart);
+
+
+  
+
+
 
   useEffect(() => {
-    localStorage.setItem("cart",JSON.stringify(cart));
+    localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
+
+  const togglePopup = () => {
+    setShowProductModel(!showProductModel);
+  };
+  
+  useEffect(() => {
+    
+    const handleScroll = () => {
+      if (showProductModel) {
+        setShowProductModel(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [showProductModel]);
+
 
   return (
     <GlobalContext.Provider
@@ -60,7 +88,12 @@ const ContextWrapper = (props) => {
         setPage,
         convertNumberToFarsi,
         loggedIn,
-        setLoggedIn,categoryPage, setCategoryPage
+        setLoggedIn,
+        categoryPage,
+        setCategoryPage,
+        showProductModel,
+        setShowProductModel,togglePopup ,
+       
       }}
     >
       {props.children}
