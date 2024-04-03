@@ -44,12 +44,12 @@ const initCart = () => {
 const ContextWrapper = (props) => {
   // const [addCart, setAddCart] = useReducer(savedCartReduser, [], initCart);
   const [loggedIn, setLoggedIn] = useState(localStorage.access ? true : false);
-  const [page, setPage] = useState("home");
   const [showProductModel, setShowProductModel] = useState(false);
   const [categoryPage, setCategoryPage] = useState(null);
   const [cart, dispatchCalCart] = useReducer(savedCartReduser, [], initCart);
   const [logo, setlogo] = useState();
   const [info, setInfo] = useState();
+  const [activeMeasure, setActiveMeasure] = useState();
 
   useEffect(() => {
     async function getData() {
@@ -88,8 +88,6 @@ const ContextWrapper = (props) => {
       value={{
         cart,
         dispatchCalCart,
-        page,
-        setPage,
         convertNumberToFarsi,
         loggedIn,
         setLoggedIn,
@@ -100,6 +98,7 @@ const ContextWrapper = (props) => {
         togglePopup,
         logo,
         info,
+        activeMeasure, setActiveMeasure
       }}
     >
       {props.children}

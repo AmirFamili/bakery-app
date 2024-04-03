@@ -11,238 +11,127 @@ import TaskSquareIcon from "../../images/icons/task-square.png";
 import TaskSquareWhiteIcon from "../../images/icons/task-square-white.png";
 import ShoppingCartIcon from "../../images/icons/shopping-cart.png";
 import ShoppingCartWhiteIcon from "../../images/icons/shopping-cart-white.png";
-import { Link } from "react-router-dom";
+import { Link, useMatch, useResolvedPath } from "react-router-dom";
 import { GlobalContext } from "../../context/ContextWrapper";
 import axios from "../../api/axios";
 
 export const Sidebar = () => {
-  const [home, setHome] = useState("");
-  const [category, setCategory] = useState("");
-  const [call, setCall] = useState("");
-  const [profile, setProfile] = useState("");
-  const [history, setHistory] = useState("");
-  const [cart, setCart] = useState("");
-
- 
-
   useEffect(() => {
     async function getData() {
-     
-        await axios
+      await axios
         .get("/bakery/category/")
         .then((response) => setCategoryPage(response.data[0].id))
-        .catch(err=>console.log(err));
+        .catch((err) => console.log(err));
     }
 
     getData();
-
-    window.location.pathname === "/"
-      ? setPage("home")
-      : window.location.pathname.includes("/category")
-      ? setPage("category")
-      : setPage("");
   }, []);
 
-  const { page, setPage, loggedIn,setCategoryPage,categoryPage,logo  } = useContext(GlobalContext);
+  const { loggedIn, setCategoryPage, categoryPage, logo } =
+    useContext(GlobalContext);
 
   return (
     <section className="side-bar p-2 h-screen flex justify-center z-50 max-lg:hidden ">
       <div className="fixed ">
-        <Link to="/" onClick={() => setPage("home")}>
+        <Link to="/">
           <img src={logo} alt="logo" className="w-20 mt-3" />
         </Link>
-        <div className="mt-3 flex flex-col justify-center items-center ">
-          <div className="h-20  mt-5 text-center">
-            <Link
-              to="/"
-              onMouseEnter={() => {
-                if (page !== "home") {
-                  setHome("خانه");
-                }
-              }}
-              onMouseLeave={() => setHome("")}
-              onClick={() => setPage("home")}
-            >
-              <div
-                className={` rounded-full p-3 inline-block shadow-sm  m-auto ${
-                  page === "home" ? "bg-primary  " : "bg-gray-main "
-                }`}
-              >
-                {page === "home" ? (
-                  <img src={HomeWhiteIcon} alt="خانه" className="w-7" />
-                ) : (
-                  <img src={HomeIcon} alt="خانه" className="w-6" />
-                )}
-              </div>
-            </Link>
-            <p className="iranyekan-very-light-white">{home}</p>
-          </div>
+        <nav className="mt-3 flex flex-col justify-center items-center ">
+          <CustomLink
+            to={"/"}
+            icon={HomeIcon}
+            whiteIcon={HomeWhiteIcon}
+            name={"خانه"}
+          >
+            خانه
+          </CustomLink>
 
-          <div className="h-20  mt-3 text-center ">
-           <Link
-              to={`/category/:${categoryPage}`}
-              onMouseEnter={() => {
-                if (page !== "category") {
-                  setCategory("دسته‌بندی");
-                }
-              }}
-              onMouseLeave={() => setCategory("")}
-              onClick={() => setPage("category")}
-            >
-              <div
-                className={` rounded-full p-3 shadow-sm  inline-block m-auto ${
-                  page === "category" ? "bg-primary  " : "bg-gray-main "
-                }`}
-              >
-                {page === "category" ? (
-                  <img src={ElementWhiteIcon} alt="دسته‌بندی" className="w-7" />
-                ) : (
-                  <img src={ElementIcon} alt="دسته‌بندی" className="w-6" />
-                )}
-              </div>
-            </Link>
-            <p className="iranyekan-very-light-white">{category}</p>
-          </div>
+          <CustomLink
+            to={`/category/:${categoryPage}`}
+            icon={ElementIcon}
+            whiteIcon={ElementWhiteIcon}
+            name={"دسته‌بندی"}
+          >
+            دسته‌بندی
+          </CustomLink>
 
-          <div className="h-20  mt-3  text-center  ">
-            <Link
-              to="#"
-              onMouseEnter={() => {
-                if (page !== "call") {
-                  setCall("تماس با ما");
-                }
-              }}
-              onMouseLeave={() => setCall("")}
-              onClick={() => setPage("call")}
-            >
-              <div
-                className={` rounded-full p-3 shadow-sm  inline-block m-auto ${
-                  page === "call" ? "bg-primary  " : "bg-gray-main "
-                }`}
-              >
-                {page === "call" ? (
-                  <img
-                    src={CallWhiteIcon}
-                    alt="تماس با ما"
-                    className="w-7 m-auto"
-                  />
-                ) : (
-                  <img src={CallIcon} alt="تماس با ما" className="w-6 m-auto" />
-                )}
-              </div>
-            </Link>
-            <p className="iranyekan-very-light-white">{call}</p>
-          </div>
+          <CustomLink
+            to={"/call"}
+            icon={CallIcon}
+            whiteIcon={CallWhiteIcon}
+            name={"تماس با ما"}
+          >
+            تماس با ما
+          </CustomLink>
 
           <span className="border-t mb-3  w-12"></span>
 
           {loggedIn && (
-            <div className="h-20 mt-5  text-center  ">
-              <Link
-                to="#"
-                onMouseEnter={() => {
-                  if (page !== "history") {
-                    setHistory("تاریخچه خرید");
-                  }
-                }}
-                onMouseLeave={() => setHistory("")}
-                onClick={() => setPage("history")}
-              >
-                <div
-                  className={` rounded-full p-3.5 inline-block  m-auto ${
-                    page === "history" ? "bg-primary  " : "bg-gray-main "
-                  }`}
-                >
-                  {page === "history" ? (
-                    <img
-                      src={TaskSquareWhiteIcon}
-                      alt="تاریخچه خرید"
-                      className="w-7"
-                    />
-                  ) : (
-                    <img
-                      src={TaskSquareIcon}
-                      alt="تاریخچه خرید"
-                      className="w-6"
-                    />
-                  )}
-                </div>
-              </Link>
-              <p className="iranyekan-very-light-white">{history}</p>
-            </div>
+            <CustomLink
+              to={"/history"}
+              icon={TaskSquareIcon}
+              whiteIcon={TaskSquareWhiteIcon}
+              name={"تاریخچه خرید"}
+            >
+              تاریخچه خرید
+            </CustomLink>
           )}
 
           {loggedIn && (
-            <div className="h-20 mt-3  text-center  ">
-              <Link
-                to="cart"
-                onMouseEnter={() => {
-                  if (page !== "cart") {
-                    setCart("سبد خرید");
-                  }
-                }}
-                onMouseLeave={() => setCart("")}
-                onClick={() => setPage("cart")}
-              >
-                <div
-                  className={` rounded-full p-3.5 inline-block  m-auto ${
-                    page === "cart" ? "bg-primary  " : "bg-gray-main "
-                  }`}
-                >
-                  {page === "cart" ? (
-                    <img
-                      src={ShoppingCartWhiteIcon}
-                      alt="سبد خرید "
-                      className="w-7"
-                    />
-                  ) : (
-                    <img
-                      src={ShoppingCartIcon}
-                      alt="سبد خرید"
-                      className="w-6"
-                    />
-                  )}
-                </div>
-              </Link>
-              <p className="iranyekan-very-light-white">{cart}</p>
-            </div>
-          )}
-
-          <div
-            className={
-              loggedIn ? "h-20 mt-5  text-center " : "h-20 mt-3  text-center "
-            }
-          >
-            <Link
-              to="#"
-              onMouseEnter={() => {
-                if (page !== "profile") {
-                  setProfile("حساب کاربری");
-                }
-              }}
-              onMouseLeave={() => setProfile("")}
-              onClick={() => setPage("profile")}
+            <CustomLink
+              to={"/cart"}
+              icon={ShoppingCartIcon}
+              whiteIcon={ShoppingCartWhiteIcon}
+              name={"سبد خرید"}
             >
-              <div
-                className={` rounded-full p-3 inline-block  m-auto ${
-                  page === "profile" ? "bg-primary  " : "bg-gray-main "
-                }`}
-              >
-                {page === "profile" ? (
-                  <img
-                    src={ProfileWhiteIcon}
-                    alt="حساب کاربری"
-                    className="w-7"
-                  />
-                ) : (
-                  <img src={ProfileIcon} alt="حساب کاربری" className="w-6" />
-                )}
-              </div>
-            </Link>
-            <p className="iranyekan-very-light-white">{profile}</p>
-          </div>
-        </div>
+              سبد خرید
+            </CustomLink>
+          )}
+          <CustomLink
+            to={"/profile"}
+            icon={ProfileIcon}
+            whiteIcon={ProfileWhiteIcon}
+            name={"حساب کاربری"}
+          >
+            حساب کاربری
+          </CustomLink>
+        </nav>
       </div>
     </section>
+  );
+};
+
+const CustomLink = ({ to, children, icon, whiteIcon, name, ...props }) => {
+  const [popUp, setPopUp] = useState(false);
+
+  const resolvedPath = useResolvedPath(to);
+  const isActive = useMatch({ path: resolvedPath.pathname, end: true });
+
+  return (
+    <div className="h-20  mt-5 text-center">
+      <Link
+        to={to}
+        {...props}
+        onMouseEnter={() => {
+          !isActive && setPopUp(true);
+        }}
+        onMouseLeave={() => setPopUp(false)}
+      >
+        <div
+          className={` rounded-full p-3 inline-block shadow-sm  m-auto ${
+            isActive ? "bg-primary  " : "bg-gray-main "
+          }`}
+        >
+          {isActive ? (
+            <img src={whiteIcon} alt={name} className="w-7" />
+          ) : (
+            <img src={icon} alt={name} className="w-6" />
+          )}
+        </div>
+      </Link>
+      <p className={popUp ? "iranyekan-very-light-white block" : "hidden"}>
+        {children}
+      </p>
+    </div>
   );
 };
