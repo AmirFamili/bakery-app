@@ -7,8 +7,6 @@ import { Popup } from "./Popup";
 export const Product = ({ product }) => {
   const [count, setCount] = useState(0);
   const {
-    cart,
-    dispatchCalCart,
     convertNumberToFarsi,
     showProductModel,
     setShowProductModel,

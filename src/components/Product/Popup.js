@@ -1,26 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import AddIcon from "../../images/icons/add.png";
-import MinusIcon from "../../images/icons/minus.png";
 import { GlobalContext } from "../../context/ContextWrapper";
 import { AddMeasure } from "./AddMeasure";
 
-
 export const Popup = ({ onClose, price }) => {
-  // const [countSlice, setCountSlice] = useState(0);
-  // const [countKilo, setCountKilo] = useState(0);
-  // const [activeMeasure,setActiveMeasure]=useState();
-
-  const {
-    togglePopup,
-    setLoggedIn,
-    convertNumberToFarsi,
-    cart,
-    dispatchCalCart,setActiveMeasure 
-  } = useContext(GlobalContext);
+  const { setActiveMeasure } = useContext(GlobalContext);
 
   useEffect(() => {}, []);
 
-  
   return (
     <div className="fixed top-0 right-0 w-screen h-screen flex justify-center items-center z-50 border text-black ">
       <div className="bg-white rounded-lg p-5 border w-2/6  ">
@@ -33,16 +19,14 @@ export const Popup = ({ onClose, price }) => {
 
         <div className="mt-5">
           {price.map((measure) => (
-         <AddMeasure measure={measure}/>
-           
+            <AddMeasure measure={measure} />
           ))}
-  
         </div>
         <div className="text-center mt-5">
           <button
-            onClick={()=>{
-              setActiveMeasure(null) 
-              onClose()
+            onClick={() => {
+              setActiveMeasure(null);
+              onClose();
             }}
             className="my-4  bg-primary text-font-white rounded-xl shadow-lg py-2 px-11 vazir-regular"
           >

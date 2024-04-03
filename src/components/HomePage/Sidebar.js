@@ -17,14 +17,19 @@ import axios from "../../api/axios";
 
 export const Sidebar = () => {
   useEffect(() => {
+    const abortController = new AbortController();
+    const signal = abortController.signal;
     async function getData() {
       await axios
-        .get("/bakery/category/")
+        .get("/bakery/category/",{signal})
         .then((response) => setCategoryPage(response.data[0].id))
         .catch((err) => console.log(err));
     }
 
     getData();
+    return () => {
+      abortController.abort();
+    };
   }, []);
 
   const { loggedIn, setCategoryPage, categoryPage, logo } =

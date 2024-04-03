@@ -8,14 +8,19 @@ export const News = () => {
   const [products, setProducts] = useState();
 
   useEffect(() => {
+    const abortController = new AbortController();
+    const signal = abortController.signal;
     async function getData() {
       await axios
-        .get("/bakery/recent_cake/")
+        .get("/bakery/recent_cake/",{signal})
         .then((response) => setProducts(response.data))
         .catch(err=>console.log(err));
     }
 
     getData();
+    return () => {
+      abortController.abort();
+    };
   }, []);
 
   return (

@@ -6,14 +6,20 @@ import { Group } from "./Group";
 export const Grouping = () => {
   const [groupsData,setGroupsData]=useState();
   useEffect(() => {
+    const abortController = new AbortController();
+    const signal = abortController.signal;
     async function getData() {
       await axios
-        .get("/bakery/category/")
+        .get("/bakery/category/",{signal})
         .then((response) => setGroupsData(response.data))
         .catch(err=>console.log(err));
     }
 
     getData();
+
+    return () => {
+      abortController.abort();
+    };
   }, []);
   return (
     <section className="p-6   ">

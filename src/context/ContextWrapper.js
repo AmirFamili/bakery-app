@@ -42,7 +42,6 @@ const initCart = () => {
 };
 
 const ContextWrapper = (props) => {
-  // const [addCart, setAddCart] = useReducer(savedCartReduser, [], initCart);
   const [loggedIn, setLoggedIn] = useState(localStorage.access ? true : false);
   const [showProductModel, setShowProductModel] = useState(false);
   const [categoryPage, setCategoryPage] = useState(null);
@@ -52,19 +51,27 @@ const ContextWrapper = (props) => {
   const [activeMeasure, setActiveMeasure] = useState();
 
   useEffect(() => {
+    const abortController = new AbortController();
+    const signal = abortController.signal;
+
     async function getData() {
-      await axios.get("/settings/").then((response) => {
-        setlogo(response.data[0].logo);
-        setInfo(response.data[0]);
-      });
+      await axios
+        .get("/settings/", { signal })
+        .then((response) => {
+          setlogo(response.data[0].logo);
+          setInfo(response.data[0]);
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
     }
 
     getData();
-  }, []);
 
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
+    return () => {
+      abortController.abort();
+    };
+  }, []);
 
   const togglePopup = () => {
     setShowProductModel(!showProductModel);
@@ -98,7 +105,8 @@ const ContextWrapper = (props) => {
         togglePopup,
         logo,
         info,
-        activeMeasure, setActiveMeasure
+        activeMeasure,
+        setActiveMeasure,
       }}
     >
       {props.children}

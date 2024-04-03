@@ -1,6 +1,4 @@
 import React, { useContext, useState } from "react";
-// import EmailIcon from "../../images/icons/email.png";
-// import CallIcon from "../../images/icons/call.png";
 import SearchIcon from "../../../images/icons/search-normal-black.png";
 import ProfileIcon from "../../../images/icons/profile.png";
 import ShoppingCartIcon from "../../../images/icons/shopping-cart-black.png";
@@ -10,7 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { GlobalContext } from "../../../context/ContextWrapper";
 
 export const HeaderMobile = () => {
-  const { cart,  loggedIn, setLoggedIn } =
+  const { loggedIn, setLoggedIn } =
     useContext(GlobalContext);
   const navigate = useNavigate();
   const [showLogOut, setShowLogOut] = useState(false);

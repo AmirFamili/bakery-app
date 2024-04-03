@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from "react";
-import { Outlet, Link, useParams,useNavigate } from "react-router-dom";
+import { Outlet, Link, useParams, useNavigate } from "react-router-dom";
 import { GlobalContext } from "../../context/ContextWrapper";
 import axios from "../../api/axios";
 
@@ -10,19 +10,24 @@ export const Category = () => {
   const [groupsData, setGroupsData] = useState();
 
   useEffect(() => {
+    const abortController = new AbortController();
+    const signal = abortController.signal;
     async function getData() {
       await axios
-        .get("/bakery/category/")
-        .then((response) => setGroupsData(response.data)) 
-        .catch(err=>console.log(err));
+        .get("/bakery/category/",{signal})
+        .then((response) => setGroupsData(response.data))
+        .catch((err) => console.log(err));
     }
     getData();
-    if(params.id){
-       setCategoryPage(params.id.split(":")[1]);
-     }  else{
+    
+    if (params.id) {
+      setCategoryPage(params.id.split(":")[1]);
+    } else {
       navigate("/");
     }
-   
+    return () => {
+      abortController.abort();
+    };
   }, []);
 
   return (
@@ -32,27 +37,25 @@ export const Category = () => {
         <div className="flex border-b pt-3 mb-10 ">
           {groupsData &&
             groupsData.map((group) => (
-              <div className="relative"  key={group.id}>
-            <Link
-           
-              onClick={() => setCategoryPage(`${group.id}`)}
-              to={':'+group.id}
-              className={`ml-12  w-20 text-center py-3 inline-block max-md:ml-8 max-sm:ml-4 max-md:w-14 ${
-                categoryPage === `${group.id}` ? "vazir-regular-bold text-black" : "vazir-regular text-blue-little-light "
-              }`}
-            >
-            {group.title}
-           
-            </Link>
-            <div
-              className={`absolute w-20  z-10 max-sm:w-10 ${
-                categoryPage === `${group.id}` && "border-bottom"
-              }`}
-            ></div>
-          </div>
+              <div className="relative" key={group.id}>
+                <Link
+                  onClick={() => setCategoryPage(`${group.id}`)}
+                  to={":" + group.id}
+                  className={`ml-12  w-20 text-center py-3 inline-block max-md:ml-8 max-sm:ml-4 max-md:w-14 ${
+                    categoryPage === `${group.id}`
+                      ? "vazir-regular-bold text-black"
+                      : "vazir-regular text-blue-little-light "
+                  }`}
+                >
+                  {group.title}
+                </Link>
+                <div
+                  className={`absolute w-20  z-10 max-sm:w-10 ${
+                    categoryPage === `${group.id}` && "border-bottom"
+                  }`}
+                ></div>
+              </div>
             ))}
-
-          
         </div>
       )}
       <div className="mt-5">

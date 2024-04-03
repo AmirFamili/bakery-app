@@ -9,13 +9,19 @@ export const Hero = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 const second=10000;
   useEffect(() => {
+
+    const abortController = new AbortController();
+    const signal = abortController.signal;
     async function getImages() {
       await axios
-        .get("/bakery/promotion/")
+        .get("/bakery/promotion/",{signal})
         .then((response) => setImages(response.data))
         .catch((err) => console.log(err));
     }
     getImages();
+    return () => {
+      abortController.abort();
+    };
   }, []);
 
   useEffect(() => {

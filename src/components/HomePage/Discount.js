@@ -8,14 +8,18 @@ export const Discount = () => {
   const [products,setProducts]=useState();
 
   useEffect(() => {
+    const abortController = new AbortController();
+    const signal = abortController.signal;
     async function getData(){
-     await  axios.get('/bakery/recent_promotion/')
+     await  axios.get('/bakery/recent_promotion/',{signal})
       .then(response=>setProducts(response.data)) 
       .catch(err=>console.log(err));
     }
        
     getData();
-     
+    return () => {
+      abortController.abort();
+    };
     }, []);
   return (
     <section className="p-6  pb-24">
