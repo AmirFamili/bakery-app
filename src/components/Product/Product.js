@@ -1,17 +1,35 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import AddIcon from "../../images/icons/add.png";
 import MinusIcon from "../../images/icons/minus.png";
 import { GlobalContext } from "../../context/ContextWrapper";
 import { Popup } from "./Popup";
+import axios from "../../api/axios";
 
 export const Product = ({ product }) => {
   const [count, setCount] = useState(0);
+  const [id, setId] = useState(null);
   const {
+    cart,
+    setCart,
     convertNumberToFarsi,
     showProductModel,
     setShowProductModel,
     togglePopup,
+    products,
+    countAll,
+    setCountAll,
   } = useContext(GlobalContext);
+
+  useEffect(() => {
+    if (products) {
+      for (let i = 0; i < products.length; i++) {
+        if (products[i].cake.title === product.title) {
+          setCount(products[i].quantity);
+          setId(products[i].id);
+        }
+      }
+    }
+  }, []);
 
   const handlerCheckCount = () => {
     if (count > 0) {
@@ -19,15 +37,76 @@ export const Product = ({ product }) => {
     }
   };
 
+  
+
+  const CheckCart = async () => {
+    if (!cart) {
+      await axios.post("/order/cart/").then((response) => {
+        setCart(response.data.id);
+        axios
+          .post(`/order/cart/${response.data.id}/items/`, {
+            cake_id: product.id,
+            quantity: 1,
+            unit_measure: product.pricemodel_set[0].unit_measure_id,
+          })
+          .then((response) => {
+            setId(response.data.id);
+            console.log(response);
+          });
+      });
+    } else {
+      if (count >= 1) {
+        if (id) {
+          await axios
+            .patch(`/order/cart/${cart}/items/${id}/`, {
+              quantity: count + 1,
+            })
+            .then((response) => {
+              console.log(response);
+            });
+        }
+      } else {
+        await axios
+          .post(`/order/cart/${cart}/items/`, {
+            cake_id: product.id,
+            quantity: 1,
+            unit_measure: product.pricemodel_set[0].unit_measure_id,
+          })
+          .then((response) => {
+            setId(response.data.id);
+            console.log(response);
+          });
+      }
+    }
+  };
   const handlerIncrease = () => {
-    // dispatchCalCart(cart + 1);
+    CheckCart();
+    setCountAll(countAll + 1);
     setCount(count + 1);
   };
-
-  const handlerDecrease = () => {
+  const handlerDecrease = async () => {
     if (count > 0) {
-      // dispatchCalCart(cart - 1);
-      setCount(count - 1);
+      if (count > 1) {
+        if (id) {
+          setCountAll(countAll - 1);
+          setCount(count - 1);
+          await axios
+            .patch(`/order/cart/${cart}/items/${id}/`, {
+              quantity: count - 1,
+            })
+            .then((response) => {
+              console.log(response);
+            });
+        }
+      } else if (count === 1) {
+        setCountAll(countAll - 1);
+        setCount(count - 1);
+        await axios
+          .delete(`/order/cart/${cart}/items/${id}/`)
+          .then((response) => {
+            console.log(response);
+          });
+      }
     }
   };
 
@@ -88,7 +167,9 @@ export const Product = ({ product }) => {
             >
               <img src={MinusIcon} alt="minus" />
             </button>
-            <p className={`px-2 w-7 hidden iranyekan ${handlerCheckCount()}`}>
+            <p
+              className={` w-7 text-center hidden iranyekan ${handlerCheckCount()}`}
+            >
               {convertNumberToFarsi(count)}
             </p>
             <button
@@ -110,7 +191,9 @@ export const Product = ({ product }) => {
           </button>
         </div>
       )}
-      {product.pricemodel_set.length !== 1 &&  showProductModel && <Popup onClose={togglePopup} price={product.pricemodel_set} />}
+      {product.pricemodel_set.length !== 1 && showProductModel && (
+        <Popup onClose={togglePopup} product={product} />
+      )}
     </div>
   );
 };

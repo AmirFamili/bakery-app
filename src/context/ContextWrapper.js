@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "../api/axios";
 
 export const GlobalContext = React.createContext();
@@ -22,22 +22,10 @@ const convertNumberToFarsi = (num) => {
     .join("");
 };
 
-const savedCartReduser = (state, { type, payload }) => {
-  switch (type) {
-    case "add":
-      return [...state, payload];
-    case "update":
-      return state.map((evt) => (evt.id === payload.id ? payload : evt));
-    case "delete":
-      return state.filter((evt) => evt.id !== payload.id);
-    default:
-      throw new Error();
-  }
-};
 
-const initCart = () => {
+const cartId = () => {
   const storageCart = localStorage.getItem("cart");
-  const parsedCart = storageCart ? JSON.parse(storageCart) : [];
+  const parsedCart = storageCart ? JSON.parse(storageCart) : null;
   return parsedCart;
 };
 
@@ -45,10 +33,34 @@ const ContextWrapper = (props) => {
   const [loggedIn, setLoggedIn] = useState(localStorage.access ? true : false);
   const [showProductModel, setShowProductModel] = useState(false);
   const [categoryPage, setCategoryPage] = useState(null);
-  const [cart, dispatchCalCart] = useReducer(savedCartReduser, [], initCart);
+  const [cart, setCart] = useState(cartId);
   const [logo, setlogo] = useState();
   const [info, setInfo] = useState();
-  const [activeMeasure, setActiveMeasure] = useState();
+  const [activeMeasure, setActiveMeasure] = useState(2);
+  const [products, setProducts] = useState(null);
+  const [countAll, setCountAll] = useState(0);
+
+  useEffect(() => {
+    if (cart) {
+      const getProduct = async () => {
+        await axios.get(`/order/cart/${cart}/items/`).then((response) => {
+          setProducts(response.data);
+          var x = 0;
+          for (let i = 0; i < response.data.length; i++) {
+           
+            x += response.data[i].quantity;
+          }
+          setCountAll(x);
+        });
+      };
+      getProduct();
+    }
+  }, [showProductModel]);
+
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -75,6 +87,7 @@ const ContextWrapper = (props) => {
 
   const togglePopup = () => {
     setShowProductModel(!showProductModel);
+
   };
 
   useEffect(() => {
@@ -94,7 +107,7 @@ const ContextWrapper = (props) => {
     <GlobalContext.Provider
       value={{
         cart,
-        dispatchCalCart,
+        setCart,
         convertNumberToFarsi,
         loggedIn,
         setLoggedIn,
@@ -107,6 +120,8 @@ const ContextWrapper = (props) => {
         info,
         activeMeasure,
         setActiveMeasure,
+        products,
+        countAll,setCountAll
       }}
     >
       {props.children}

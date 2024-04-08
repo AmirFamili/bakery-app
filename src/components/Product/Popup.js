@@ -2,11 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../../context/ContextWrapper";
 import { AddMeasure } from "./AddMeasure";
 
-export const Popup = ({ onClose, price }) => {
-  const { setActiveMeasure } = useContext(GlobalContext);
-
-  useEffect(() => {}, []);
-
+export const Popup = ({ onClose, product }) => {
+  const { setActiveMeasure, } = useContext(GlobalContext);
+ 
   return (
     <div className="fixed top-0 right-0 w-screen h-screen flex justify-center items-center z-50 border text-black ">
       <div className="bg-white rounded-lg p-5 border w-2/6  ">
@@ -18,8 +16,8 @@ export const Popup = ({ onClose, price }) => {
         </h4>
 
         <div className="mt-5">
-          {price.map((measure) => (
-            <AddMeasure measure={measure} />
+          {product.pricemodel_set.map((measure) => (
+            <AddMeasure key={measure.unit_measure_id} measure={measure} product={product}/>
           ))}
         </div>
         <div className="text-center mt-5">
