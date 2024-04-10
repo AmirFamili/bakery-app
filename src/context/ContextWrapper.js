@@ -36,7 +36,7 @@ const ContextWrapper = (props) => {
   const [cart, setCart] = useState(cartId);
   const [logo, setlogo] = useState();
   const [info, setInfo] = useState();
-  const [activeMeasure, setActiveMeasure] = useState(2);
+  const [activeMeasure, setActiveMeasure] = useState();
   const [products, setProducts] = useState(null);
   const [countAll, setCountAll] = useState(0);
 
@@ -55,7 +55,7 @@ const ContextWrapper = (props) => {
       };
       getProduct();
     }
-  }, [showProductModel]);
+  }, [showProductModel,countAll]);
 
 
   useEffect(() => {

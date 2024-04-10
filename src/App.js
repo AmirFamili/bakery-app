@@ -16,6 +16,7 @@ import { CallToUs } from "./components/Call/CallToUs";
 import { History } from "./components/History/History";
 import { Profile } from "./components/Profile/Profile";
 import axios from "./api/axios";
+import { InfoCart } from "./components/Customer/Cart/InfoCart";
 
 function App() {
   const { setLoggedIn } = useContext(GlobalContext);
@@ -74,10 +75,12 @@ function App() {
           <Route path="category/*" element={<Category />}>
             <Route path=":id" element={<Products />}></Route>
           </Route>
-          <Route path="cart/*" element={<Cart />}></Route>
-          <Route path="call" element={<CallToUs/>}></Route>  
-          <Route path="history" element={<History/>}></Route>
-          <Route path="profile" element={<Profile/>}></Route>
+          <Route path="cart/*" element={<Cart />}>
+            <Route path="" element={<InfoCart />}></Route>
+          </Route>
+          <Route path="call" element={<CallToUs />}></Route>
+          <Route path="history" element={<History />}></Route>
+          <Route path="profile" element={<Profile />}></Route>
         </Route>
         <Route path="/singup" element={<SignUp />}></Route>
         <Route path="/login" element={<Login />}></Route>
