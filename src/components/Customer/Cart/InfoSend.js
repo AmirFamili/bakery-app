@@ -11,31 +11,30 @@ export const InfoSend = () => {
     useContext(GlobalContext);
     const navigate = useNavigate();
   const validationSchema = Yup.object().shape({
-    // name: Yup.string()
-    //   .required("لطفا این قسمت را خالی نگذارید.")
-    //   .min(3, "نام خود را کامل وارد کنید."),
-    // lastName: Yup.string()
-    //   .required("لطفا این قسمت را خالی نگذارید.")
-    //   .min(3, "نام خانوادگی خود را کامل وارد کنید."),
-    // phone: Yup.string()
-    //   .required("لطفا این قسمت را خالی نگذارید.")
-    //   .matches(
-    //     /(0|\+98)?([ ]|-|[()]){0,2}9[1|2|3|4]([ ]|-|[()]){0,2}(?:[0-9]([ ]|-|[()]){0,2}){8}/,
-    //     "شماره تلفن نامعتبر می باشد."
-    //   ),
-    // postalCode: Yup.string()
-    //   .required("لطفا این قسمت را خالی نگذارید.")
-    //   .matches(/^\d{5}-\d{5}$/, "کد پستی نامعتبر می باشد.(مثال 12345-67891)"),
-    // address: Yup.string()
-    //   .required("لطفا این قسمت را خالی نگذارید.")
-    //   .matches(/[,.-_]?[ء-ی0-9]+[,.-_]?/, "آدرس درست نمی باشد."),
+    name: Yup.string()
+      .required("لطفا این قسمت را خالی نگذارید.")
+      .min(3, "نام خود را کامل وارد کنید."),
+    lastName: Yup.string()
+      .required("لطفا این قسمت را خالی نگذارید.")
+      .min(3, "نام خانوادگی خود را کامل وارد کنید."),
+    phone: Yup.string()
+      .required("لطفا این قسمت را خالی نگذارید.")
+      .matches(
+        /(0|\+98)?([ ]|-|[()]){0,2}9[1|2|3|4]([ ]|-|[()]){0,2}(?:[0-9]([ ]|-|[()]){0,2}){8}/,
+        "شماره تلفن نامعتبر می باشد."
+      ),
+    postalCode: Yup.string()
+      .required("لطفا این قسمت را خالی نگذارید.")
+      .matches(/^\d{5}-\d{5}$/, "کد پستی نامعتبر می باشد.(مثال 12345-67891)"),
+    address: Yup.string()
+      .required("لطفا این قسمت را خالی نگذارید.")
+      .matches(/[,.-_]?[ء-ی0-9]+[,.-_]?/, "آدرس درست نمی باشد."),
   });
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    setError,
     reset,
   } = useForm({ resolver: yupResolver(validationSchema) });
 
@@ -54,6 +53,7 @@ export const InfoSend = () => {
       )
       .then((response) => {
         console.log(response);
+        reset();
       })
       .catch((err) => console.log(err));
       localStorage.removeItem('cart');
