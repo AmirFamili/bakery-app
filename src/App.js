@@ -10,7 +10,6 @@ import { Sidebar } from "./components/HomePage/Sidebar";
 import { Home } from "./components/HomePage/Home";
 import { Products } from "./components/Customer/Products";
 import { GlobalContext } from "./context/ContextWrapper";
-import { Footer } from "./components/HomePage/Footer";
 import { Cart } from "./components/Customer/Cart/Cart";
 import { CallToUs } from "./components/Call/CallToUs";
 import { History } from "./components/History/History";
@@ -69,7 +68,6 @@ function App() {
                   </main>
                 </div>
               </div>
-              <Footer />
             </div>
           }
         >
@@ -79,7 +77,7 @@ function App() {
           </Route>
           <Route path="cart/*" element={<Cart />}>
             <Route path="" element={<InfoCart />}></Route>
-            <Route path="show-info" element={<InfoSend/>}></Route>
+            <Route path="show-info" element={<InfoSend />}></Route>
           </Route>
           <Route path="call" element={<CallToUs />}></Route>
           <Route path="history" element={<History />}></Route>

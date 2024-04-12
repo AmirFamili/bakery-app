@@ -1,4 +1,4 @@
-import React,{useContext,useEffect, useState} from "react";
+import React,{useContext} from "react";
 import WhatsApp from "../../images/icons/whatsapp.png";
 import Instagram from "../../images/icons/instagram.png";
 import LocationIcon from "../../images/icons/location-tick.png";
