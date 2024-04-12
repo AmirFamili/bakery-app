@@ -17,9 +17,10 @@ import { History } from "./components/History/History";
 import { Profile } from "./components/Profile/Profile";
 import axios from "./api/axios";
 import { InfoCart } from "./components/Customer/Cart/InfoCart";
+import { InfoSend } from "./components/Customer/Cart/InfoSend";
 
 function App() {
-  const { setLoggedIn } = useContext(GlobalContext);
+  const { setLoggedIn, setAccessToken } = useContext(GlobalContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,6 +32,7 @@ function App() {
           })
           .then((response) => {
             if (response.data.access) {
+              setAccessToken(response.data.access);
               localStorage.setItem(
                 "access",
                 JSON.stringify(response.data.access)
@@ -77,6 +79,7 @@ function App() {
           </Route>
           <Route path="cart/*" element={<Cart />}>
             <Route path="" element={<InfoCart />}></Route>
+            <Route path="show-info" element={<InfoSend/>}></Route>
           </Route>
           <Route path="call" element={<CallToUs />}></Route>
           <Route path="history" element={<History />}></Route>

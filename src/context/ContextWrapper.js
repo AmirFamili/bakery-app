@@ -22,7 +22,6 @@ const convertNumberToFarsi = (num) => {
     .join("");
 };
 
-
 const cartId = () => {
   const storageCart = localStorage.getItem("cart");
   const parsedCart = storageCart ? JSON.parse(storageCart) : null;
@@ -39,24 +38,36 @@ const ContextWrapper = (props) => {
   const [activeMeasure, setActiveMeasure] = useState();
   const [products, setProducts] = useState(null);
   const [countAll, setCountAll] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [accessToken, setAccessToken] = useState();
+
+  useEffect(()=>{
+    if(localStorage.getItem('access')){
+      setAccessToken(localStorage.getItem('access'));
+    }
+   
+  },[])
 
   useEffect(() => {
     if (cart) {
       const getProduct = async () => {
-        await axios.get(`/order/cart/${cart}/items/`).then((response) => {
-          setProducts(response.data);
+        await axios.get(`/order/cart/${cart}`).then((response) => {
+          setTotalPrice(response.data.total_price);
+          setProducts(response.data.items);
           var x = 0;
-          for (let i = 0; i < response.data.length; i++) {
-           
-            x += response.data[i].quantity;
+          for (let i = 0; i < response.data.items.length; i++) {
+            x += response.data.items[i].quantity;
           }
           setCountAll(x);
         });
       };
       getProduct();
+    }else{
+      setCountAll(0);
+      setProducts(null);
+      setTotalPrice(0)
     }
-  }, [showProductModel,countAll]);
-
+  }, [showProductModel,countAll,cart]);
 
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
@@ -87,7 +98,6 @@ const ContextWrapper = (props) => {
 
   const togglePopup = () => {
     setShowProductModel(!showProductModel);
-
   };
 
   useEffect(() => {
@@ -121,7 +131,10 @@ const ContextWrapper = (props) => {
         activeMeasure,
         setActiveMeasure,
         products,
-        countAll,setCountAll
+        countAll,
+        setCountAll,
+        totalPrice,
+        accessToken, setAccessToken
       }}
     >
       {props.children}

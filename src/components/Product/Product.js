@@ -37,8 +37,6 @@ export const Product = ({ product }) => {
     }
   };
 
-  
-
   const CheckCart = async () => {
     if (!cart) {
       await axios.post("/order/cart/").then((response) => {
@@ -51,7 +49,6 @@ export const Product = ({ product }) => {
           })
           .then((response) => {
             setId(response.data.id);
-            console.log(response);
           });
       });
     } else {
@@ -61,9 +58,7 @@ export const Product = ({ product }) => {
             .patch(`/order/cart/${cart}/items/${id}/`, {
               quantity: count + 1,
             })
-            .then((response) => {
-              console.log(response);
-            });
+            .then((response) => {});
         }
       } else {
         await axios
@@ -74,7 +69,6 @@ export const Product = ({ product }) => {
           })
           .then((response) => {
             setId(response.data.id);
-            console.log(response);
           });
       }
     }
@@ -94,18 +88,14 @@ export const Product = ({ product }) => {
             .patch(`/order/cart/${cart}/items/${id}/`, {
               quantity: count - 1,
             })
-            .then((response) => {
-              console.log(response);
-            });
+            .then((response) => {});
         }
       } else if (count === 1) {
         setCountAll(countAll - 1);
         setCount(count - 1);
         await axios
           .delete(`/order/cart/${cart}/items/${id}/`)
-          .then((response) => {
-            console.log(response);
-          });
+          .then((response) => {});
       }
     }
   };

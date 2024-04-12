@@ -36,7 +36,7 @@ export const Sidebar = () => {
     useContext(GlobalContext);
 
   return (
-    <section className="side-bar p-2 h-screen flex justify-center z-50 max-lg:hidden ">
+    <section className="  side-bar p-2 h-screen flex justify-center z-50 max-lg:hidden ">
       <div className="fixed ">
         <Link to="/">
           <img src={logo} alt="logo" className="w-20 mt-3" />
@@ -84,7 +84,7 @@ export const Sidebar = () => {
 
           {loggedIn && (
             <CustomLink
-              to={"/cart"}
+              to={'/cart/'}
               icon={ShoppingCartIcon}
               whiteIcon={ShoppingCartWhiteIcon}
               name={"سبد خرید"}
@@ -109,7 +109,7 @@ export const Sidebar = () => {
 const CustomLink = ({ to, children, icon, whiteIcon, name, ...props }) => {
   const [popUp, setPopUp] = useState(false);
 
-  const resolvedPath = useResolvedPath(to);
+  const resolvedPath = useResolvedPath(`${to}/*`);
   const isActive = useMatch({ path: resolvedPath.pathname, end: true });
 
   return (
