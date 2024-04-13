@@ -12,7 +12,6 @@ import { GlobalContext } from "../../context/ContextWrapper";
 
 export const Header = () => {
   const {
-    setPage,
     countAll,
     convertNumberToFarsi,
     loggedIn,
