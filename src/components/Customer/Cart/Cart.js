@@ -57,3 +57,17 @@ export const Cart = () => {
     </section>
   );
 };
+
+// const ShowStep = ({ link, image, name }) => {
+//   const resolvedPath = useResolvedPath(link);
+//   const isActive = useMatch({ path: resolvedPath.pathname, end: true });
+
+//   return (
+//     <div className="flex justify-center items-center pl-24 max-md:pl-16">
+//       <img src={image} className="w-5 h-5 ml-2 " alt={name} />
+//       <p className={`${isActive && "text-secondry"} iranyekan w-auto `}>
+//         {name}
+//       </p>
+//     </div>
+//   );
+// };
