@@ -13,10 +13,10 @@
   font-family: vazir;
   src: url('./fonts/Vazir.ttf');
 } */
-/* @font-face{
+@font-face{
   font-family: IRANYekan;
-  src: url('./fonts/IranYekan.ttf');
-} */
+  src: url('./my-fonts/fonts/IranYekan.ttf');
+}
 
 @import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
 
@@ -33,9 +33,9 @@
   }
 }
 
-@import url(https://db.onlinewebfonts.com/c/1510aa80463174b1d0847ab936a70e8e?family=IRANYekanWeb);
+/* @import url(https://db.onlinewebfonts.com/c/1510aa80463174b1d0847ab936a70e8e?family=IRANYekanWeb); */
 .iranyekan-very-light-small {
-  font-family: "IRANYekanWeb";
+  font-family: "IRANYekan";
   font-optical-sizing: auto;
   font-size: 10px;
   font-weight: lighter;
@@ -43,7 +43,7 @@
   color: rgb(145, 145, 147);
 }
 .iranyekan-very-light {
-  font-family: "IRANYekanWeb";
+  font-family: "IRANYekan";
   font-optical-sizing: auto;
   font-size: 12px;
   font-weight: lighter;
@@ -52,21 +52,21 @@
 }
 
 .iranyekan-very-light-white {
-  font-family: "IRANYekanWeb";
+  font-family: "IRANYekan";
   font-optical-sizing: auto;
   font-size: 12px;
   font-weight: 200;
   font-style: normal;
 }
 .iranyekan-little-light {
-  font-family: "IRANYekanWeb";
+  font-family: "IRANYekan";
   font-optical-sizing: auto;
   font-size: 14px;
   font-weight: 200;
   font-style: normal;
 }
 .iranyekan-light {
-  font-family: "IRANYekanWeb";
+  font-family: "IRANYekan";
   font-optical-sizing: auto;
   font-size: 16px;
   font-weight: lighter;
@@ -74,14 +74,14 @@
   color: rgb(145, 145, 147);
 }
 .iranyekan {
-  font-family: "IRANYekanWeb";
+  font-family: "IRANYekan";
   font-optical-sizing: auto;
   font-size: 16px;
   font-weight: 200;
   font-style: normal;
 }
 .iranyekan-very-medium {
-  font-family: "IRANYekanWeb";
+  font-family: "IRANYekan";
   font-optical-sizing: auto;
   font-size: 20px;
   font-weight: 200;
@@ -89,7 +89,7 @@
 }
 
 .iranyekan-medium {
-  font-family: "IRANYekanWeb";
+  font-family: "IRANYekan";
   font-optical-sizing: auto;
   font-size: 24px;
   font-weight: 200;
@@ -97,7 +97,7 @@
 }
 
 .iranyekan-low-bold {
-  font-family: "IRANYekanWeb";
+  font-family: "IRANYekan";
   font-optical-sizing: auto;
   font-size: 14px;
   font-weight: 100;
@@ -105,7 +105,7 @@
 }
 
 .iranyekan-bold {
-  font-family: "IRANYekanWeb";
+  font-family: "IRANYekan";
   font-optical-sizing: auto;
   font-size: 16px;
   font-weight: 100;
@@ -113,7 +113,7 @@
 }
 
 .iranyekan-very-bold {
-  font-family: "IRANYekanWeb";
+  font-family: "IRANYekan";
   font-optical-sizing: auto;
   font-size: 32px;
   font-weight: 500;

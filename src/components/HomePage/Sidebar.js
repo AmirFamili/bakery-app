@@ -5,6 +5,8 @@ import ElementIcon from "../../images/icons/element.png";
 import ElementWhiteIcon from "../../images/icons/element-white.png";
 import CallWhiteIcon from "../../images/icons/call-white.png";
 import CallIcon from "../../images/icons/call-gray.png";
+import AboutIcon from "../../images/icons/about.png";
+import AboutWhiteIcon from "../../images/icons/about-white.png";
 import ProfileIcon from "../../images/icons/profile.png";
 import ProfileWhiteIcon from "../../images/icons/profile-white.png";
 import TaskSquareIcon from "../../images/icons/task-square.png";
@@ -68,8 +70,15 @@ export const Sidebar = () => {
           >
             تماس با ما
           </CustomLink>
-
-          <span className="border-t mb-3  w-12"></span>
+          <CustomLink
+            to={"/about-us"}
+            icon={AboutIcon}
+            whiteIcon={AboutWhiteIcon}
+            name={"درباره ما"}
+          >
+           درباره ما
+          </CustomLink>
+          {/* <span className="border-t mb-3  w-12"></span>
 
           {loggedIn && (
             <CustomLink
@@ -99,7 +108,7 @@ export const Sidebar = () => {
             name={"حساب کاربری"}
           >
             حساب کاربری
-          </CustomLink>
+          </CustomLink> */}
         </nav>
       </div>
     </section>
@@ -111,7 +120,6 @@ const CustomLink = ({ to, children, icon, whiteIcon, name, ...props }) => {
 
   const resolvedPath = useResolvedPath(`${to}/*`);
   const isActive = useMatch({ path: resolvedPath.pathname, end: true });
-
   return (
     <div className="h-20  mt-5 text-center">
       <Link

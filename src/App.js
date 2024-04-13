@@ -17,6 +17,7 @@ import { Profile } from "./components/Profile/Profile";
 import axios from "./api/axios";
 import { InfoCart } from "./components/Customer/Cart/InfoCart";
 import { InfoSend } from "./components/Customer/Cart/InfoSend";
+import { AboutUs } from "./components/AboutUs/AboutUs";
 
 function App() {
   const { setLoggedIn, setAccessToken } = useContext(GlobalContext);
@@ -82,6 +83,8 @@ function App() {
           <Route path="call" element={<CallToUs />}></Route>
           <Route path="history" element={<History />}></Route>
           <Route path="profile" element={<Profile />}></Route>
+          <Route path="about-us" element={<AboutUs />}></Route>
+
         </Route>
         <Route path="/singup" element={<SignUp />}></Route>
         <Route path="/login" element={<Login />}></Route>

@@ -6,10 +6,11 @@ import { Outlet } from "react-router-dom";
 import { useMatch, useResolvedPath } from "react-router-dom";
 
 export const Cart = () => {
-  const resolvedPath_2 = useResolvedPath("cart/show-info");
-  const resolvedPath_3 = useResolvedPath("/cart");
-  const isActive_2 = useMatch({ path: resolvedPath_2.pathname, end: true });
-  const isActive_3 = useMatch({ path: resolvedPath_3.pathname, end: true });
+  // const resolvedPath_2 = useResolvedPath('show-info');
+  // const resolvedPath_3 = useResolvedPath("/cart");
+  const isActive_2 = useMatch({ path:'/cart/show-info', end: true });
+  // const isActive_3 = useMatch({ path: resolvedPath_3.pathname, end: true });
+console.log(isActive_2);
 
   return (
     <section className="  mt-2 px-10 py-28 max-md:px-5 max-lg:mt-0 h-full min-h-screen max-lg:pt-5 ">
@@ -28,7 +29,7 @@ export const Cart = () => {
           <img src={LocationGrayIcon} className="w-5 h-5 ml-2" alt="سبد خرید" />
           <p
             className={`iranyekan-light w-28 max-md:w-24 ${
-              isActive_2 && "text-secondry"
+              isActive_2 &&"text-secondry"
             } `}
           >
             اطلاعات ارسال
@@ -37,7 +38,9 @@ export const Cart = () => {
         {/*  <ShowStep link='/cart/show-info' image={CardTickGrayIcon} name='پرداخت'/> */}
         <div className="flex justify-center items-center pl-28 max-md:pl-20">
           <img src={CardTickGrayIcon} className="w-5 h-5 ml-2" alt="سبد خرید" />
-          <p className="iranyekan-light w-16">پرداخت</p>
+          <p className={`iranyekan-light w-16 ${
+               "text-secondry"
+            } `}>پرداخت</p>
         </div>
       </div>
       <Outlet />
@@ -45,16 +48,16 @@ export const Cart = () => {
   );
 };
 
-const ShowStep = ({ link, image, name }) => {
-  const resolvedPath = useResolvedPath(link);
-  const isActive = useMatch({ path: resolvedPath.pathname, end: true });
+// const ShowStep = ({ link, image, name }) => {
+//   const resolvedPath = useResolvedPath(link);
+//   const isActive = useMatch({ path: resolvedPath.pathname, end: true });
 
-  return (
-    <div className="flex justify-center items-center pl-24 max-md:pl-16">
-      <img src={image} className="w-5 h-5 ml-2 " alt={name} />
-      <p className={`${isActive && "text-secondry"} iranyekan w-auto `}>
-        {name}
-      </p>
-    </div>
-  );
-};
+//   return (
+//     <div className="flex justify-center items-center pl-24 max-md:pl-16">
+//       <img src={image} className="w-5 h-5 ml-2 " alt={name} />
+//       <p className={`${isActive && "text-secondry"} iranyekan w-auto `}>
+//         {name}
+//       </p>
+//     </div>
+//   );
+// };

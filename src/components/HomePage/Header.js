@@ -1,9 +1,12 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import EmailIcon from "../../images/icons/email.png";
 import CallIcon from "../../images/icons/call.png";
 import SearchIcon from "../../images/icons/search-normal.png";
 import ProfileIcon from "../../images/icons/profile.png";
 import ShoppingCartWhiteIcon from "../../images/icons/shopping-cart-white.png";
+import ExitIcon from "../../images/icons/exit.png";
+import TaskIcon from "../../images/icons/task.png";
+import SettingIcon from "../../images/icons/setting.png";
 import { Link, useNavigate } from "react-router-dom";
 import { GlobalContext } from "../../context/ContextWrapper";
 
@@ -18,7 +21,7 @@ export const Header = () => {
   } = useContext(GlobalContext);
   const navigate = useNavigate();
   const [showLogOut, setShowLogOut] = useState(false);
-  
+
   const handlerLogOut = () => {
     localStorage.removeItem("access");
     localStorage.removeItem("refresh");
@@ -106,13 +109,27 @@ export const Header = () => {
             />
 
             <div
-              className={`absolute top-14 left-6  max-xl:left-2 border p-5 bg-slate-50  m-1 z-30 rounded-xl iranyekan-very-light-white  ${
+              className={`absolute top-14 left-6 w-64  max-xl:left-2 border p-5 bg-slate-50  m-1 z-30 rounded-xl iranyekan ${
                 showLogOut ? "block" : "hidden"
               }`}
             >
-              <span onClick={handlerLogOut} className="cursor-pointer">
+              {" "}
+              <Link to='/profile' className="cursor-pointer flex border-b p-3">
+                <img
+                  src={SettingIcon}
+                  alt="settings"
+                  className="w-5 h-5 ml-2"
+                />{" "}
+                تنظیمات حساب کاربری
+              </Link>
+              <Link to='/history' className="cursor-pointer flex border-b p-3">
+                <img src={TaskIcon} alt="settings" className="w-5 h-5 ml-2" />
+                سفارشات شما
+              </Link>
+              <p onClick={handlerLogOut} className="cursor-pointer flex p-3">
+                <img src={ExitIcon} alt="settings" className="w-5 h-5 ml-2" />
                 خروج
-              </span>
+              </p>
             </div>
           </div>
         )}
