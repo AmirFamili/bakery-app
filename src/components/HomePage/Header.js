@@ -82,8 +82,7 @@ export const Header = () => {
         )}
         {loggedIn && (
           <Link
-            to="cart"
-            onClick={() => setPage("cart")}
+            to="/cart"
             className="flex justify-center items-center m-4 max-xl:mx-1  p-1 rounded-3xl bg-blue-little-light"
           >
             <p className="bg-white p-1 rounded-full w-8 text-primary text-center iranyekan ">
