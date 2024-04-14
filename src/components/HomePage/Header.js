@@ -14,7 +14,7 @@ export const Header = () => {
   const { countAll, convertNumberToFarsi, loggedIn, setLoggedIn, info } =
     useContext(GlobalContext);
   const navigate = useNavigate();
-  const [showLogOut, setShowLogOut] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
 
   const handlerLogOut = () => {
     localStorage.removeItem("access");
@@ -87,8 +87,8 @@ export const Header = () => {
         {loggedIn && (
           <div
             className="relative "
-            onMouseEnter={() => setShowLogOut(true)}
-            onMouseLeave={() => setShowLogOut(false)}
+            onMouseEnter={() => setShowMenu(true)}
+            onMouseLeave={() => setShowMenu(false)}
           >
             <img
               src={ProfileIcon}
@@ -97,12 +97,12 @@ export const Header = () => {
             />
 
             <div
-              className={`absolute top-14 left-6 w-64  max-xl:left-2 border p-5 bg-slate-50  m-1 z-30 rounded-xl iranyekan ${
-                showLogOut ? "block" : "hidden"
+              className={`absolute top-14 left-2 w-56  max-xl:left-2 border p-2 bg-slate-50  m-1 z-30 rounded-2xl iranyekan ${
+                showMenu ? "block" : "hidden"
               }`}
             >
               {" "}
-              <Link to="/profile" className="cursor-pointer flex border-b p-3">
+              <Link to="/profile" onClick={()=>setShowMenu(false)} className="cursor-pointer flex border-b p-3">
                 <img
                   src={SettingIcon}
                   alt="settings"
@@ -110,7 +110,7 @@ export const Header = () => {
                 />{" "}
                 تنظیمات حساب کاربری
               </Link>
-              <Link to="/history" className="cursor-pointer flex border-b p-3">
+              <Link to="/history" onClick={()=>setShowMenu(false)}  className="cursor-pointer flex border-b p-3">
                 <img src={TaskIcon} alt="settings" className="w-5 h-5 ml-2" />
                 سفارشات شما
               </Link>
