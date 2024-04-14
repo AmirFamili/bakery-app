@@ -11,13 +11,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { GlobalContext } from "../../context/ContextWrapper";
 
 export const Header = () => {
-  const {
-    countAll,
-    convertNumberToFarsi,
-    loggedIn,
-    setLoggedIn,
-    info,
-  } = useContext(GlobalContext);
+  const { countAll, convertNumberToFarsi, loggedIn, setLoggedIn, info } =
+    useContext(GlobalContext);
   const navigate = useNavigate();
   const [showLogOut, setShowLogOut] = useState(false);
 
@@ -71,27 +66,22 @@ export const Header = () => {
             alt="Email"
           />
         </a>
+
+        <Link
+          to="/cart"
+          className="flex justify-center items-center m-4 max-xl:mx-1  p-1 rounded-3xl bg-blue-little-light"
+        >
+          <p className="bg-white p-1 rounded-full w-8 text-primary text-center iranyekan ">
+            {convertNumberToFarsi(countAll)}
+          </p>
+          <img src={ShoppingCartWhiteIcon} alt="سبدخرید" className="w-6 mx-2" />
+        </Link>
         {!loggedIn && (
           <Link
             to="/singup"
             className="my-4 mx-5 bg-primary text-font-white rounded-xl shadow-lg py-2 px-9"
           >
             ورود
-          </Link>
-        )}
-        {loggedIn && (
-          <Link
-            to="/cart"
-            className="flex justify-center items-center m-4 max-xl:mx-1  p-1 rounded-3xl bg-blue-little-light"
-          >
-            <p className="bg-white p-1 rounded-full w-8 text-primary text-center iranyekan ">
-              {convertNumberToFarsi(countAll)}
-            </p>
-            <img
-              src={ShoppingCartWhiteIcon}
-              alt="سبدخرید"
-              className="w-6 mx-2"
-            />
           </Link>
         )}
         {loggedIn && (
@@ -112,7 +102,7 @@ export const Header = () => {
               }`}
             >
               {" "}
-              <Link to='/profile' className="cursor-pointer flex border-b p-3">
+              <Link to="/profile" className="cursor-pointer flex border-b p-3">
                 <img
                   src={SettingIcon}
                   alt="settings"
@@ -120,7 +110,7 @@ export const Header = () => {
                 />{" "}
                 تنظیمات حساب کاربری
               </Link>
-              <Link to='/history' className="cursor-pointer flex border-b p-3">
+              <Link to="/history" className="cursor-pointer flex border-b p-3">
                 <img src={TaskIcon} alt="settings" className="w-5 h-5 ml-2" />
                 سفارشات شما
               </Link>
