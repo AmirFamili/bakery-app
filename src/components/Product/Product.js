@@ -18,6 +18,7 @@ export const Product = ({ product }) => {
     products,
     countAll,
     setCountAll,
+    accessToken
   } = useContext(GlobalContext);
 
   useEffect(() => {
@@ -39,7 +40,13 @@ export const Product = ({ product }) => {
 
   const CheckCart = async () => {
     if (!cart) {
-      await axios.post("/order/cart/").then((response) => {
+      await axios.post("/order/cart/",{},{
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
+        },
+      }).then((response) => {
+        console.log(response.data);
         setCart(response.data.id);
         axios
           .post(`/order/cart/${response.data.id}/items/`, {

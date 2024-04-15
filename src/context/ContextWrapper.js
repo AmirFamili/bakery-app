@@ -48,26 +48,26 @@ const ContextWrapper = (props) => {
    
   },[])
 
-  useEffect(() => {
-    if (cart) {
-      const getProduct = async () => {
-        await axios.get(`/order/cart/${cart}`).then((response) => {
-          setTotalPrice(response.data.total_price);
-          setProducts(response.data.items);
-          var x = 0;
-          for (let i = 0; i < response.data.items.length; i++) {
-            x += response.data.items[i].quantity;
-          }
-          setCountAll(x);
-        });
-      };
-      getProduct();
-    }else{
-      setCountAll(0);
-      setProducts(null);
-      setTotalPrice(0)
-    }
-  }, [showProductModel,countAll,cart]);
+  // useEffect(() => {
+  //   if (cart) {
+  //     const getProduct = async () => {
+  //       await axios.get(`/order/cart/${cart}`).then((response) => {
+  //         setTotalPrice(response.data.total_price);
+  //         setProducts(response.data.items);
+  //         var x = 0;
+  //         for (let i = 0; i < response.data.items.length; i++) {
+  //           x += response.data.items[i].quantity;
+  //         }
+  //         setCountAll(x);
+  //       });
+  //     };
+  //     getProduct();
+  //   }else{
+  //     setCountAll(0);
+  //     setProducts(null);
+  //     setTotalPrice(0)
+  //   }
+  // }, [showProductModel,countAll,cart]);
 
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));

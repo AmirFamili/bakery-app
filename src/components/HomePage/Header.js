@@ -67,15 +67,22 @@ export const Header = () => {
           />
         </a>
 
-        <Link
-          to="/cart"
-          className="flex justify-center items-center m-4 max-xl:mx-1  p-1 rounded-3xl bg-blue-little-light"
-        >
-          <p className="bg-white p-1 rounded-full w-8 text-primary text-center iranyekan ">
-            {convertNumberToFarsi(countAll)}
-          </p>
-          <img src={ShoppingCartWhiteIcon} alt="سبدخرید" className="w-6 mx-2" />
-        </Link>
+        {loggedIn && (
+          <Link
+            to="/cart"
+            className="flex justify-center items-center m-4 max-xl:mx-1  p-1 rounded-3xl bg-blue-little-light"
+          >
+            <p className="bg-white p-1 rounded-full w-8 text-primary text-center iranyekan ">
+              {convertNumberToFarsi(countAll)}
+            </p>
+            <img
+              src={ShoppingCartWhiteIcon}
+              alt="سبدخرید"
+              className="w-6 mx-2"
+            />
+          </Link>
+        )}
+        
         {!loggedIn && (
           <Link
             to="/singup"
