@@ -54,11 +54,12 @@ export const InfoSend = () => {
       .then((response) => {
         console.log(response);
         reset();
+        localStorage.removeItem('cart');
+        setCart(null);
+        navigate('/history');
       })
       .catch((err) => console.log(err));
-      localStorage.removeItem('cart');
-      setCart(null);
-      navigate('/history');
+     
   };
 
   return (
