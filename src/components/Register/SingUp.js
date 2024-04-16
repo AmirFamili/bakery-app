@@ -10,7 +10,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
 export const SignUp = () => {
-  const initialTime = 1 * 60;
+  const initialTime = 5 * 60;
 
   const [showPassword, setShowPassword] = useState(false);
   const [showRePassword, setShowRePassword] = useState(false);
@@ -129,7 +129,7 @@ export const SignUp = () => {
               type: "server",
               message: "شما قبلا با این ایمیل ثبت نام کردید.",
             });
-          } else if (response.data.error === "user with this phone number already exists.") {
+          } else if (response.data.error === 'user with this phone number already exists') {
             setError("phoneNumber", {
               type: "server",
               message: "شما قبلا با این تلفن ثبت نام کردید.",
