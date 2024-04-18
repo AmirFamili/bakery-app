@@ -1,13 +1,13 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../../context/ContextWrapper";
 import { Order } from "./Order";
 import axios from "../../api/axios";
 
 export const History = () => {
   const { accessToken } = useContext(GlobalContext);
-
+const [orders,setOrders]=useState(null);
   useEffect(() => {
-    if (accessToken) {
+    if(accessToken){
       const getProduct = async () => {
         const abortController = new AbortController();
         const signal = abortController.signal;
@@ -24,7 +24,7 @@ export const History = () => {
             { signal }
           )
           .then((response) => {
-            console.log(response);
+            setOrders(response.data);
           })
           .catch((err) => console.log(err));
 
@@ -34,7 +34,7 @@ export const History = () => {
       };
       getProduct();
     }
-  }, []);
+  }, [accessToken]);
 
   return (
     <section className="  mt-2 px-10 py-28 max-md:px-5 max-lg:mt-0 h-full min-h-screen max-lg:pt-5 ">
@@ -53,10 +53,10 @@ export const History = () => {
             </tr>
           </thead>
           <tbody>
-            <Order />
+            {orders && orders.map((order)=> <Order key={order.id} order={order}/>)}
           </tbody>
         </table>
-        <div className=""></div>
+     
       </div>
     </section>
   );
