@@ -20,7 +20,6 @@ export const Header = () => {
     setLoggedIn(false);
     navigate("/");
   };
-  console.log(info);
   return (
     <header className="fixed w-11/12 z-40 iranyekan-light flex justify-between items-center bg-white px-2 py-4 border-r-2 border-gray-main max-lg:hidden">
       <div className="mr-5 w-1/2 max-xl:w-2/5 ">

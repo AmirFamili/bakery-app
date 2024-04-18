@@ -1,10 +1,40 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { GlobalContext } from "../../context/ContextWrapper";
 import { Order } from "./Order";
+import axios from "../../api/axios";
 
 export const History = () => {
+  const { accessToken } = useContext(GlobalContext);
 
-  const { convertNumberToFarsi } = useContext(GlobalContext);
+  useEffect(() => {
+    if (accessToken) {
+      const getProduct = async () => {
+        const abortController = new AbortController();
+        const signal = abortController.signal;
+
+        await axios
+          .get(
+            `/order/order/`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${accessToken}`,
+              },
+            },
+            { signal }
+          )
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((err) => console.log(err));
+
+        return () => {
+          abortController.abort();
+        };
+      };
+      getProduct();
+    }
+  }, []);
 
   return (
     <section className="  mt-2 px-10 py-28 max-md:px-5 max-lg:mt-0 h-full min-h-screen max-lg:pt-5 ">
@@ -23,8 +53,7 @@ export const History = () => {
             </tr>
           </thead>
           <tbody>
-           
-            <Order/>
+            <Order />
           </tbody>
         </table>
         <div className=""></div>
