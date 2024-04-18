@@ -9,8 +9,7 @@ export const Product = ({ product }) => {
   const [count, setCount] = useState(0);
   const [id, setId] = useState(null);
   const {
-    cart,
-    setCart,
+  
     convertNumberToFarsi,
     showProductModel,
     setShowProductModel,
@@ -18,7 +17,7 @@ export const Product = ({ product }) => {
     products,
     countAll,
     setCountAll,
-    accessToken
+    accessToken,
   } = useContext(GlobalContext);
 
   useEffect(() => {
@@ -30,7 +29,7 @@ export const Product = ({ product }) => {
         }
       }
     }
-  }, []);
+  }, [products]);
 
   const handlerCheckCount = () => {
     if (count > 0) {
@@ -39,70 +38,100 @@ export const Product = ({ product }) => {
   };
 
   const CheckCart = async () => {
-    if (!cart) {
-      await axios.post("/order/cart/",{},{
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`,
-        },
-      }).then((response) => {
-        console.log(response.data);
-        setCart(response.data.id);
-        axios
-          .post(`/order/cart/${response.data.id}/items/`, {
-            cake_id: product.id,
-            quantity: 1,
-            unit_measure: product.pricemodel_set[0].unit_measure_id,
-          })
-          .then((response) => {
-            setId(response.data.id);
-          });
-      });
-    } else {
-      if (count >= 1) {
-        if (id) {
-          await axios
-            .patch(`/order/cart/${cart}/items/${id}/`, {
-              quantity: count + 1,
-            })
-            .then((response) => {});
-        }
-      } else {
+    if (count === 0) {
+      axios
+        .post(
+          `/order/items/`,
+          {
+            cake_id:product.id,
+            quantity:1,
+            unit_measure:product.pricemodel_set[0].unit_measure_id,
+          
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        )
+        .then((response) => {
+          setCount(count + 1);
+          console.log(response);
+          setId(response.data.id);
+          setCountAll(countAll + 1);
+        });
+    } else if (count >= 1) {
+      if (id) {
         await axios
-          .post(`/order/cart/${cart}/items/`, {
-            cake_id: product.id,
-            quantity: 1,
-            unit_measure: product.pricemodel_set[0].unit_measure_id,
-          })
+          .patch(
+            `/order/items/${id}/`,
+            {
+              quantity: count + 1,
+              unit_measure:product.pricemodel_set[0].unit_measure_id,
+            },
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${accessToken}`,
+              },
+            }
+          )
           .then((response) => {
-            setId(response.data.id);
+            setCount(count + 1);
+            console.log(response);
+            setCountAll(countAll + 1);
+           
           });
       }
     }
   };
   const handlerIncrease = () => {
     CheckCart();
-    setCountAll(countAll + 1);
-    setCount(count + 1);
+  
+   
   };
+  
   const handlerDecrease = async () => {
     if (count > 0) {
       if (count > 1) {
         if (id) {
-          setCountAll(countAll - 1);
-          setCount(count - 1);
+         
+         
           await axios
-            .patch(`/order/cart/${cart}/items/${id}/`, {
-              quantity: count - 1,
-            })
-            .then((response) => {});
+            .patch(
+              `/order/items/${id}/`,
+              {
+                quantity: count - 1,
+                unit_measure:product.pricemodel_set[0].unit_measure_id,
+              },
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${accessToken}`,
+                },
+              }
+            )
+            .then((response) => {
+              setCount(count-1);
+               setCountAll(countAll - 1);
+             });
         }
       } else if (count === 1) {
-        setCountAll(countAll - 1);
-        setCount(count - 1);
+       
         await axios
-          .delete(`/order/cart/${cart}/items/${id}/`)
-          .then((response) => {});
+          .delete(`/order/items/${id}/`, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${accessToken}`,
+            },
+          })
+          .then((response) => {
+            setCount(count - 1);
+            console.log(response);
+            setCountAll(countAll - 1);
+           
+          });
       }
     }
   };

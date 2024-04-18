@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import EmailGrayIcon from "../../images/icons/email-gray.png";
 import KeyIcon from "../../images/icons/key.png";
 import EyeIcon from "../../images/icons/eye.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "../../api/axios";
 import { GlobalContext } from "../../context/ContextWrapper";
 import { useForm } from "react-hook-form";
@@ -12,8 +12,8 @@ import * as Yup from "yup";
 export const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showRePassword, setShowRePassword] = useState(false);
-  const navigate = useNavigate();
-  const { logo } = useContext(GlobalContext);
+  
+  const { logo , navigate} = useContext(GlobalContext);
 
   const validationSchema = Yup.object().shape({
     email: Yup.string()

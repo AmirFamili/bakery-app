@@ -7,13 +7,13 @@ import ShoppingCartWhiteIcon from "../../images/icons/shopping-cart-white.png";
 import ExitIcon from "../../images/icons/exit.png";
 import TaskIcon from "../../images/icons/task.png";
 import SettingIcon from "../../images/icons/setting.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { GlobalContext } from "../../context/ContextWrapper";
 
 export const Header = () => {
-  const { countAll, convertNumberToFarsi, loggedIn, setLoggedIn, info } =
+  const { countAll, convertNumberToFarsi, loggedIn, setLoggedIn, info,navigate } =
     useContext(GlobalContext);
-  const navigate = useNavigate();
+ 
   const [showLogOut, setShowLogOut] = useState(false);
 
   const handlerLogOut = () => {
