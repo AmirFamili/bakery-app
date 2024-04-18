@@ -10,12 +10,14 @@ export const InfoSend = () => {
   const {
     convertNumberToFarsi,
     totalPrice,
+    totalDiscount,
     accessToken,
     cart,
     setCart,
     deliveryPrice,
     totalPayment,
     setCountAll,
+   
   } = useContext(GlobalContext);
 
   const validationSchema = Yup.object().shape({
@@ -195,7 +197,7 @@ export const InfoSend = () => {
           <div className="flex justify-between items-center text-gray-600">
             <h3 className="iranyekan-little-light"> مجموع تخفیف:</h3>
             <h3 className="iranyekan-little-light">
-              {convertNumberToFarsi(0)} تومان
+              {convertNumberToFarsi( totalDiscount)} تومان
             </h3>
           </div>
 
