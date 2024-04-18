@@ -2,7 +2,7 @@ import React, { useState, useContext,useEffect} from "react";
 import EmailGrayIcon from "../../images/icons/email-gray.png";
 import KeyIcon from "../../images/icons/key.png";
 import EyeIcon from "../../images/icons/eye.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
 import { GlobalContext } from "../../context/ContextWrapper";
 import { useForm } from "react-hook-form";
@@ -14,13 +14,67 @@ import * as Yup from "yup";
 export const Login = () => {
 
   const initialTime = 5 * 60;
+
   const [showPassword, setShowPassword] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [email, setEmail] = useState();
   const [showVerify, setShowVerify] = useState(false);
   const [time, setTime] = useState(initialTime);
   const [timerActive, setTimerActive] = useState(false);
-  const { setLoggedIn, logo ,navigate} = useContext(GlobalContext);
+
+  const navigate = useNavigate();
+  const { setLoggedIn, logo } = useContext(GlobalContext);
+
+  useEffect(() => {
+    let interval;
+
+    if (timerActive) {
+      interval = setInterval(() => {
+        setTime((prevTime) => {
+          if (prevTime === 0) {
+            clearInterval(interval);
+            setTimerActive(false);
+            setButtonDisabled(false);
+
+            return 0;
+          }
+          return prevTime - 1;
+        });
+      }, 1000);
+    } else {
+      clearInterval(interval);
+    }
+
+    return () => clearInterval(interval);
+  }, [timerActive]);
+
+  const formatTime = (time) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = time % 60;
+    return `${minutes.toString().padStart(2, "0")}:${seconds
+      .toString()
+      .padStart(2, "0")}`;
+  };
+
+  useEffect(() => {
+    const email = localStorage.getItem("email");
+    if (email) {
+      setEmail(email);
+    }
+  }, []);
+
+  const handlerVerify = async () => {
+    await axios
+      .post("/auth/verify_email/", {
+        email: email,
+      })
+      .then((response) => {console.log(response);});
+    setTime(initialTime);
+    setTimerActive(true);
+    setButtonDisabled(true);
+  };
+
+
 
   const validationSchema = Yup.object().shape({
     email: Yup.string()
