@@ -9,7 +9,7 @@ export const Product = ({ product }) => {
   const [count, setCount] = useState(0);
   const [id, setId] = useState(null);
   const {
-  
+  loggedIn,
     convertNumberToFarsi,
     showProductModel,
     setShowProductModel,
@@ -18,6 +18,7 @@ export const Product = ({ product }) => {
     countAll,
     setCountAll,
     accessToken,
+    navigate
   } = useContext(GlobalContext);
 
   useEffect(() => {
@@ -86,8 +87,14 @@ export const Product = ({ product }) => {
       }
     }
   };
+
   const handlerIncrease = () => {
-    CheckCart();
+    if(loggedIn){
+       CheckCart();
+    }else{
+navigate('/login')
+    }
+   
   
    
   };
