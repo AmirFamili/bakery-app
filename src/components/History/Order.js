@@ -1,27 +1,28 @@
 import React, { useContext } from "react";
 import { GlobalContext } from "../../context/ContextWrapper";
 
-export const Order = (order,key) => {
+export const Order = ({order,key,index}) => {
+
   const { convertNumberToFarsi } = useContext(GlobalContext);
   return (
     <tr key={key} className="iranyekan-little-light  border-b  text-center">
-      <td className="border-l w-10 p-7 max-md:w-5 max-md:p-5">1</td>
+      <td className="border-l w-10 p-7 max-md:w-5 max-md:p-5">{index+1}</td>
       <td className="w-64">
         <ul className="list-disc w-2/3  mx-auto pr-5 py-3">
           {order &&
-            order.order.items.map((item) => (
+            order.items.map((item) => (
           <li key={item.id} className="text-right py-0.5">{item.cake.title} - {item.quantity}</li>
         
             ))}
             
         </ul>
       </td>
-      <td className="w-52 "> { order && order.order.payment_status==='P'?<span className="text-orange-300">درحال آماده سازی</span>:''}</td>
+      <td className="w-52 "> { order && order.payment_status==='P'?<span className="text-orange-300">درحال آماده سازی</span>:''}</td>
       <td className="w-52 ">{convertNumberToFarsi(600.0)}تومان</td>
       <td className="w-52 ">_</td>
-      <td className="w-32 max-md:hidden">{convertNumberToFarsi(order && order.order.code)}</td>
+      <td className="w-32 max-md:hidden">{convertNumberToFarsi(order && order.code)}</td>
       <td className="w-32 max-md:hidden">
-        {convertNumberToFarsi(order && order.order.created_at.split("T")[0])}
+        {convertNumberToFarsi(order && order.created_at.split("T")[0])}
       </td>
       <td className="my-4 ml-2 hidden max-md:block">
         <svg

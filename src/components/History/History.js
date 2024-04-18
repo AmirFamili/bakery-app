@@ -53,7 +53,7 @@ const [orders,setOrders]=useState(null);
             </tr>
           </thead>
           <tbody>
-            {orders && orders.map((order)=> <Order key={order.id} order={order}/>)}
+            {orders && orders.map((order,index)=> <Order key={order.id} order={order} index={index}/>)}
           </tbody>
         </table>
      
