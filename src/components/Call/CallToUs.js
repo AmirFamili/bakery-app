@@ -43,9 +43,10 @@ export const CallToUs = () => {
       .catch((err) => console.log(err));
   };
   return (
-    <section className="  mt-2 px-10 py-28 max-md:px-5 max-lg:mt-0 h-full min-h-screen max-lg:pt-5 ">
+    <section className="  mt-2 px-10 py-28 max-md:px-5 max-lg:mt-0 h-full min-h-screen max-lg:pt-5 relative">
       <h1 className="py-5 iranyekan-very-bold ">ارتباط با ما</h1>
-      <div className="flex justify-center items-center mt-5 relative">
+      <div className="flex justify-between ">
+      <div className="mt-5 ">
         <div className="max-md:w-full ">
           <h2 className="iranyekan text-center">
             لطفا نظرات خود را در رابطه با خدمات ما بنویسید
@@ -128,6 +129,10 @@ export const CallToUs = () => {
             پیام شما ارسال شد.
           </div>
         </div>
+      </div>
+      <div className="w-1/2  absolute top-24 left-0 bottom-0">
+        <img src="" alt="تماس با ما"  />
+      </div>
       </div>
     </section>
   );
