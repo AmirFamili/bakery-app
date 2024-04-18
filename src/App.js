@@ -1,5 +1,5 @@
-import React, { useEffect, useContext } from "react";
-import { Routes, Route, Outlet, useNavigate } from "react-router-dom";
+import React from "react";
+import { Routes, Route, Outlet } from "react-router-dom";
 import { Login } from "./components/Register/Login";
 import { SignUp } from "./components/Register/SingUp";
 import { ChangePassword } from "./components/Register/ChangePassword";
@@ -9,49 +9,16 @@ import { HeaderMobile } from "./components/HomePage/Mobile/HeaderMobile";
 import { Sidebar } from "./components/HomePage/Sidebar";
 import { Home } from "./components/HomePage/Home";
 import { Products } from "./components/Customer/Products";
-import { GlobalContext } from "./context/ContextWrapper";
 import { Cart } from "./components/Customer/Cart/Cart";
 import { CallToUs } from "./components/Call/CallToUs";
 import { History } from "./components/History/History";
 import { Profile } from "./components/Profile/Profile";
-import axios from "./api/axios";
 import { InfoCart } from "./components/Customer/Cart/InfoCart";
 import { InfoSend } from "./components/Customer/Cart/InfoSend";
 import { AboutUs } from "./components/AboutUs/AboutUs";
 
 function App() {
-  const { setLoggedIn, setAccessToken } = useContext(GlobalContext);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const refreshTokens = () => {
-      if (localStorage.refresh) {
-        axios
-          .post("/auth/refresh/", {
-            refresh: localStorage.refresh.split('"')[1],
-          })
-          .then((response) => {
-            if (response.data.access) {
-              setAccessToken(response.data.access);
-              localStorage.setItem(
-                "access",
-                JSON.stringify(response.data.access)
-              );
-              setLoggedIn(true);
-            }
-          })
-          .catch((err) => {
-            localStorage.removeItem("access");
-            localStorage.removeItem("refresh");
-            navigate("/login");
-          });
-      }
-    };
-    refreshTokens();
-    const minute = 1000 * 60;
-    setInterval(refreshTokens, minute * 1);
-  }, []);
-
+  
   return (
     <div dir="rtl" className="App relative">
       <Routes>

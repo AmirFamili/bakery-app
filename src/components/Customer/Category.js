@@ -1,12 +1,11 @@
 import React, { useEffect, useContext, useState } from "react";
-import { Outlet, Link, useParams, useNavigate } from "react-router-dom";
+import { Outlet, Link, useParams} from "react-router-dom";
 import { GlobalContext } from "../../context/ContextWrapper";
 import axios from "../../api/axios";
 
 export const Category = () => {
-  const { categoryPage, setCategoryPage } = useContext(GlobalContext);
+  const { categoryPage, setCategoryPage,navigate } = useContext(GlobalContext);
   const params = useParams();
-  const navigate = useNavigate();
   const [groupsData, setGroupsData] = useState();
 
   useEffect(() => {

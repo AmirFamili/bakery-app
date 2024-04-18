@@ -7,13 +7,13 @@ import ShoppingCartWhiteIcon from "../../images/icons/shopping-cart-white.png";
 import ExitIcon from "../../images/icons/exit.png";
 import TaskIcon from "../../images/icons/task.png";
 import SettingIcon from "../../images/icons/setting.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { GlobalContext } from "../../context/ContextWrapper";
 
 export const Header = () => {
-  const { countAll, convertNumberToFarsi, loggedIn, setLoggedIn, info } =
+  const { countAll, convertNumberToFarsi, loggedIn, setLoggedIn, info,navigate } =
     useContext(GlobalContext);
-  const navigate = useNavigate();
+ 
   const [showLogOut, setShowLogOut] = useState(false);
 
   const handlerLogOut = () => {
@@ -67,15 +67,22 @@ export const Header = () => {
           />
         </a>
 
-        <Link
-          to="/cart"
-          className="flex justify-center items-center m-4 max-xl:mx-1  p-1 rounded-3xl bg-blue-little-light"
-        >
-          <p className="bg-white p-1 rounded-full w-8 text-primary text-center iranyekan ">
-            {convertNumberToFarsi(countAll)}
-          </p>
-          <img src={ShoppingCartWhiteIcon} alt="سبدخرید" className="w-6 mx-2" />
-        </Link>
+        {loggedIn && (
+          <Link
+            to="/cart"
+            className="flex justify-center items-center m-4 max-xl:mx-1  p-1 rounded-3xl bg-blue-little-light"
+          >
+            <p className="bg-white p-1 rounded-full w-8 text-primary text-center iranyekan ">
+              {convertNumberToFarsi(countAll)}
+            </p>
+            <img
+              src={ShoppingCartWhiteIcon}
+              alt="سبدخرید"
+              className="w-6 mx-2"
+            />
+          </Link>
+        )}
+        
         {!loggedIn && (
           <Link
             to="/singup"
