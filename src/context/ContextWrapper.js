@@ -99,8 +99,7 @@ const ContextWrapper = (props) => {
               if (response.data[0].delivery_method) {
                 setDeliveryPrice(response.data[0].delivery_method.cost);
                 setDeliveryId(response.data[0].delivery_method.id);
-                setTotalDiscount(response.data[0].total_discount)
-               
+                setTotalDiscount(response.data[0].total_discount);
               }
               setTotalPayment(response.data[0].total_payment);
               setTotalPrice(response.data[0].total_price);
