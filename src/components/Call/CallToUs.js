@@ -46,15 +46,15 @@ export const CallToUs = () => {
     <section className="  mt-2 px-10 py-28 max-md:px-5 max-lg:mt-0 h-full min-h-screen max-lg:pt-5 relative">
       <h1 className="py-5 iranyekan-very-bold ">ارتباط با ما</h1>
       <div className="flex justify-between ">
-      <div className="mt-5 ">
-        <div className="max-md:w-full ">
-          <h2 className="iranyekan text-center">
+     
+        <div className="mt-5 max-sm:w-2/3">
+          <h2 className="iranyekan ">
             لطفا نظرات خود را در رابطه با خدمات ما بنویسید
           </h2>
 
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className=" mx-auto my-7   max-sm:text-sm max-md:w-4/5 "
+            className=" mx-auto my-7   max-sm:text-sm  "
           >
             <div className="pb-3">
               <input
@@ -129,8 +129,8 @@ export const CallToUs = () => {
             پیام شما ارسال شد.
           </div>
         </div>
-      </div>
-      <div className="w-1/2  absolute top-24 left-0 bottom-0">
+      
+      <div className="w-1/2  absolute top-24 left-0 bottom-0 max-lg:hidden">
         <img src="" alt="تماس با ما"  />
       </div>
       </div>
