@@ -14,8 +14,62 @@ export const SignUp = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showRePassword, setShowRePassword] = useState(false);
-  const navigate = useNavigate();
+  const [email, setEmail] = useState();
+  const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [showVerify, setShowVerify] = useState(false);
+  const [time, setTime] = useState(initialTime);
+  const [timerActive, setTimerActive] = useState(false);
+
   const { logo } = useContext(GlobalContext);
+
+  useEffect(() => {
+    let interval;
+
+    if (timerActive) {
+      interval = setInterval(() => {
+        setTime((prevTime) => {
+          if (prevTime === 0) {
+            clearInterval(interval);
+            setTimerActive(false);
+            setButtonDisabled(false);
+
+            return 0;
+          }
+          return prevTime - 1;
+        });
+      }, 1000);
+    } else {
+      clearInterval(interval);
+    }
+
+    return () => clearInterval(interval);
+  }, [timerActive]);
+
+  const formatTime = (time) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = time % 60;
+    return `${minutes.toString().padStart(2, "0")}:${seconds
+      .toString()
+      .padStart(2, "0")}`;
+  };
+
+  useEffect(() => {
+    const email = localStorage.getItem("email");
+    if (email) {
+      setEmail(email);
+    }
+  }, []);
+
+  const handlerVerify = async () => {
+    await axios
+      .post("/auth/verify_email/", {
+        email: email,
+      })
+      .then((response) => {});
+    setTime(initialTime);
+    setTimerActive(true);
+    setButtonDisabled(true);
+  };
 
   const validationSchema = Yup.object().shape({
     firstName: Yup.string()

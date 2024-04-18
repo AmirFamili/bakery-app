@@ -14,10 +14,13 @@ import * as Yup from "yup";
 export const Login = () => {
 
   const initialTime = 5 * 60;
-
   const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();
-  const { setLoggedIn, logo } = useContext(GlobalContext);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [email, setEmail] = useState();
+  const [showVerify, setShowVerify] = useState(false);
+  const [time, setTime] = useState(initialTime);
+  const [timerActive, setTimerActive] = useState(false);
+  const { setLoggedIn, logo ,navigate} = useContext(GlobalContext);
 
   const validationSchema = Yup.object().shape({
     email: Yup.string()
