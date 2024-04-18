@@ -1,11 +1,67 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ArrowLeftIcon from "../../../images/icons/arrow-left.png";
 import { GlobalContext } from "../../../context/ContextWrapper";
 import { CartProduct } from "./CartProduct";
-import {Link} from 'react-router-dom';
+import axios from "../../../api/axios";
 
 export const InfoCart = () => {
-  const { convertNumberToFarsi, products } = useContext(GlobalContext);
+  const { convertNumberToFarsi, products, accessToken, countAll, cart,navigate,deliveryId  } =
+    useContext(GlobalContext);
+
+  const [delivery, setDelivery] = useState();
+  const [selectedDelivery, setSelectedDelivery] = useState(deliveryId);
+
+  useEffect(() => {
+    if (accessToken) {
+      const getProduct = async () => {
+        const abortController = new AbortController();
+        const signal = abortController.signal;
+
+        await axios
+          .get(
+            `/order/delivery/`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${accessToken}`,
+              },
+            },
+            { signal }
+          )
+          .then((response) => {
+            setDelivery(response.data);
+          })
+          .catch((err) => console.log(err));
+
+        return () => {
+          abortController.abort();
+        };
+      };
+      getProduct();
+    }
+  }, [accessToken]);
+
+  const clickHandler = async () => {
+    if (cart) {
+      await axios
+        .patch(
+          `/order/cart/${cart}/`,
+          {
+            delivery_method: selectedDelivery,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        )
+        .then((response) => {
+          navigate("/cart/show-info") 
+        })
+        .catch((err) => console.log(err));
+    }
+  };
 
   return (
     <div className="min-h-96 mt-5 p-1 pb-0 flex justify-center  border  rounded-2xl bg-white max-md:block ">
@@ -33,38 +89,42 @@ export const InfoCart = () => {
       <div className="w-1/3 p-5 relative max-md:w-full  max-md:flex max-md:justify-between ">
         <div className="mt-3">
           <h3 className="iranyekan-little-light"> نحوه تحویل سفارش:</h3>
-          <div className="flex mt-5">
-            <input type="radio" name="price" className=" accent-primary" />
+          {delivery &&
+            delivery.map((delivey) => (
+              <div key={delivey.id} className="flex mt-5">
+                <input
+                  type="radio"
+                  checked={selectedDelivery === delivey.id}
+                  onChange={() => setSelectedDelivery(delivey.id)}
+                  name="price"
+                  className=" accent-primary"
+                />
 
-            <p className="pr-2 iranyekan-very-light-white">
-              تحویل حضوری _
-              <span className="iranyekan-very-light-small">
-                هزینه ارسال رایگان
-              </span>
-            </p>
-          </div>
-          <div className="flex mt-5 ">
-            <input type="radio" name="price" className="accent-primary" />
-
-            <p className="pr-2 iranyekan-very-light-white">
-              تحویل با پیک _
-              <span className="iranyekan-very-light-small">
-                هزینه ارسال {convertNumberToFarsi("40,000")} تومان
-              </span>
-            </p>
-          </div>
+                <p className="pr-2 iranyekan-very-light-white">
+                  {delivey.name} _{" "}
+                  <span className="iranyekan-very-light-small">
+                    هزینه ارسال{" "}
+                    {delivey.cost === 0
+                      ? "رایگان"
+                      : convertNumberToFarsi(delivey.cost)}{" "}
+                  </span>
+                </p>
+              </div>
+            ))}
         </div>
         <div className="absolute bottom-5 right-28 max-xl:right-12 max-md:static max-md:mt-10">
-          <Link to={'/cart/show-info'}><button
-            
-            className=" text-center w-52 flex justify-center items-center my-5 bg-primary text-font-white  rounded-xl shadow-xl py-2 px-1 vazir-regular  max-lg:max-w-48  max-md:w-32"
-          >
-            تایید و تکمیل سفارش
-            <img src={ArrowLeftIcon} alt=" Arrow Left" className="w-5 mx-2" />
-          </button></Link>
+         
+            <button
+              onClick={clickHandler}
+              disabled={countAll === 0 ? true : selectedDelivery ? false : true}
+              className=" text-center w-52 flex justify-center items-center my-5 bg-primary text-font-white  rounded-xl shadow-xl py-2 px-1 vazir-regular  max-lg:max-w-48  max-md:w-32"
+            >
+              تایید و تکمیل سفارش
+              <img src={ArrowLeftIcon} alt=" Arrow Left" className="w-5 mx-2" />
+            </button>
+         
         </div>
       </div>
     </div>
   );
 };
-

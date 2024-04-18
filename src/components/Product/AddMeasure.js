@@ -12,8 +12,7 @@ export const AddMeasure = ({ measure, product }) => {
     convertNumberToFarsi,
     activeMeasure,
     setActiveMeasure,
-    cart,
-    setCart,
+    accessToken,
     products,
     countAll,
     setCountAll,
@@ -23,12 +22,23 @@ export const AddMeasure = ({ measure, product }) => {
     if (products) {
       for (let i = 0; i < products.length; i++) {
         if (products[i].cake.title === product.title) {
-          setCount(products[i].quantity);
-          setId(products[i].id);
+         
+          for (let y = 0; y < products[i].cake.pricemodel_set.length; y++) {
+            if (
+              products[i].cake.pricemodel_set[y].unit_measure_id ===
+              measure.unit_measure_id
+            ) {
+              if (products[i].cake.pricemodel_set[y].choice === true) {
+                setActiveMeasure(measure.unit_measure_id);
+                setCount(products[i].quantity);
+                setId(products[i].id);
+              }
+            }
+          }
         }
       }
     }
-  }, []);
+  }, [products,activeMeasure]);
 
   const handleChange = (event) => {
     setActiveMeasure(event.target.value);
@@ -41,41 +51,46 @@ export const AddMeasure = ({ measure, product }) => {
   };
 
   const CheckCart = async () => {
-    if (!cart) {
-      await axios.post("/order/cart/").then((response) => {
-        setCart(response.data.id);
-        axios
-          .post(`/order/cart/${response.data.id}/items/`, {
+    if (count === 0) {
+      axios
+        .post(
+          `/order/items/`,
+          {
             cake_id: product.id,
             quantity: 1,
             unit_measure: measure.unit_measure_id,
-          })
-          .then((response) => {
-            setId(response.data.id);
-            console.log(response);
-          });
-      });
-    } else {
-      if (count >= 1) {
-        if (id) {
-          await axios
-            .patch(`/order/cart/${cart}/items/${id}/`, {
-              quantity: count + 1,
-            })
-            .then((response) => {
-              console.log(response);
-            });
-        }
-      } else {
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response);
+          setId(response.data.id);
+          setCountAll(countAll + 1);
+        });
+    } else if (count >= 1) {
+      if (id) {
         await axios
-          .post(`/order/cart/${cart}/items/`, {
-            cake_id: product.id,
-            quantity: 1,
-            unit_measure: measure.unit_measure_id,
-          })
+          .patch(
+            `/order/items/${id}/`,
+            {
+              quantity: count + 1,
+              unit_measure: measure.unit_measure_id,
+            },
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${accessToken}`,
+              },
+            }
+          )
           .then((response) => {
-            setId(response.data.id);
             console.log(response);
+            setCountAll(countAll + 1);
           });
       }
     }
@@ -92,20 +107,35 @@ export const AddMeasure = ({ measure, product }) => {
         if (id) {
           setCount(count - 1);
           await axios
-            .patch(`/order/cart/${cart}/items/${id}/`, {
-              quantity: count - 1,
-            })
+            .patch(
+              `/order/items/${id}/`,
+              {
+                quantity: count - 1,
+                unit_measure: measure.unit_measure_id,
+              },
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${accessToken}`,
+                },
+              }
+            )
             .then((response) => {
-              console.log(response);
+              setCountAll(countAll - 1);
             });
         }
       } else if (count === 1) {
-        setCountAll(countAll - 1);
         setCount(count - 1);
         await axios
-          .delete(`/order/cart/${cart}/items/${id}/`)
+          .delete(`/order/items/${id}/`, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${accessToken}`,
+            },
+          })
           .then((response) => {
             console.log(response);
+            setCountAll(countAll - 1);
           });
       }
     }
@@ -153,7 +183,7 @@ export const AddMeasure = ({ measure, product }) => {
           <img src={MinusIcon} alt="minus" />
         </button>
 
-        <p className={`px-2 w-7 hidden iranyekan ${handlerCheckCount()} `}>
+        <p className={`px-2 w-7  iranyekan  hidden ${handlerCheckCount()} `}>
           {convertNumberToFarsi(count)}
         </p>
 

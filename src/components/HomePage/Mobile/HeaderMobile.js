@@ -4,13 +4,13 @@ import ProfileIcon from "../../../images/icons/profile.png";
 import ShoppingCartIcon from "../../../images/icons/shopping-cart-black.png";
 import Menu from "../../../images/icons/menu.png";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { GlobalContext } from "../../../context/ContextWrapper";
 
 export const HeaderMobile = () => {
-  const { loggedIn, setLoggedIn } =
+  const { loggedIn, setLoggedIn , navigate} =
     useContext(GlobalContext);
-  const navigate = useNavigate();
+ 
   const [showLogOut, setShowLogOut] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
 

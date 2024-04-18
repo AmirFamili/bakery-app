@@ -7,8 +7,24 @@ import axios from "../../../api/axios";
 
 export const CartProduct = ({ product, number }) => {
   const [id, setId] = useState(null);
-  const { convertNumberToFarsi, countAll, setCountAll, cart } =
+  const [price, setPrice] = useState();
+  const [measureId, setMeasureId] = useState(null);
+  const [count, setCount] = useState(product.quantity);
+  const { convertNumberToFarsi, countAll, setCountAll, accessToken } =
     useContext(GlobalContext);
+
+  useEffect(() => {
+    for (let i = 0; i < product.cake.pricemodel_set.length; i++) {
+      if (product.cake.pricemodel_set[i].choice === true) {
+        setMeasureId(product.cake.pricemodel_set[i].unit_measure_id);
+        if (product.cake.pricemodel_set[i].price_with_discount) {
+          setPrice(product.cake.pricemodel_set[i].price_with_discount);
+        } else {
+          setPrice(product.cake.pricemodel_set[i].price_per_unit);
+        }
+      }
+    }
+  }, []);
 
   useEffect(() => {
     if (product) {
@@ -19,43 +35,79 @@ export const CartProduct = ({ product, number }) => {
   const CheckCart = async () => {
     if (id) {
       await axios
-        .patch(`/order/cart/${cart}/items/${id}/`, {
-          quantity: product.quantity + 1,
-        })
-        .then((response) => {});
+        .patch(
+          `/order/items/${id}/`,
+          {
+            quantity: product.quantity + 1,
+            unit_measure: measureId,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        )
+        .then((response) => {
+          setCountAll(countAll + 1);
+          setCount(count + 1);
+        });
     }
   };
 
   const handlerIncrease = () => {
     CheckCart();
-    setCountAll(countAll + 1);
   };
   const handlerDecrease = async () => {
     if (product.quantity > 0) {
       if (product.quantity > 1) {
         if (id) {
-          setCountAll(countAll - 1);
           await axios
-            .patch(`/order/cart/${cart}/items/${id}/`, {
-              quantity: product.quantity - 1,
-            })
-            .then((response) => {});
+            .patch(
+              `/order/items/${id}/`,
+              {
+                quantity: product.quantity - 1,
+                unit_measure: measureId,
+              },
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${accessToken}`,
+                },
+              }
+            )
+            .then((response) => {
+              setCountAll(countAll - 1);
+              setCount(count - 1);
+            });
         }
       } else if (product.quantity === 1) {
-        setCountAll(countAll - 1);
         await axios
-          .delete(`/order/cart/${cart}/items/${id}/`)
+          .delete(`/order/items/${id}/`, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${accessToken}`,
+            },
+          })
           .then((response) => {
-            window.location.reload();
+            setCountAll(countAll - 1);
+            setCount(count - 1);
           });
       }
     }
   };
 
   const handlerDelete = async () => {
-    await axios.delete(`/order/cart/${cart}/items/${id}/`).then((response) => {
-      window.location.reload();
-    });
+    await axios
+      .delete(`/order/items/${id}/`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((response) => {
+        setCountAll(countAll - count);
+      });
   };
 
   return (
@@ -71,12 +123,7 @@ export const CartProduct = ({ product, number }) => {
           <p className="">{product.cake.title}</p>
         </div>
       </td>
-      <td className="w-52 ">
-        {product.cake.pricemodel_set[0].price_with_discount
-          ? product.cake.pricemodel_set[0].price_with_discount
-          : product.cake.pricemodel_set[0].price_per_unit}{" "}
-        تومان
-      </td>
+      <td className="w-52 ">{price} تومان</td>
       <td className="w-52 ">
         {" "}
         <div className="flex justify-center items-center">
@@ -87,7 +134,7 @@ export const CartProduct = ({ product, number }) => {
             <img src={MinusIcon} alt="minus" />
           </button>
           <p className="w-7 text-center  iranyekan max-md:w-5">
-            {convertNumberToFarsi(product.quantity)}
+            {convertNumberToFarsi(count)}
           </p>
           <button
             onClick={handlerIncrease}

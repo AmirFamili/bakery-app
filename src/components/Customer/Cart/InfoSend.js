@@ -1,15 +1,23 @@
 import React, { useContext } from "react";
 import { GlobalContext } from "../../../context/ContextWrapper";
-import { Link ,useNavigate} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import axios from "../../../api/axios";
 
 export const InfoSend = () => {
-  const { convertNumberToFarsi, totalPrice, cart, accessToken, setCart } =
-    useContext(GlobalContext);
-    const navigate = useNavigate();
+  const {
+    convertNumberToFarsi,
+    totalPrice,
+    accessToken,
+    cart,
+    setCart,
+    deliveryPrice,
+    totalPayment,
+    setCountAll,
+  } = useContext(GlobalContext);
+
   const validationSchema = Yup.object().shape({
     name: Yup.string()
       .required("لطفا این قسمت را خالی نگذارید.")
@@ -39,26 +47,25 @@ export const InfoSend = () => {
   } = useForm({ resolver: yupResolver(validationSchema) });
 
   const onSubmit = async (values) => {
-   
     await axios
       .post(
         "/order/order/",
         { cart_id: cart },
         {
           headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
           },
         }
       )
       .then((response) => {
         console.log(response);
-        reset();
+        setCountAll(0);
+        localStorage.removeItem("cart");
+        setCart(null);
+        window.location.href = "http://localhost:3000/history"
       })
       .catch((err) => console.log(err));
-      localStorage.removeItem('cart');
-      setCart(null);
-      navigate('/history');
   };
 
   return (
@@ -188,14 +195,16 @@ export const InfoSend = () => {
           <div className="flex justify-between items-center text-gray-600">
             <h3 className="iranyekan-little-light"> مجموع تخفیف:</h3>
             <h3 className="iranyekan-little-light">
-              {convertNumberToFarsi(530000)} تومان
+              {convertNumberToFarsi(0)} تومان
             </h3>
           </div>
 
           <div className="flex justify-between items-center mt-7 text-gray-600">
             <h3 className="iranyekan-little-light "> هزینه ارسال:</h3>
             <h3 className="iranyekan-little-light">
-              {convertNumberToFarsi(40000)} تومان
+              {deliveryPrice === 0
+                ? "رایگان"
+                : convertNumberToFarsi(deliveryPrice) + " تومان"}
             </h3>
           </div>
 
@@ -209,7 +218,7 @@ export const InfoSend = () => {
 
           <div className="flex justify-between items-center mt-7 iranyekan">
             <h3> قابل پرداخت:</h3>
-            <h3>{convertNumberToFarsi(totalPrice)} تومان</h3>
+            <h3>{convertNumberToFarsi(totalPayment)} تومان</h3>
           </div>
         </div>
 

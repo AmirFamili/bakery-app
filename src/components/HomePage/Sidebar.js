@@ -7,17 +7,15 @@ import CallWhiteIcon from "../../images/icons/call-white.png";
 import CallIcon from "../../images/icons/call-gray.png";
 import AboutIcon from "../../images/icons/about.png";
 import AboutWhiteIcon from "../../images/icons/about-white.png";
-import ProfileIcon from "../../images/icons/profile.png";
-import ProfileWhiteIcon from "../../images/icons/profile-white.png";
-import TaskSquareIcon from "../../images/icons/task-square.png";
-import TaskSquareWhiteIcon from "../../images/icons/task-square-white.png";
-import ShoppingCartIcon from "../../images/icons/shopping-cart.png";
-import ShoppingCartWhiteIcon from "../../images/icons/shopping-cart-white.png";
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
 import { GlobalContext } from "../../context/ContextWrapper";
 import axios from "../../api/axios";
 
 export const Sidebar = () => {
+
+  const { setCategoryPage, categoryPage, logo } =
+  useContext(GlobalContext);
+  
   useEffect(() => {
     const abortController = new AbortController();
     const signal = abortController.signal;
@@ -34,8 +32,7 @@ export const Sidebar = () => {
     };
   }, []);
 
-  const { loggedIn, setCategoryPage, categoryPage, logo } =
-    useContext(GlobalContext);
+ 
 
   return (
     <section className="  side-bar p-2 h-screen flex justify-center z-50 max-lg:hidden ">
@@ -78,37 +75,7 @@ export const Sidebar = () => {
           >
            درباره ما
           </CustomLink>
-          {/* <span className="border-t mb-3  w-12"></span>
-
-          {loggedIn && (
-            <CustomLink
-              to={"/history"}
-              icon={TaskSquareIcon}
-              whiteIcon={TaskSquareWhiteIcon}
-              name={"تاریخچه خرید"}
-            >
-              تاریخچه خرید
-            </CustomLink>
-          )}
-
-          {loggedIn && (
-            <CustomLink
-              to={'/cart/'}
-              icon={ShoppingCartIcon}
-              whiteIcon={ShoppingCartWhiteIcon}
-              name={"سبد خرید"}
-            >
-              سبد خرید
-            </CustomLink>
-          )}
-          <CustomLink
-            to={"/profile"}
-            icon={ProfileIcon}
-            whiteIcon={ProfileWhiteIcon}
-            name={"حساب کاربری"}
-          >
-            حساب کاربری
-          </CustomLink> */}
+         
         </nav>
       </div>
     </section>

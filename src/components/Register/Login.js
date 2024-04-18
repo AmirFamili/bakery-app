@@ -1,4 +1,4 @@
-import React, { useState, useContext} from "react";
+import React, { useState, useContext,useEffect} from "react";
 import EmailGrayIcon from "../../images/icons/email-gray.png";
 import KeyIcon from "../../images/icons/key.png";
 import EyeIcon from "../../images/icons/eye.png";
@@ -8,13 +8,73 @@ import { GlobalContext } from "../../context/ContextWrapper";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+// import { ToastContainer, toast } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 
 export const Login = () => {
+
+  const initialTime = 5 * 60;
+
   const [showPassword, setShowPassword] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [email, setEmail] = useState();
+  const [showVerify, setShowVerify] = useState(false);
+  const [time, setTime] = useState(initialTime);
+  const [timerActive, setTimerActive] = useState(false);
+
   const navigate = useNavigate();
   const { setLoggedIn, logo } = useContext(GlobalContext);
+
+  useEffect(() => {
+    let interval;
+
+    if (timerActive) {
+      interval = setInterval(() => {
+        setTime((prevTime) => {
+          if (prevTime === 0) {
+            clearInterval(interval);
+            setTimerActive(false);
+            setButtonDisabled(false);
+
+            return 0;
+          }
+          return prevTime - 1;
+        });
+      }, 1000);
+    } else {
+      clearInterval(interval);
+    }
+
+    return () => clearInterval(interval);
+  }, [timerActive]);
+
+  const formatTime = (time) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = time % 60;
+    return `${minutes.toString().padStart(2, "0")}:${seconds
+      .toString()
+      .padStart(2, "0")}`;
+  };
+
+  useEffect(() => {
+    const email = localStorage.getItem("email");
+    if (email) {
+      setEmail(email);
+    }
+  }, []);
+
+  const handlerVerify = async () => {
+    await axios
+      .post("/auth/verify_email/", {
+        email: email,
+      })
+      .then((response) => {console.log(response);});
+    setTime(initialTime);
+    setTimerActive(true);
+    setButtonDisabled(true);
+  };
+
+
 
   const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -34,6 +94,8 @@ export const Login = () => {
   } = useForm({ resolver: yupResolver(validationSchema) });
 
   const onSubmit = async (values) => {
+    setEmail(values.email);
+    localStorage.setItem('email',values.email);
     await axios
       .post("/auth/login/", {
         email: values.email,
@@ -68,7 +130,8 @@ export const Login = () => {
             });
           }
           if (response.data.error === 'Verify your account') {
-            notify();
+            setShowVerify(true);
+            // notify();
           }
         }
       })
@@ -76,17 +139,17 @@ export const Login = () => {
   };
 
 
-  const notify = () =>
-  toast.error("مشکلی در ورود داشتیم دوباره انجام دهید.", {
-    position: "top-center",
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "light",
-  });
+  // const notify = () =>
+  // toast.error("مشکلی در ورود داشتیم دوباره انجام دهید.", {
+  //   position: "top-center",
+  //   autoClose: 5000,
+  //   hideProgressBar: false,
+  //   closeOnClick: true,
+  //   pauseOnHover: true,
+  //   draggable: true,
+  //   progress: undefined,
+  //   theme: "light",
+  // });
 
 
   return (
@@ -185,7 +248,31 @@ export const Login = () => {
           </Link>
         </h3>
       </div>
-      <ToastContainer
+
+      <div
+        className={`fixed top-0 right-0 w-screen h-screen  justify-center items-center z-50 border text-black ${
+          showVerify ? "flex" : "hidden"
+        }`}
+      >
+        <div className="bg-white rounded-lg p-10 border w-2/6 text-center shadow-xl ">
+          <h3 className="iranyekan-little-light ">
+            لطفا لینک ارسال شده به ایمیل <span>{email}</span> را تایید نمایید.
+          </h3>
+
+          <button
+            disabled={buttonDisabled}
+            onClick={handlerVerify}
+            className={` mt-6 vazir-very-light  shadow-lg  bg-primary text-white py-2 px-10 rounded-2xl max-md:px-10 max-md:py-3 ${
+              buttonDisabled ? "bg-gray-500" : "bg-primary"
+            }`}
+            type="button"
+          >
+            {formatTime(time)}
+          </button>
+        </div>
+      </div>
+
+      {/* <ToastContainer
         position="top-center"
         autoClose={5000}
         hideProgressBar={false}
@@ -197,7 +284,7 @@ export const Login = () => {
         draggable
         pauseOnHover
         theme="colored"
-      />
+      /> */}
     </section>
   );
 };
