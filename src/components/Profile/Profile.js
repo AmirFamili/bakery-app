@@ -37,28 +37,34 @@ export const Profile = () => {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
+  
   } = useForm({ resolver: yupResolver(validationSchema) });
 
   const onSubmit = async (values) => {
-    // await axios
-    //   .post(
-    //     "/order/order/",
-    //     { cart_id: cart },
-    //     {
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //         'Authorization': `Bearer ${accessToken}`,
-    //       },
-    //     }
-    //   )
-    //   .then((response) => {
-    //     console.log(response);
-    //     reset();
-    //   })
-    //   .catch((err) => console.log(err));
-    //   localStorage.removeItem('cart');
-    //   setCart(null);
+    await axios
+      .post(
+        "/profile/me/",
+        { address:values.address,
+          post_code:values.postalCode,
+          user: {
+            first_name: values.name,
+            last_name: values.lastName
+          }
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response);
+       
+      })
+      .catch((err) => console.log(err));
+     
+    
   };
 
   return (
