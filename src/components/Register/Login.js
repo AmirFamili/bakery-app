@@ -254,7 +254,7 @@ export const Login = () => {
           showVerify ? "flex" : "hidden"
         }`}
       >
-        <div className="bg-white rounded-lg p-10 border w-2/6 text-center shadow-xl ">
+        <div className="bg-white rounded-lg p-10 border w-2/6 text-center shadow-xl max-md:w-4/6">
           <h3 className="iranyekan-little-light ">
             لطفا لینک ارسال شده به ایمیل <span>{email}</span> را تایید نمایید.
           </h3>

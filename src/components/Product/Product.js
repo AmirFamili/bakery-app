@@ -144,7 +144,7 @@ navigate('/login')
   };
 
   return (
-    <div className=" group p-6 ml-5 my-10 w-56 h-64 bg-white shadow-lg rounded-2xl  hover:bg-primary hover:text-white max-md:w-48">
+    <div className=" group p-6 ml-5 my-10 w-56 h-64 bg-white shadow-lg rounded-2xl  hover:bg-primary hover:text-white max-md:w-44 max-md:h-56">
       <img
         src={product.image}
         alt="cup cake"
@@ -201,7 +201,7 @@ navigate('/login')
               <img src={MinusIcon} alt="minus" />
             </button>
             <p
-              className={` w-7 text-center hidden iranyekan ${handlerCheckCount()}`}
+              className={` w-7 text-center hidden iranyekan max-md:w-6 ${handlerCheckCount()}`}
             >
               {convertNumberToFarsi(count)}
             </p>

@@ -71,7 +71,7 @@ export const HeaderMobile = () => {
         )}
         {loggedIn && (
           <Link
-            to="#"
+            to="/cart"
             className="flex justify-center items-center  mx-1 p-1 "
           >
             <img
