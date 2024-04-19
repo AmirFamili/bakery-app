@@ -12,7 +12,7 @@ export const Header = () => {
   const { countAll, convertNumberToFarsi, loggedIn, setLoggedIn, info,navigate } =
     useContext(GlobalContext);
  
-  const [showLogOut, setShowLogOut] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
 
   const handlerLogOut = () => {
     localStorage.removeItem("access");
