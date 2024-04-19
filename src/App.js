@@ -16,9 +16,9 @@ import { Profile } from "./components/Profile/Profile";
 import { InfoCart } from "./components/Customer/Cart/InfoCart";
 import { InfoSend } from "./components/Customer/Cart/InfoSend";
 import { AboutUs } from "./components/AboutUs/AboutUs";
+import { CustomerOrder } from "./components/Customer/CustomerOrder";
 
 function App() {
-  
   return (
     <div dir="rtl" className="App relative">
       <Routes>
@@ -43,6 +43,7 @@ function App() {
           <Route path="category/*" element={<Category />}>
             <Route path=":id" element={<Products />}></Route>
           </Route>
+          <Route path="customer-order" element={<CustomerOrder />}></Route>
           <Route path="cart/*" element={<Cart />}>
             <Route path="" element={<InfoCart />}></Route>
             <Route path="show-info" element={<InfoSend />}></Route>
@@ -51,7 +52,6 @@ function App() {
           <Route path="history" element={<History />}></Route>
           <Route path="profile" element={<Profile />}></Route>
           <Route path="about-us" element={<AboutUs />}></Route>
-
         </Route>
         <Route path="/singup" element={<SignUp />}></Route>
         <Route path="/login" element={<Login />}></Route>

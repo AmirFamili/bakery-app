@@ -1,24 +1,25 @@
 import React, { useEffect, useContext, useState } from "react";
-import { Outlet, Link, useParams} from "react-router-dom";
+import { Outlet, Link, useParams } from "react-router-dom";
 import { GlobalContext } from "../../context/ContextWrapper";
 import axios from "../../api/axios";
 
 export const Category = () => {
-  const { categoryPage, setCategoryPage,navigate } = useContext(GlobalContext);
+  const { categoryPage, setCategoryPage, navigate } = useContext(GlobalContext);
   const params = useParams();
   const [groupsData, setGroupsData] = useState();
+  const [birthdayCake, setBirthdayCake] = useState(false);
 
   useEffect(() => {
     const abortController = new AbortController();
     const signal = abortController.signal;
     async function getData() {
       await axios
-        .get("/bakery/category/",{signal})
+        .get("/bakery/category/", { signal })
         .then((response) => setGroupsData(response.data))
         .catch((err) => console.log(err));
     }
     getData();
-    
+
     if (params.id) {
       setCategoryPage(params.id.split(":")[1]);
     } else {
@@ -38,7 +39,12 @@ export const Category = () => {
             groupsData.map((group) => (
               <div className="relative" key={group.id}>
                 <Link
-                  onClick={() => setCategoryPage(`${group.id}`)}
+                  onClick={() =>{ setCategoryPage(`${group.id}`)
+                if(group.title==='کیک تولد'){
+                  setBirthdayCake(true)
+                }else{
+                  setBirthdayCake(false)
+                }}}
                   to={":" + group.id}
                   className={`ml-12  w-20 text-center py-3 inline-block max-md:ml-8 max-sm:ml-4 max-md:w-14 ${
                     categoryPage === `${group.id}`
@@ -58,6 +64,17 @@ export const Category = () => {
         </div>
       )}
       <div className="mt-5">
+        <div className={`border rounded-xl px-5 flex justify-between items-center ${birthdayCake?'block':'hidden'}`}>
+          <h4 className="iranyekan ">
+            شما می توانید کیک مورد نظر را از کیک های موجود انتخاب کنید و یا کیک
+            خود را<span className="font-extrabold"> سفارش دهید</span>.
+          </h4>
+          <Link to="/customer-order">
+            <button className=" text-center w-40 m-3  bg-primary text-font-white  rounded-xl shadow-xl py-3  vazir-regular max-xl:w-28 max-lg:w-28 ">
+              سفارش کیک
+            </button>
+          </Link>
+        </div>
         <Outlet />
       </div>
     </section>

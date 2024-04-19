@@ -9,7 +9,7 @@ export const Product = ({ product }) => {
   const [count, setCount] = useState(0);
   const [id, setId] = useState(null);
   const {
-  
+  loggedIn,
     convertNumberToFarsi,
     showProductModel,
     setShowProductModel,
@@ -18,6 +18,7 @@ export const Product = ({ product }) => {
     countAll,
     setCountAll,
     accessToken,
+    navigate
   } = useContext(GlobalContext);
 
   useEffect(() => {
@@ -86,8 +87,14 @@ export const Product = ({ product }) => {
       }
     }
   };
+
   const handlerIncrease = () => {
-    CheckCart();
+    if(loggedIn){
+       CheckCart();
+    }else{
+navigate('/login')
+    }
+   
   
    
   };
@@ -137,7 +144,7 @@ export const Product = ({ product }) => {
   };
 
   return (
-    <div className=" group p-6 ml-5 my-10 w-56 h-64 bg-white shadow-lg rounded-2xl  hover:bg-primary hover:text-white max-md:w-48">
+    <div className=" group p-6 ml-5 my-10 w-56 h-64 bg-white shadow-lg rounded-2xl  hover:bg-primary hover:text-white max-md:w-44 max-md:h-56">
       <img
         src={product.image}
         alt="cup cake"
@@ -194,7 +201,7 @@ export const Product = ({ product }) => {
               <img src={MinusIcon} alt="minus" />
             </button>
             <p
-              className={` w-7 text-center hidden iranyekan ${handlerCheckCount()}`}
+              className={` w-7 text-center hidden iranyekan max-md:w-6 ${handlerCheckCount()}`}
             >
               {convertNumberToFarsi(count)}
             </p>

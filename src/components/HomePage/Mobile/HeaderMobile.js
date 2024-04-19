@@ -2,6 +2,9 @@ import React, { useContext, useState } from "react";
 import SearchIcon from "../../../images/icons/search-normal-black.png";
 import ProfileIcon from "../../../images/icons/profile.png";
 import ShoppingCartIcon from "../../../images/icons/shopping-cart-black.png";
+import ExitIcon from "../../../images/icons/exit.png";
+import TaskIcon from "../../../images/icons/task.png";
+import SettingIcon from "../../../images/icons/setting.png";
 import Menu from "../../../images/icons/menu.png";
 
 import { Link} from "react-router-dom";
@@ -68,7 +71,7 @@ export const HeaderMobile = () => {
         )}
         {loggedIn && (
           <Link
-            to="#"
+            to="/cart"
             className="flex justify-center items-center  mx-1 p-1 "
           >
             <img
@@ -90,14 +93,28 @@ export const HeaderMobile = () => {
               className="border rounded-full w-8 p-1 my-5 ml-3 mx-1 cursor-pointer max-md:w-7"
             />
 
-            <div
-              className={`absolute top-14 left-3 border p-5 bg-slate-50  m-1 z-30 rounded-xl iranyekan-very-light-white  ${
+<div
+              className={`absolute top-14 left-6 w-64  max-sm:w-56 max-xl:left-2 border p-5 bg-slate-50  m-1 z-30 rounded-xl iranyekan ${
                 showLogOut ? "block" : "hidden"
               }`}
             >
-              <span onClick={handlerLogOut} className="cursor-pointer">
+              {" "}
+              <Link to="/profile" className="cursor-pointer flex border-b p-3">
+                <img
+                  src={SettingIcon}
+                  alt="settings"
+                  className="w-5 h-5 ml-2"
+                />{" "}
+                تنظیمات حساب کاربری
+              </Link>
+              <Link to="/history" className="cursor-pointer flex border-b p-3">
+                <img src={TaskIcon} alt="settings" className="w-5 h-5 ml-2" />
+                سفارشات شما
+              </Link>
+              <p onClick={handlerLogOut} className="cursor-pointer flex p-3">
+                <img src={ExitIcon} alt="settings" className="w-5 h-5 ml-2" />
                 خروج
-              </span>
+              </p>
             </div>
           </div>
         )}

@@ -41,6 +41,7 @@ const ContextWrapper = (props) => {
   const [countAll, setCountAll] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalPayment, setTotalPayment] = useState(0);
+  const [totalDiscount, setTotalDiscount] = useState(0);
   const [accessToken, setAccessToken] = useState(null);
   const [deliveryPrice, setDeliveryPrice] = useState(0);
   const [deliveryId, setDeliveryId] = useState(null);
@@ -74,7 +75,7 @@ const ContextWrapper = (props) => {
     refreshTokens();
     const minute = 1000 * 60;
     setInterval(refreshTokens, minute * 1);
-  }, []);
+  }, [loggedIn]);
 
   useEffect(() => {
     if (accessToken) {
@@ -98,6 +99,7 @@ const ContextWrapper = (props) => {
               if (response.data[0].delivery_method) {
                 setDeliveryPrice(response.data[0].delivery_method.cost);
                 setDeliveryId(response.data[0].delivery_method.id);
+                setTotalDiscount(response.data[0].total_discount);
               }
               setTotalPayment(response.data[0].total_payment);
               setTotalPrice(response.data[0].total_price);
@@ -191,6 +193,7 @@ const ContextWrapper = (props) => {
         countAll,
         setCountAll,
         totalPrice,
+        totalDiscount,
         accessToken,
         setAccessToken,
         navigate,
