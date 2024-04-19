@@ -19,7 +19,7 @@ export const CustomerOrder = () => {
   };
 
   return (
-    <section className="mb-14 relative overflow-hidden">
+    <section className="py-6 px-10 pt-48 max-md:px-5 max-lg:mt-0  max-lg:pt-5 relative overflow-hidden">
       <div className="flex justify-center px-5 border  rounded-2xl">
         <div className="w-2/3 py-5 border-l">
           <div className="w-1/2 py-2 ">
