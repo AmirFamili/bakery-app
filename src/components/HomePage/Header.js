@@ -65,7 +65,7 @@ export const Header = () => {
         </a>
 
         <a className="flex pr-2 " href={`mailto:${info && info.instagram}`}>
-          <span className="my-6 mx-2 Lato-light  max-xl:mx-1">
+          <span dir="ltr" className="my-6 mx-2 Lato-light  max-xl:mx-1">
             {" "}
             {info && info.instagram_id}
           </span>

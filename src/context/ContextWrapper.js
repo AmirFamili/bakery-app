@@ -36,6 +36,7 @@ const ContextWrapper = (props) => {
   const [cart, setCart] = useState(cartId);
   const [logo, setlogo] = useState();
   const [info, setInfo] = useState();
+  const [profile, setProfile] = useState();
   const [activeMeasure, setActiveMeasure] = useState();
   const [products, setProducts] = useState(null);
   const [countAll, setCountAll] = useState(0);
@@ -49,9 +50,9 @@ const ContextWrapper = (props) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const refreshTokens = () => {
+    const refreshTokens = async () => {
       if (localStorage.refresh) {
-        axios
+        await axios
           .post("/auth/refresh/", {
             refresh: localStorage.refresh.split('"')[1],
           })
@@ -76,6 +77,60 @@ const ContextWrapper = (props) => {
     const minute = 1000 * 60;
     setInterval(refreshTokens, minute * 1);
   }, [loggedIn]);
+
+  useEffect(() => {
+    const abortController = new AbortController();
+    const signal = abortController.signal;
+    async function getData() {
+      await axios
+        .get("/settings/", { signal })
+        .then((response) => {
+          setlogo(response.data[0].logo);
+          setInfo(response.data[0]);
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    }
+
+    getData();
+
+    return () => {
+      abortController.abort();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (accessToken) {
+      const abortController = new AbortController();
+      const signal = abortController.signal;
+
+      async function getProfile() {
+        await axios
+          .get(
+            "/profile/me/",
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${accessToken}`,
+              },
+            },
+            { signal }
+          )
+          .then((response) => {
+            setProfile(response.data);
+          })
+          .catch((error) => {
+            console.error("Error fetching data:", error);
+          });
+        return () => {
+          abortController.abort();
+        };
+      }
+
+      getProfile();
+    }
+  }, [accessToken]);
 
   useEffect(() => {
     if (accessToken) {
@@ -132,29 +187,6 @@ const ContextWrapper = (props) => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
-  useEffect(() => {
-    const abortController = new AbortController();
-    const signal = abortController.signal;
-
-    async function getData() {
-      await axios
-        .get("/settings/", { signal })
-        .then((response) => {
-          setlogo(response.data[0].logo);
-          setInfo(response.data[0]);
-        })
-        .catch((error) => {
-          console.error("Error fetching data:", error);
-        });
-    }
-
-    getData();
-
-    return () => {
-      abortController.abort();
-    };
-  }, []);
-
   const togglePopup = () => {
     setShowProductModel(!showProductModel);
   };
@@ -187,6 +219,7 @@ const ContextWrapper = (props) => {
         togglePopup,
         logo,
         info,
+        profile,
         activeMeasure,
         setActiveMeasure,
         products,

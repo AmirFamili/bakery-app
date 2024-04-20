@@ -35,7 +35,7 @@ export const InfoSend = () => {
       ),
     postalCode: Yup.string()
       .required("لطفا این قسمت را خالی نگذارید.")
-      .matches(/^\d{5}-\d{5}$/, "کد پستی نامعتبر می باشد.(مثال 12345-67891)"),
+      .matches(/^\d{10}$/, "کد پستی نامعتبر می باشد."),
     address: Yup.string()
       .required("لطفا این قسمت را خالی نگذارید.")
       .matches(/[,.-_]?[ء-ی0-9]+[,.-_]?/, "آدرس درست نمی باشد."),
@@ -158,7 +158,7 @@ export const InfoSend = () => {
               <div className="flex relative">
                 <textarea
                   {...register("address")}
-                  type="number"
+                  type="text"
                   name="address"
                   placeholder="آدرس"
                   className={` border w-full rounded-md h-20 mt-1  py-2 px-8 outline-none iranyekan-very-light ${
