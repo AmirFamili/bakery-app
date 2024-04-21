@@ -4,6 +4,7 @@ import { GlobalContext } from "../../context/ContextWrapper";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import ProfileIcon from "../../images/icons/profile-xl.png";
+import SuccessIcon from "../../images/icons/success.png";
 
 import * as Yup from "yup";
 
@@ -14,8 +15,15 @@ export const Profile = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
-
+  const [selectedImageShow, setSelectedImageShow] = useState(null);
   const [refresh, setRefresh] = useState(false);
+  const [showSuccess, setShowSucccess] = useState(false);
+
+  const goBackBox = () => {
+    setTimeout(() => {
+      setShowSucccess(false);
+    }, 2500);
+  };
 
   useEffect(() => {
     if (profile) {
@@ -26,7 +34,6 @@ export const Profile = () => {
       setValue("phone", profile.user.phone_number);
       setValue("postalCode", profile.post_code);
       setValue("address", profile.address);
-      // setValue("image",profile.avatar);
     }
   }, [profile, refresh]);
 
@@ -60,49 +67,29 @@ export const Profile = () => {
   } = useForm({ resolver: yupResolver(validationSchema) });
 
   const handleImageChange = async (event) => {
-    setSelectedImage(URL.createObjectURL(event.target.files[0]));
+    setSelectedImageShow(URL.createObjectURL(event.target.files[0]));
+    setSelectedImage(event.target.files[0]);
+  };
+
+  const onSubmit = async (values) => {
     const formData = new FormData();
-    formData.append("avatar", event.target.files[0]);
+    formData.append("avatar", selectedImage);
+    formData.append("address", values.address);
+    formData.append("post_code", values.postalCode);
+    // formData.append("first_name",values.firstName);
+    // formData.append("last_name",values.lastName);
+    // formData.append("phone_number",values.phone);
 
     await axios
-      .patch("/profile/avatar/", formData, {
+      .patch("/profile/me/", formData, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       })
       .then((response) => {
-        console.log(response);
-      })
-      .catch((err) => console.log(err));
-  };
-
-  // const watchImage = watch('image');
-
-  const onSubmit = async (values) => {
-    await axios
-      .patch(
-        "/profile/me/",
-        {
-          address: values.address,
-          post_code: values.postalCode,
-          user: {
-            first_name: values.firstName,
-            last_name: values.lastName,
-            phone_number: values.phone,
-          },
-        },
-
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      )
-      .then((response) => {
-        console.log(response);
         setFirstName(response.data.user.first_name);
         setLastName(response.data.user.last_name);
+        setShowSucccess(true)
       })
       .catch((err) => console.log(err));
   };
@@ -119,8 +106,8 @@ export const Profile = () => {
             <div className=" rounded-full w-32 h-32 relative bg-gray-100 max-xl:w-28 max-lg:w-24 max-sm:w-20">
               <img
                 src={
-                  selectedImage
-                    ? selectedImage
+                  selectedImageShow
+                    ? selectedImageShow
                     : profile && profile.avatar === null
                     ? ProfileIcon
                     : profile && profile.avatar
@@ -176,7 +163,7 @@ export const Profile = () => {
             </div>
           </div>
           <div className="flex justify-center items-center ">
-            <div className="w-10/12 ">
+            <div className="w-10/12 overflow-hidden">
               <form
                 onSubmit={handleSubmit(onSubmit)}
                 className=" w-full my-7  max-sm:text-sm  max-md:mr-5 "
@@ -293,6 +280,16 @@ export const Profile = () => {
                   </button>
                 </div>
               </form>
+              <div
+                className={`absolute top-96  transition  flex justify-center items-center py-4 px-10 bg-white rounded-2xl shadow-lg border iranyekan ${
+                  showSuccess
+                    ? "-translate-x-48  delay-75 "
+                    : " translate-x-full -right-full"
+                } ${goBackBox()}`}
+              >
+                <img src={SuccessIcon} alt="success" className="w-11 ml-2" />
+                حساب کاربری به روز شد.
+              </div>
             </div>
           </div>
         </div>
