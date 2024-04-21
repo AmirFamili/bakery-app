@@ -9,7 +9,7 @@ import SuccessIcon from "../../images/icons/success.png";
 import * as Yup from "yup";
 
 export const Profile = () => {
-  const { accessToken, convertNumberToFarsi, profile } =
+  const { accessToken, convertNumberToFarsi, profile, setImageProfile } =
     useContext(GlobalContext);
 
   const [firstName, setFirstName] = useState("");
@@ -17,11 +17,13 @@ export const Profile = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedImageShow, setSelectedImageShow] = useState(null);
   const [refresh, setRefresh] = useState(false);
-  const [showSuccess, setShowSucccess] = useState(false);
+  const [showPopUP, setShowPopUP] = useState(false);
+  const [textPopUP, setTextPopUP] = useState(null);
+
 
   const goBackBox = () => {
     setTimeout(() => {
-      setShowSucccess(false);
+      setShowPopUP(false);
     }, 2500);
   };
 
@@ -89,9 +91,14 @@ export const Profile = () => {
       .then((response) => {
         setFirstName(response.data.user.first_name);
         setLastName(response.data.user.last_name);
-        setShowSucccess(true)
+        setShowPopUP(true);
+        setImageProfile (response.data.avatar);
+        setTextPopUP('حساب کاربری به روز شد.');
       })
-      .catch((err) => console.log(err));
+      .catch((err) =>{ 
+        setTextPopUP('مشکلی در بروز شدن وجود داشت.');
+        setShowPopUP(true);
+        console.log(err)});
   };
 
   return (
@@ -282,13 +289,14 @@ export const Profile = () => {
               </form>
               <div
                 className={`absolute top-96  transition  flex justify-center items-center py-4 px-10 bg-white rounded-2xl shadow-lg border iranyekan ${
-                  showSuccess
+                  showPopUP
                     ? "-translate-x-48  delay-75 "
                     : " translate-x-full -right-full"
                 } ${goBackBox()}`}
               >
                 <img src={SuccessIcon} alt="success" className="w-11 ml-2" />
-                حساب کاربری به روز شد.
+                {textPopUP}
+               
               </div>
             </div>
           </div>

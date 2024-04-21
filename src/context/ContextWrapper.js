@@ -36,7 +36,8 @@ const ContextWrapper = (props) => {
   const [cart, setCart] = useState(cartId);
   const [logo, setlogo] = useState();
   const [info, setInfo] = useState();
-  const [profile, setProfile] = useState();
+  const [profile, setProfile] = useState(null);
+  const [imageProfile, setImageProfile] = useState(null);
   const [activeMeasure, setActiveMeasure] = useState();
   const [products, setProducts] = useState(null);
   const [countAll, setCountAll] = useState(0);
@@ -119,6 +120,7 @@ const ContextWrapper = (props) => {
           )
           .then((response) => {
             setProfile(response.data);
+            setImageProfile(response.data.avatar)
           })
           .catch((error) => {
             console.error("Error fetching data:", error);
@@ -220,6 +222,7 @@ const ContextWrapper = (props) => {
         logo,
         info,
         profile,
+        imageProfile, setImageProfile,
         activeMeasure,
         setActiveMeasure,
         products,
