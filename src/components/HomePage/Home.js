@@ -3,7 +3,7 @@ import { Hero } from "./Hero";
 import { News } from "./News";
 import { Discount } from "./Discount";
 import { Grouping } from "./Grouping";
-import { Footer } from "./FooterCustomer";
+import { Footer } from "./Footer";
 
 export const Home = () => {
   return (

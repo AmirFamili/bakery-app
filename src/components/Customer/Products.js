@@ -30,7 +30,7 @@ export const Products = () => {
 
   return (
     <div className="p-5 max-md:p-1">
-      <div className="flex justify-start items-center flex-wrap">
+      <div className="flex justify-start items-center flex-wrap ">
         {products &&
           products.map((product) => (
             <Product key={product.id} product={product} />

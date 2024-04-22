@@ -31,7 +31,7 @@ export const Category = () => {
   }, []);
 
   return (
-    <section className="py-6 px-10 pt-28 max-md:px-5 max-lg:mt-0 h-screen max-lg:pt-5">
+    <section className="py-6 px-10 pt-28 max-md:px-5 max-lg:mt-0 h-screen max-lg:pt-5 max-md:h-auto">
       <h1 className="py-5 iranyekan-very-bold ">دسته بندی محصولات</h1>
       {categoryPage && (
         <div className="flex border-b pt-3 mb-10 ">
@@ -46,7 +46,7 @@ export const Category = () => {
                   setBirthdayCake(false)
                 }}}
                   to={":" + group.id}
-                  className={`ml-12  w-20 text-center py-3 inline-block max-md:ml-8 max-sm:ml-4 max-md:w-14 ${
+                  className={`ml-12  w-20 text-center  py-3 inline-block max-md:ml-8 max-sm:ml-0 max-md:w-15  ${
                     categoryPage === `${group.id}`
                       ? "vazir-regular-bold text-black"
                       : "vazir-regular text-blue-little-light "
@@ -55,7 +55,7 @@ export const Category = () => {
                   {group.title}
                 </Link>
                 <div
-                  className={`absolute w-20  z-10 max-sm:w-10 ${
+                  className={`absolute w-20  z-10 max-sm:w-4 ${
                     categoryPage === `${group.id}` && "border-bottom"
                   }`}
                 ></div>
@@ -75,7 +75,12 @@ export const Category = () => {
             </button>
           </Link>
         </div>
+        <div className="h-dvh hidden max-md:block">
         <Outlet />
+        </div>
+        <div className=" block max-md:hidden">
+        <Outlet />
+        </div>
       </div>
     </section>
   );

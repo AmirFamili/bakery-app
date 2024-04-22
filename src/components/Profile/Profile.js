@@ -20,7 +20,6 @@ export const Profile = () => {
   const [showPopUP, setShowPopUP] = useState(false);
   const [textPopUP, setTextPopUP] = useState(null);
 
-
   const goBackBox = () => {
     setTimeout(() => {
       setShowPopUP(false);
@@ -29,11 +28,11 @@ export const Profile = () => {
 
   useEffect(() => {
     if (profile) {
-      setFirstName(profile.user.first_name);
-      setLastName(profile.user.last_name);
-      setValue("firstName", profile.user.first_name);
-      setValue("lastName", profile.user.last_name);
-      setValue("phone", profile.user.phone_number);
+      setFirstName(profile.first_name);
+      setLastName(profile.last_name);
+      setValue("firstName", profile.first_name);
+      setValue("lastName", profile.last_name);
+      setValue("phone", profile.phone_number);
       setValue("postalCode", profile.post_code);
       setValue("address", profile.address);
     }
@@ -75,12 +74,14 @@ export const Profile = () => {
 
   const onSubmit = async (values) => {
     const formData = new FormData();
-    formData.append("avatar", selectedImage);
+    if (selectedImage) {
+      formData.append("avatar", selectedImage);
+    }
     formData.append("address", values.address);
     formData.append("post_code", values.postalCode);
-    // formData.append("first_name",values.firstName);
-    // formData.append("last_name",values.lastName);
-    // formData.append("phone_number",values.phone);
+    formData.append("first_name", values.firstName);
+    formData.append("last_name", values.lastName);
+    formData.append("phone_number", values.phone);
 
     await axios
       .patch("/profile/me/", formData, {
@@ -89,28 +90,29 @@ export const Profile = () => {
         },
       })
       .then((response) => {
-        setFirstName(response.data.user.first_name);
-        setLastName(response.data.user.last_name);
+        setFirstName(response.data.first_name);
+        setLastName(response.data.last_name);
         setShowPopUP(true);
-        setImageProfile (response.data.avatar);
-        setTextPopUP('حساب کاربری به روز شد.');
+        setImageProfile(response.data.avatar);
+        setTextPopUP("حساب کاربری به روز شد.");
       })
-      .catch((err) =>{ 
-        setTextPopUP('مشکلی در بروز شدن وجود داشت.');
+      .catch((err) => {
+        setTextPopUP("مشکلی در بروز شدن وجود داشت.");
         setShowPopUP(true);
-        console.log(err)});
+        console.log(err);
+      });
   };
 
   return (
-    <section className="  mt-2 px-10 py-28 max-md:px-5 max-lg:mt-0 h-full min-h-screen max-lg:pt-5 ">
+    <section className=" overflow-hidden relative mt-2 px-10 py-28 max-md:px-5 max-lg:mt-0 h-full min-h-screen max-lg:pt-5 ">
       <h1 className="py-5 iranyekan-very-bold ">حساب کاربری </h1>
       <h2 className="iranyekan-little-light text-gray-400">
         شما میتوانید اطلاعات حساب کاربری خود را ویرایش کنید.
       </h2>
-      <div className="flex justify-center items-center  ">
-        <div className="w-4/6 mt-8 max-lg:w-5/6 max-md:w-full">
+      <div className="flex justify-center items-center ">
+        <div className="w-4/6 mt-8 max-lg:w-5/6 max-md:w-full max-md:mt-5">
           <div className="flex ">
-            <div className=" rounded-full w-32 h-32 relative bg-gray-100 max-xl:w-28 max-lg:w-24 max-sm:w-20">
+            <div className=" rounded-full w-32 h-32 relative bg-gray-100 max-xl:w-28 max-lg:w-24  max-md:w-24 max-md:h-24 max-md:mt-2">
               <img
                 src={
                   selectedImageShow
@@ -155,14 +157,14 @@ export const Profile = () => {
               <h3 className="iranyekan ">
                 {firstName} {lastName}{" "}
               </h3>
-              <div className="flex mt-5">
-                <h4 className="iranyekan-very-light ml-5 max-xl:ml-3 max-md:ml-2">
+              <div className="flex mt-5 max-md:block max-md:mt-3">
+                <h4 className="iranyekan-very-light ml-5 max-xl:ml-3 max-md:ml-0 max-md:my-2">
                   کل سفارشات ثبت شده: <span>{convertNumberToFarsi(12)}</span>{" "}
                 </h4>
-                <h4 className="iranyekan-very-light mx-5 max-xl:mx-3 max-md:mx-2">
+                <h4 className="iranyekan-very-light mx-5 max-xl:mx-3 max-md:mx-0 max-md:my-2">
                   سفارشات تحویل گرفته: <span>{convertNumberToFarsi(11)}</span>{" "}
                 </h4>
-                <h4 className="iranyekan-very-light mx-5 max-xl:mx-3 max-md:mx-2">
+                <h4 className="iranyekan-very-light mx-5 max-xl:mx-3 max-md:mx-0 max-md:my-2">
                   سفارشات درحال آماده سازی:{" "}
                   <span>{convertNumberToFarsi(1)}</span>{" "}
                 </h4>
@@ -170,13 +172,13 @@ export const Profile = () => {
             </div>
           </div>
           <div className="flex justify-center items-center ">
-            <div className="w-10/12 overflow-hidden">
+            <div className="w-10/12 max-md:w-full ">
               <form
                 onSubmit={handleSubmit(onSubmit)}
-                className=" w-full my-7  max-sm:text-sm  max-md:mr-5 "
+                className=" w-full my-7  max-sm:text-sm  max-md:mr-0 "
               >
-                <div className="flex w-full">
-                  <div className="pb-3 w-1/2 ml-1.5">
+                <div className="flex w-full max-md:block">
+                  <div className="pb-3 w-1/2 ml-1.5 max-md:w-full  max-md:ml-0">
                     <div className="flex relative">
                       <input
                         {...register("firstName")}
@@ -195,7 +197,7 @@ export const Profile = () => {
                     )}
                   </div>
 
-                  <div className="pb-3 w-1/2 mr-1.5">
+                  <div className="pb-3 w-1/2 mr-1.5 max-md:w-full  max-md:mr-0">
                     <div className="flex relative">
                       <input
                         {...register("lastName")}
@@ -214,8 +216,8 @@ export const Profile = () => {
                     )}
                   </div>
                 </div>
-                <div className="flex w-full">
-                  <div className="pb-3 w-1/2 ml-1.5">
+                <div className="flex w-full max-md:block">
+                  <div className="pb-3 w-1/2 ml-1.5 max-md:w-full  max-md:ml-0">
                     <div className="flex relative">
                       <input
                         {...register("phone")}
@@ -234,7 +236,7 @@ export const Profile = () => {
                     )}
                   </div>
 
-                  <div className="pb-3 w-1/2 mr-1.5">
+                  <div className="pb-3 w-1/2 mr-1.5 max-md:w-full max-md:mr-0">
                     <div className="flex relative">
                       <input
                         {...register("postalCode")}
@@ -254,7 +256,7 @@ export const Profile = () => {
                   </div>
                 </div>
                 <div className="">
-                  <div className="flex relative">
+                  <div className="flex relative max-md:block">
                     <textarea
                       {...register("address")}
                       type="text"
@@ -274,14 +276,14 @@ export const Profile = () => {
                 <div className="flex justify-center  items-center">
                   <button
                     onClick={() => setRefresh(!refresh)}
-                    className=" w-40 text-center  m-6  bg-blue-very-light  rounded-xl shadow-xl py-3  vazir-regular max-xl:w-28 max-lg:w-28 "
+                    className=" w-40 text-center  m-6  bg-blue-very-light  rounded-xl shadow-xl py-3  vazir-regular max-xl:w-28  max-md:py-2 "
                   >
                     انصراف
                   </button>
 
                   <button
                     onClick={handleSubmit(onSubmit)}
-                    className=" text-center w-40 m-6  bg-primary text-font-white  rounded-xl shadow-xl py-3  vazir-regular max-xl:w-28 max-lg:w-28 "
+                    className=" text-center w-40 m-6  bg-primary text-font-white  rounded-xl shadow-xl py-3  vazir-regular max-xl:w-28  max-md:py-2"
                   >
                     ذخیره تغییرات
                   </button>
@@ -296,7 +298,6 @@ export const Profile = () => {
               >
                 <img src={SuccessIcon} alt="success" className="w-11 ml-2" />
                 {textPopUP}
-               
               </div>
             </div>
           </div>

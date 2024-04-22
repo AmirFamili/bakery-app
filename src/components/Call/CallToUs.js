@@ -54,7 +54,7 @@ export const CallToUs = () => {
 
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className=" mx-auto my-7   max-sm:text-sm  w-1/2 "
+            className=" mx-auto my-7   max-sm:text-sm  w-1/2 max-md:w-2/3"
           >
             <div className="pb-3">
               <input

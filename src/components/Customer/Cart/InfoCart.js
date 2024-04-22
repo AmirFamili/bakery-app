@@ -120,7 +120,7 @@ export const InfoCart = () => {
               className=" text-center w-52 flex justify-center items-center my-5 bg-primary text-font-white  rounded-xl shadow-xl py-2 px-1 vazir-regular  max-lg:max-w-48  max-md:w-32"
             >
               تایید و تکمیل سفارش
-              <img src={ArrowLeftIcon} alt=" Arrow Left" className="w-5 mx-2" />
+              <img src={ArrowLeftIcon} alt=" Arrow Left" className="w-5 mx-2 max-md:hidden" />
             </button>
          
         </div>

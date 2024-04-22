@@ -15,12 +15,12 @@ export const Cart = () => {
       <h1 className="py-5 iranyekan-very-bold ">سبد خرید شما</h1>
 
       <div className="flex  pt-3 mb-7  max-md:pr-5">
-        <div className="flex justify-center items-center pl-24 max-md:pl-16">
+        <div className="flex justify-center items-center pl-24 max-md:pl-0">
           <img src={CartOrangeIcon} className="w-5 h-5 ml-2" alt="سبد خرید" />
           <p className="text-secondry iranyekan w-20">سبد خرید</p>
         </div>
 
-        <div className="flex justify-center items-center pl-28 max-md:pl-20">
+        <div className="flex justify-center items-center pl-28 max-md:pl-5">
           {isActive_2 ? (
             <img
               src={LocationOrangeIcon}
@@ -42,7 +42,7 @@ export const Cart = () => {
             اطلاعات ارسال
           </p>
         </div>
-        <div className="flex justify-center items-center pl-28 max-md:pl-20">
+        <div className="flex justify-center items-center pl-28 max-md:pl-5">
           <img src={CardTickGrayIcon} className="w-5 h-5 ml-2" alt="سبد خرید" />
           <p
             className={` w-16 ${
