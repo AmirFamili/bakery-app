@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import TrashIcon from "../../../images/icons/trash.png";
-import AddIcon from "../../../images/icons/add.png";
-import MinusIcon from "../../../images/icons/minus.png";
-import { GlobalContext } from "../../../context/ContextWrapper";
-import axios from "../../../api/axios";
+import TrashIcon from "../../images/icons/trash.png";
+import AddIcon from "../../images/icons/add.png";
+import MinusIcon from "../../images/icons/minus.png";
+import { GlobalContext } from "../../context/ContextWrapper";
+import axios from "../../api/axios";
 
 export const CartProduct = ({ product, number }) => {
   const [id, setId] = useState(null);

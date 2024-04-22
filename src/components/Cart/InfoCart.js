@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import ArrowLeftIcon from "../../../images/icons/arrow-left.png";
-import { GlobalContext } from "../../../context/ContextWrapper";
+import ArrowLeftIcon from "../../images/icons/arrow-left.png";
+import { GlobalContext } from "../../context/ContextWrapper";
 import { CartProduct } from "./CartProduct";
-import axios from "../../../api/axios";
+import axios from "../../api/axios";
 
 export const InfoCart = () => {
   const { convertNumberToFarsi, products, accessToken, countAll, cart,navigate,deliveryId  } =

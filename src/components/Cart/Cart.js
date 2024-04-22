@@ -1,8 +1,8 @@
 import React from "react";
-import CartOrangeIcon from "../../../images/icons/shopping-cart-orange.png";
-import LocationGrayIcon from "../../../images/icons/location-tick-gray.png";
-import LocationOrangeIcon from "../../../images/icons/Location-tick-orange.png";
-import CardTickGrayIcon from "../../../images/icons/card-tick.png";
+import CartOrangeIcon from "../../images/icons/shopping-cart-orange.png";
+import LocationGrayIcon from "../../images/icons/location-tick-gray.png";
+import LocationOrangeIcon from "../../images/icons/Location-tick-orange.png";
+import CardTickGrayIcon from "../../images/icons/card-tick.png";
 import { Outlet } from "react-router-dom";
 import { useMatch } from "react-router-dom";
 
