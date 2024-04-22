@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import ArrowLeftIcon from "../../../images/icons/arrow-left.png";
-import { GlobalContext } from "../../../context/ContextWrapper";
+import ArrowLeftIcon from "../../images/icons/arrow-left.png";
+import { GlobalContext } from "../../context/ContextWrapper";
 import { CartProduct } from "./CartProduct";
-import axios from "../../../api/axios";
+import axios from "../../api/axios";
 
 export const InfoCart = () => {
   const { convertNumberToFarsi, products, accessToken, countAll, cart,navigate,deliveryId  } =
@@ -86,7 +86,7 @@ export const InfoCart = () => {
         </table>
         <div className=""></div>
       </div>
-      <div className="w-1/3 p-5 relative max-md:w-full  max-md:flex max-md:justify-between ">
+      <div className="w-1/3 p-5 relative max-md:w-full  max-md:flex max-md:justify-between max-md:p-2">
         <div className="mt-3">
           <h3 className="iranyekan-little-light"> نحوه تحویل سفارش:</h3>
           {delivery &&

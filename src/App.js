@@ -3,20 +3,21 @@ import { Routes, Route, Outlet } from "react-router-dom";
 import { Login } from "./components/Register/Login";
 import { SignUp } from "./components/Register/SingUp";
 import { ChangePassword } from "./components/Register/ChangePassword";
-import { Category } from "./components/Customer/Category";
+import { Category } from "./components/Category/Category";
 import { Header } from "./components/HomePage/Header";
 import { HeaderMobile } from "./components/HomePage/Mobile/HeaderMobile";
 import { Sidebar } from "./components/HomePage/Sidebar";
 import { Home } from "./components/HomePage/Home";
-import { Products } from "./components/Customer/Products";
-import { Cart } from "./components/Customer/Cart/Cart";
+import { Products } from "./components/Category/Products";
+import { Cart } from "./components/Cart/Cart";
 import { CallToUs } from "./components/Call/CallToUs";
 import { History } from "./components/History/History";
 import { Profile } from "./components/Profile/Profile";
-import { InfoCart } from "./components/Customer/Cart/InfoCart";
-import { InfoSend } from "./components/Customer/Cart/InfoSend";
+import { InfoCart } from "./components/Cart/InfoCart";
+import { InfoSend } from "./components/Cart/InfoSend";
 import { AboutUs } from "./components/AboutUs/AboutUs";
 import { CustomerOrder } from "./components/Customer/CustomerOrder";
+import { Menu } from "./components/HomePage/Mobile/Menu";
 
 function App() {
   return (
@@ -26,8 +27,9 @@ function App() {
           path="/*"
           element={
             <div className="">
-              <div className="flex ">
+              <div className="flex relative ">
                 <Sidebar />
+                <Menu/>
                 <div className="main  ">
                   <Header />
                   <HeaderMobile />

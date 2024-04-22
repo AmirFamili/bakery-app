@@ -37,7 +37,7 @@ export const History = () => {
   }, [accessToken]);
 
   return (
-    <section className="  mt-2 px-10 py-28 max-md:px-5 max-lg:mt-0 h-full min-h-screen max-lg:pt-5 ">
+    <section className="  mt-2 px-10 py-28 max-md:px-5  h-full min-h-screen max-lg:pt-5 max-lg:mt-20 ">
       <h1 className="py-5 iranyekan-very-bold ">سفارشات شما</h1>
       <div className="w-full border rounded-2xl overflow-hidden mt-3">
         <table className="w-full table bg-white ">

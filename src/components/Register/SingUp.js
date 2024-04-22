@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import EmailGrayIcon from "../../images/icons/email-gray.png";
 import KeyIcon from "../../images/icons/key.png";
 import EyeIcon from "../../images/icons/eye.png";
+import GoogleIcon from "../../images/icons/google.png";
 import { Link } from "react-router-dom";
 import axios from "../../api/axios";
 import { GlobalContext } from "../../context/ContextWrapper";
@@ -129,7 +130,9 @@ export const SignUp = () => {
               type: "server",
               message: "شما قبلا با این ایمیل ثبت نام کردید.",
             });
-          } else if (response.data.error === 'user with this phone number already exists') {
+          } else if (
+            response.data.error === "user with this phone number already exists"
+          ) {
             setError("phoneNumber", {
               type: "server",
               message: "شما قبلا با این تلفن ثبت نام کردید.",
@@ -141,7 +144,7 @@ export const SignUp = () => {
   };
 
   return (
-    <section className="bg-gray-main py-10 w-full flex justify-center items-center">
+    <section className="bg-gray-main py-10 w-full h-full flex justify-center items-center">
       <div className=" bg-white border w-2/5  rounded-2xl p-5 relative max-lg:w-4/5 pb-20">
         <div className="flex justify-center items-center p-2">
           <img src={logo} alt="بلو کیک" className="w-24 max-md:w-20" />
@@ -323,6 +326,18 @@ export const SignUp = () => {
           </div>
         </form>
 
+        <div className=" flex items-center mx-auto my-7 w-4/6  max-md:w-5/6">
+          <div className="border-b border-gray-300 w-1/2"></div>
+          <div className="iranyekan-little-light px-3"> یا </div>
+          <div className="border-b border-gray-300 w-1/2"></div>
+        </div>
+
+        <div className="flex items-center justify-center ">
+          <button className="flex items-center  justify-center border shadow-xl vazir-regular p-3 rounded-2xl text-center w-4/6  max-md:w-5/6">
+            <img src={GoogleIcon} alt="گوگل" className="w-7 ml-3 max-md:w-6" />
+            ورود با حساب کاربری گوگل{" "}
+          </button>
+        </div>
         <h3 className="iranyekan-little-light text-center mt-10">
           حساب کاربری دارید؟{" "}
           <Link to="/login" className="border-b border-gray-500 text-gray-600">

@@ -32,7 +32,9 @@ const cartId = () => {
 const ContextWrapper = (props) => {
   const [loggedIn, setLoggedIn] = useState(localStorage.access ? true : false);
   const [showProductModel, setShowProductModel] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
   const [categoryPage, setCategoryPage] = useState(null);
+  const [categories, setCategories] = useState(null);
   const [cart, setCart] = useState(cartId);
   const [logo, setlogo] = useState();
   const [info, setInfo] = useState();
@@ -120,7 +122,7 @@ const ContextWrapper = (props) => {
           )
           .then((response) => {
             setProfile(response.data);
-            setImageProfile(response.data.avatar)
+            setImageProfile(response.data.avatar);
           })
           .catch((error) => {
             console.error("Error fetching data:", error);
@@ -189,6 +191,24 @@ const ContextWrapper = (props) => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
+
+  useEffect(() => {
+    const abortController = new AbortController();
+    const signal = abortController.signal;
+    async function getData() {
+      await axios
+        .get("/bakery/category/", { signal })
+        .then((response) => setCategories(response.data))
+        .catch((err) => console.log(err));
+    }
+    getData();
+
+    return () => {
+      abortController.abort();
+    };
+  }, []);
+
+
   const togglePopup = () => {
     setShowProductModel(!showProductModel);
   };
@@ -216,13 +236,15 @@ const ContextWrapper = (props) => {
         setLoggedIn,
         categoryPage,
         setCategoryPage,
+        categories,
         showProductModel,
         setShowProductModel,
         togglePopup,
         logo,
         info,
         profile,
-        imageProfile, setImageProfile,
+        imageProfile,
+        setImageProfile,
         activeMeasure,
         setActiveMeasure,
         products,
@@ -236,6 +258,8 @@ const ContextWrapper = (props) => {
         deliveryPrice,
         deliveryId,
         totalPayment,
+        showMenu,
+        setShowMenu,
       }}
     >
       {props.children}

@@ -35,7 +35,7 @@ const second=10000;
   }, [currentImageIndex]);
 
   return (
-    <section className="hero bg-hero mt-28 flex p-5 pb-20 relative max-lg:mt-0  ">
+    <section className="hero bg-hero mt-28 flex p-5 pb-20 relative max-lg:mt-20 ">
       <div className="px-1 w-9/12  ">
         <img
           src={CakeImg}

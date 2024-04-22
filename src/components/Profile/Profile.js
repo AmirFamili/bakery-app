@@ -104,7 +104,7 @@ export const Profile = () => {
   };
 
   return (
-    <section className=" overflow-hidden relative mt-2 px-10 py-28 max-md:px-5 max-lg:mt-0 h-full min-h-screen max-lg:pt-5 ">
+    <section className=" overflow-hidden relative mt-2 px-10 py-28 max-md:px-5  h-full min-h-screen max-lg:pt-5 max-lg:mt-20">
       <h1 className="py-5 iranyekan-very-bold ">حساب کاربری </h1>
       <h2 className="iranyekan-little-light text-gray-400">
         شما میتوانید اطلاعات حساب کاربری خود را ویرایش کنید.
