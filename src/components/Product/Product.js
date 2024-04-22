@@ -34,7 +34,7 @@ export const Product = ({ product }) => {
 
   const handlerCheckCount = () => {
     if (count > 0) {
-      return "group-hover:block";
+      return "group-hover:block max-md:block";
     }
   };
 
@@ -144,14 +144,14 @@ navigate('/login')
   };
 
   return (
-    <div className=" group p-6 ml-5 my-10 w-56 h-64 bg-white shadow-lg rounded-2xl  hover:bg-primary hover:text-white max-md:w-44 max-md:h-56">
+    <div className=" group p-6 ml-5 my-10 w-56 h-64 bg-white shadow-lg rounded-2xl  hover:bg-primary hover:text-white max-md:w-36 max-md:h-44 max-md:p-3">
       <img
         src={product.image}
         alt="cup cake"
-        className="-mt-16 w-28 h-28 mx-auto shadow-md rounded-full"
+        className="-mt-16 w-28 h-28 mx-auto shadow-md rounded-full max-md:w-20 max-md:h-20 max-md:-mt-12"
       />
-      <h3 className="iranyekan-bold my-5">{product.title} </h3>
-      <h4 className=" my-4 iranyekan-very-light   group-hover:text-white ">
+      <h3 className="iranyekan-bold my-5 max-md:my-4">{product.title} </h3>
+      <h4 className=" my-4 iranyekan-very-light   group-hover:text-white max-md:mb-3">
         {product.pricemodel_set.length === 1
           ? "هر " + product.pricemodel_set[0].unit_measure
           : "به صورت اسلایس و کیلویی موجود است"}
@@ -196,18 +196,18 @@ navigate('/login')
           <div className="flex">
             <button
               onClick={handlerDecrease}
-              className={`minus rounded-full w-7 bg-blue-light hidden max-md:w-6 ${handlerCheckCount()} `}
+              className={`minus rounded-full w-7 bg-blue-light hidden max-md:w-5 ${handlerCheckCount()} `}
             >
               <img src={MinusIcon} alt="minus" />
             </button>
             <p
-              className={` w-7 text-center hidden iranyekan max-md:w-6 ${handlerCheckCount()}`}
+              className={` w-7 text-center hidden iranyekan max-md:w-5 ${handlerCheckCount()}`}
             >
               {convertNumberToFarsi(count)}
             </p>
             <button
               onClick={handlerIncrease}
-              className="bg-primary rounded-full w-7 group-hover:bg-blue-light max-md:w-6"
+              className="bg-primary rounded-full w-7 group-hover:bg-blue-light max-md:w-5"
             >
               <img src={AddIcon} alt="plus" />
             </button>
@@ -218,7 +218,7 @@ navigate('/login')
         <div className="flex justify-end">
           <button
             onClick={() => setShowProductModel(true)}
-            className="bg-primary rounded-full w-7 group-hover:bg-blue-light max-md:w-6"
+            className="bg-primary rounded-full w-7 group-hover:bg-blue-light max-md:w-5"
           >
             <img src={AddIcon} alt="plus" />
           </button>

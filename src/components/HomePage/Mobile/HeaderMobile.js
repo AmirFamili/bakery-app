@@ -11,7 +11,7 @@ import { Link} from "react-router-dom";
 import { GlobalContext } from "../../../context/ContextWrapper";
 
 export const HeaderMobile = () => {
-  const { loggedIn, setLoggedIn , navigate} =
+  const { loggedIn, setLoggedIn , navigate,imageProfile} =
     useContext(GlobalContext);
  
   const [showLogOut, setShowLogOut] = useState(false);
@@ -88,9 +88,9 @@ export const HeaderMobile = () => {
             onMouseLeave={() => setShowLogOut(false)}
           >
             <img
-              src={ProfileIcon}
+              src={imageProfile}
               alt="حساب کاربری"
-              className="border rounded-full w-8 p-1 my-5 ml-3 mx-1 cursor-pointer max-md:w-7"
+              className="border rounded-full w-9 h-9 my-5 ml-3 mx-1 cursor-pointer "
             />
 
 <div

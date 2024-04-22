@@ -7,7 +7,7 @@ export const Popup = ({ onClose, product }) => {
  
   return (
     <div className="fixed top-0 right-0 w-screen h-screen flex justify-center items-center z-50 border text-black ">
-      <div className="bg-white rounded-lg p-5 border w-2/6 max-lg:w-3/6 max-md:w-4/6">
+      <div className="bg-white rounded-lg p-5 border w-2/6 max-lg:w-3/6 max-md:w-5/6">
         <h3 className="iranyekan-little-light mt-3">
           نوع سفارش خود را انتخاب کنید:
         </h3>

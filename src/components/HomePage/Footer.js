@@ -1,58 +1,47 @@
-import React,{useContext} from "react";
+import React, { useContext } from "react";
 import WhatsApp from "../../images/icons/whatsapp.png";
 import Instagram from "../../images/icons/instagram.png";
-import LocationIcon from "../../images/icons/location-tick.png";
 import CallIcon from "../../images/icons/call-simple.png";
-import EmailIcon from "../../images/icons/email-simple.png";
+import TelegramIcon from "../../images/icons/telegram.png";
 import { GlobalContext } from "../../context/ContextWrapper";
 
-
 export const Footer = () => {
-  const { loggedIn, convertNumberToFarsi,logo,info } = useContext(GlobalContext);
-  
-if(!loggedIn){
- return (
-    <footer className="bg-primary w-full  rounded-t-2xl py-5  ">
-      <img
-        src= {logo}
-        alt="logo"
-        className="w-20 mt-3  border-2 rounded-full mx-auto my-5"
-      />
-      <p className="text-center text-white iranyekan-very-light-white w-5/12 m-auto">
-      {info &&  info.about}
-      </p>
-      <div className="flex justify-center items-center py-3 border-b">
-        <a href={info &&  info.instagram} target="_blank" ><img
-          src={Instagram}
-          alt="instagram"
-          className="w-6 m-5 cursor-pointer "
-        /></a>
-         <a href={info &&  info.whatsapp} target="_blank" ><img
-          src={WhatsApp}
-          alt="whatsapp"
-          className="w-7 m-5 cursor-pointer "
-        /></a>
-      </div>
-      <div className="flex justify-start items-center p-4 text-white max-lg:flex-col ">
-        <a href="" className="flex mx-6 cursor-pointer max-lg:mpt-3 iranyekan-little-light">
-          <img src={LocationIcon} alt="location" className="w-6 p-1" />
-          {info &&  info.address}
-        </a>
-        <a
-          href={`tel:${info &&  info.phone_number}`}
-          className="flex mx-6 cursor-pointer iranyekan  max-lg:mt-3"
-        >
-          <img src={CallIcon} alt="location" className="w-6 p-1  " />
-          {info &&  convertNumberToFarsi(info.phone_number)}
-        </a>
-        <a
-          href={`mailto:${info &&  info.email}`}
-          className="flex mx-6 cursor-pointer Lato-light  max-lg:mt-3"
-        >
-          <img src={EmailIcon} alt="location" className="w-6 p-1 " />{" "}
-          {info &&  info.email}
-        </a>
+  const { convertNumberToFarsi, info } = useContext(GlobalContext);
+  return (
+    <footer dir="ltr" className=" flex justify-start   ">
+      <div  className="trapezoid relative  w-3/4 max-md:w-11/12 max-md:pl-1 rounded-t-2xl ">
+        <div className="flex  items-center absolute top-6 ">
+          <a href={info && info.whatsapp}>
+            <img
+              src={WhatsApp}
+              alt="whatsapp"
+              className="w-6 my-1 ml-4 cursor-pointer max-md:w-5 max-md:mx-4 "
+            />
+          </a>
+          <a href={info && info.telegram}>
+            <img
+              src={TelegramIcon}
+              alt="telegram"
+              className="w-5 my-1 mx-4 cursor-pointer max-md:w-4"
+            />
+          </a>
+          <a
+            dir="ltr"
+            href={`mailto:${info && info.instagram}`}
+            className="flex mx-6 cursor-pointer Lato-light text-white max-md:mx-4 "
+          >
+            <img src={Instagram} alt="location" className=" h-7 mr-2 p-1 max-md:h-5 " />{" "}
+            {info && info.instagram_id}
+          </a>
+          <a
+            href={`tel:${info && info.phone_number}`}
+            className="flex mx-6 cursor-pointer text-white iranyekan max-md:mx-3 "
+          >
+            <img src={CallIcon} alt="location" className=" w-6 mr-2 h-7 p-1 max-md:h-5 max-md:w-5 max-md:mr-1" />
+            {info && convertNumberToFarsi(info.phone_number)}
+          </a>
+        </div>
       </div>
     </footer>
-  );}
+  );
 };

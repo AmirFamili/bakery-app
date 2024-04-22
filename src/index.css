@@ -176,7 +176,7 @@
     font-size: 9.1px;
   }
   .iranyekan {
-    font-size: 11px;
+    font-size: 12px;
   }
 }
 
@@ -265,7 +265,7 @@
     font-size: 10px;
   }
   .vazir-regular {
-    font-size: 9px;
+    font-size: 12px;
   }
   .vazir-regular-bold {
     font-size: 11px;
@@ -326,7 +326,7 @@
   .border-bottom {
     width: 0;
     height: 0;
-    border: 25px solid transparent;
+    border: 30px solid transparent;
     border-bottom: 0;
     border-top: 6px solid #184977;
   }
@@ -337,6 +337,12 @@
 .trapezoid {
   border-bottom: 70px solid #184977;
   border-right: 140px solid transparent;
+}
+@media (max-width: 500px) {
+  .trapezoid {
+    border-bottom: 70px solid #184977;
+    border-right: 100px solid transparent;
+  }
 }
 /* * End Footert User */
 

@@ -3,6 +3,10 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      spacing:{
+        25:'6.3rem',
+        15:'60px'
+      },
       colors: {
         'primary': '#184977',
         'secondry':'#FDA56F',
@@ -13,8 +17,6 @@ module.exports = {
 
         'font-white':'#fefefe',
         'font-green':'#038C00',
-
-       
       },
     },
   },

@@ -4,6 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import axios from "../../api/axios";
 import SuccessIcon from "../../images/icons/success.png";
+import Call from "../../images/call.jpg";
 
 export const CallToUs = () => {
   const [showSuccess, setShowSucccess] = useState(false);
@@ -43,18 +44,17 @@ export const CallToUs = () => {
       .catch((err) => console.log(err));
   };
   return (
-    <section className="  mt-2 px-10 py-28 max-md:px-5 max-lg:mt-0 h-full min-h-screen max-lg:pt-5 relative">
-      <h1 className="py-5 iranyekan-very-bold ">ارتباط با ما</h1>
-      <div className="flex justify-between ">
-     
-        <div className="mt-5 max-sm:w-2/3">
-          <h2 className="iranyekan ">
+    <section className="  py-32 max-md:px-5 max-lg:mt-0 h-screen min-h-screen max-lg:pt-5 relative">
+      <h1 className="py-5 iranyekan-very-bold px-10">ارتباط با ما</h1>
+      <div className="flex justify-between  ">
+        <div className="mt-5 w-1/2  max-lg:w-full overflow-hidden relative">
+          <h2 className="iranyekan mx-auto text-center ">
             لطفا نظرات خود را در رابطه با خدمات ما بنویسید
           </h2>
 
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className=" mx-auto my-7   max-sm:text-sm  "
+            className=" mx-auto my-7   max-sm:text-sm  w-1/2 max-md:w-2/3"
           >
             <div className="pb-3">
               <input
@@ -119,20 +119,20 @@ export const CallToUs = () => {
             </div>
           </form>
           <div
-            className={`absolute top-64  transition  flex justify-center items-center py-4 px-10 bg-white rounded-2xl shadow-lg border iranyekan ${
+            className={`absolute top-32  transition  flex justify-center items-center py-4 px-10 bg-white rounded-2xl shadow-lg border iranyekan ${
               showSuccess
-                ? "-translate-x-8  delay-75 "
-                : " translate-x-full -right-2/3  "
+                ? "-translate-x-48  delay-75 "
+                : " translate-x-full -right-2/6"
             } ${goBackBox()}`}
           >
             <img src={SuccessIcon} alt="success" className="w-11 ml-2" />
             پیام شما ارسال شد.
           </div>
         </div>
-      
-      <div className="w-1/2  absolute top-24 left-0 bottom-0 max-lg:hidden">
-        <img src="" alt="تماس با ما"  />
-      </div>
+
+        <div className="w-1/2  absolute  top-25 border-t-4 border-gray-main left-0 bottom-0 max-lg:hidden">
+          <img className="w-full h-full" src={Call} alt="تماس با ما" />
+        </div>
       </div>
     </section>
   );

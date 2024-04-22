@@ -5,9 +5,9 @@ import axios from "../../api/axios";
 
 export const History = () => {
   const { accessToken } = useContext(GlobalContext);
-const [orders,setOrders]=useState(null);
+  const [orders, setOrders] = useState(null);
   useEffect(() => {
-    if(accessToken){
+    if (accessToken) {
       const getProduct = async () => {
         const abortController = new AbortController();
         const signal = abortController.signal;
@@ -40,23 +40,25 @@ const [orders,setOrders]=useState(null);
     <section className="  mt-2 px-10 py-28 max-md:px-5 max-lg:mt-0 h-full min-h-screen max-lg:pt-5 ">
       <h1 className="py-5 iranyekan-very-bold ">سفارشات شما</h1>
       <div className="w-full border rounded-2xl overflow-hidden mt-3">
-        <table className="w-full bg-white ">
+        <table className="w-full table bg-white ">
           <thead>
             <tr className="iranyekan-little-light text-gray-400 border-b  ">
               <th className="border-l w-10 p-6 "></th>
               <th className="w-52">سفارش</th>
               <th className="w-52">وضعیت</th>
               <th className="w-52">پرداخت شده</th>
-              <th className="w-52">مانده حساب</th>
+              <th className="w-52">باقی مانده</th>
               <th className="w-32 max-md:hidden">کد سفارش</th>
               <th className="w-32 max-md:hidden">تاریخ</th>
             </tr>
           </thead>
           <tbody>
-            {orders && orders.map((order,index)=> <Order key={order.id} order={order} index={index}/>)}
+            {orders &&
+              orders.map((order, index) => (
+                <Order key={order.id} order={order} index={index} />
+              ))}
           </tbody>
         </table>
-     
       </div>
     </section>
   );

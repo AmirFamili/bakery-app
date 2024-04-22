@@ -129,16 +129,16 @@ export const CartProduct = ({ product, number }) => {
         <div className="flex justify-center items-center">
           <button
             onClick={handlerDecrease}
-            className="minus rounded-full w-7 bg-primary   max-md:w-5"
+            className="minus rounded-full w-7 bg-primary   max-md:w-4"
           >
             <img src={MinusIcon} alt="minus" />
           </button>
-          <p className="w-7 text-center  iranyekan max-md:w-5">
+          <p className="w-7 text-center  iranyekan max-md:w-4">
             {convertNumberToFarsi(count)}
           </p>
           <button
             onClick={handlerIncrease}
-            className="bg-primary rounded-full w-7  max-md:w-5"
+            className="bg-primary rounded-full w-7  max-md:w-4"
           >
             <img src={AddIcon} alt="plus" />
           </button>

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import SearchIcon from "../../images/icons/search-normal.png";
 import ProfileIcon from "../../images/icons/profile.png";
 import ShoppingCartWhiteIcon from "../../images/icons/shopping-cart-white.png";
@@ -9,9 +9,9 @@ import { Link} from "react-router-dom";
 import { GlobalContext } from "../../context/ContextWrapper";
 
 export const Header = () => {
-  const { countAll, convertNumberToFarsi, loggedIn, setLoggedIn, info,navigate } =
+  const { countAll, convertNumberToFarsi, loggedIn, setLoggedIn, info,navigate, profile,imageProfile } =
     useContext(GlobalContext);
- 
+
   const [showMenu, setShowMenu] = useState(false);
 
   const handlerLogOut = () => {
@@ -65,7 +65,7 @@ export const Header = () => {
         </a>
 
         <a className="flex pr-2 " href={`mailto:${info && info.instagram}`}>
-          <span className="my-6 mx-2 Lato-light  max-xl:mx-1">
+          <span dir="ltr" className="my-6 mx-2 Lato-light  max-xl:mx-1">
             {" "}
             {info && info.instagram_id}
           </span>
@@ -115,9 +115,13 @@ export const Header = () => {
             onMouseLeave={() => setShowMenu(false)}
           >
             <img
-              src={ProfileIcon}
+              src={
+                profile && profile.avatar === null
+                  ? ProfileIcon
+                  :imageProfile  && imageProfile 
+              }
               alt="حساب کاربری"
-              className="border rounded-full w-10 p-1 m-4 cursor-pointer"
+              className="border rounded-full w-12 h-12 m-3 cursor-pointer"
             />
 
             <div

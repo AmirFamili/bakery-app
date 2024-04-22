@@ -35,7 +35,7 @@ export const InfoSend = () => {
       ),
     postalCode: Yup.string()
       .required("لطفا این قسمت را خالی نگذارید.")
-      .matches(/^\d{5}-\d{5}$/, "کد پستی نامعتبر می باشد.(مثال 12345-67891)"),
+      .matches(/^\d{10}$/, "کد پستی نامعتبر می باشد."),
     address: Yup.string()
       .required("لطفا این قسمت را خالی نگذارید.")
       .matches(/[,.-_]?[ء-ی0-9]+[,.-_]?/, "آدرس درست نمی باشد."),
@@ -85,7 +85,7 @@ export const InfoSend = () => {
                   type="text"
                   name="name"
                   placeholder="نام"
-                  className={` border w-full rounded-md h-10 mt-1  py-2 px-8 outline-none iranyekan-very-light ${
+                  className={` border w-full rounded-md h-10 mt-1  py-2 px-8 outline-none iranyekan-very-light max-md:px-4${
                     errors.name ? "border-red-500" : ""
                   }`}
                 />
@@ -104,7 +104,7 @@ export const InfoSend = () => {
                   type="text"
                   name="lastName"
                   placeholder="نام خانوادگی"
-                  className={` border w-full rounded-md h-10 mt-1  py-2 px-8 outline-none iranyekan-very-light ${
+                  className={` border w-full rounded-md h-10 mt-1  py-2 px-8 outline-none iranyekan-very-light max-md:px-4${
                     errors.lastName ? "border-red-500" : ""
                   }`}
                 />
@@ -123,7 +123,7 @@ export const InfoSend = () => {
                   type="phone"
                   name="phone"
                   placeholder="شماره تماس"
-                  className={` border w-full rounded-md h-10 mt-1  py-2 px-8 outline-none iranyekan-very-light ${
+                  className={` border w-full rounded-md h-10 mt-1  py-2 px-8 outline-none iranyekan-very-light max-md:px-4${
                     errors.phone ? "border-red-500" : ""
                   }`}
                 />
@@ -142,7 +142,7 @@ export const InfoSend = () => {
                   type="text"
                   name="postalCode"
                   placeholder="کدپستی"
-                  className={` border w-full rounded-md h-10 mt-1  py-2 px-8 outline-none iranyekan-very-light ${
+                  className={` border w-full rounded-md h-10 mt-1  py-2 px-8 outline-none iranyekan-very-light max-md:px-4 ${
                     errors.postalCode ? "border-red-500" : ""
                   }`}
                 />
@@ -158,10 +158,10 @@ export const InfoSend = () => {
               <div className="flex relative">
                 <textarea
                   {...register("address")}
-                  type="number"
+                  type="text"
                   name="address"
                   placeholder="آدرس"
-                  className={` border w-full rounded-md h-20 mt-1  py-2 px-8 outline-none iranyekan-very-light ${
+                  className={` border w-full rounded-md h-20 mt-1  py-2 px-8 outline-none iranyekan-very-light max-md:px-4${
                     errors.address ? "border-red-500" : ""
                   }`}
                 />
@@ -227,7 +227,7 @@ export const InfoSend = () => {
         <div className="absolute bottom-5 right-8 flex max-lg:left-5 max-lg:static max-lg:mt-5 max-lg:justify-end">
           <Link to={"/cart"}>
             {" "}
-            <button className=" w-40 text-center  my-6 mx-3 bg-blue-very-light  rounded-xl shadow-xl py-3  vazir-regular max-xl:w-28 max-lg:w-32 ">
+            <button className=" w-40 text-center  my-6 mx-3 bg-blue-very-light  rounded-xl shadow-xl py-3  vazir-regular max-xl:w-28 max-lg:w-32 max-md:w-28">
               مرحله قبل
             </button>
           </Link>
