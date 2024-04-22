@@ -86,7 +86,7 @@ export const InfoCart = () => {
         </table>
         <div className=""></div>
       </div>
-      <div className="w-1/3 p-5 relative max-md:w-full  max-md:flex max-md:justify-between ">
+      <div className="w-1/3 p-5 relative max-md:w-full  max-md:flex max-md:justify-between max-md:p-2">
         <div className="mt-3">
           <h3 className="iranyekan-little-light"> نحوه تحویل سفارش:</h3>
           {delivery &&

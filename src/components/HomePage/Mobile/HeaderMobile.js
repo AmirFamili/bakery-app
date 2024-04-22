@@ -1,17 +1,17 @@
 import React, { useContext, useState } from "react";
 import SearchIcon from "../../../images/icons/search-normal-black.png";
-import ProfileIcon from "../../../images/icons/profile.png";
 import ShoppingCartIcon from "../../../images/icons/shopping-cart-black.png";
 import ExitIcon from "../../../images/icons/exit.png";
 import TaskIcon from "../../../images/icons/task.png";
 import SettingIcon from "../../../images/icons/setting.png";
 import Menu from "../../../images/icons/menu.png";
+import HamburgerIcon from "../../../images/icons/hamburger-menu.png";
 
 import { Link} from "react-router-dom";
 import { GlobalContext } from "../../../context/ContextWrapper";
 
 export const HeaderMobile = () => {
-  const { loggedIn, setLoggedIn , navigate,imageProfile} =
+  const { loggedIn, setLoggedIn , navigate,imageProfile,showMenu, setShowMenu} =
     useContext(GlobalContext);
  
   const [showLogOut, setShowLogOut] = useState(false);
@@ -25,10 +25,11 @@ export const HeaderMobile = () => {
   };
 
   return (
-    <header className="hidden iranyekan-light  justify-between items-center bg-white p-2  border-r-2 border-gray-main max-lg:flex">
+    <header className="hidden iranyekan-light  justify-between items-center bg-white p-2 fixed z-50 w-full border-r-2 border-gray-main max-lg:flex">
       
-      <div className="px-3">
-        <img className=" m-4 w-9 max-md:w-7 " src={Menu} alt="menu" />
+      <div onClick={()=>setShowMenu(!showMenu )} className="px-3">
+        <img className={` m-4 w-9 max-md:w-7 ${showMenu && 'hidden'}`} src={Menu} alt="menu" />
+        <img className={`m-4  w-9 max-md:w-7 ${showMenu? 'block':'hidden'}`}  src={HamburgerIcon} alt="menu" />
       </div>
 
       <div className=" flex items-center  text-black ">

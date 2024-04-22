@@ -17,6 +17,7 @@ import { InfoCart } from "./components/Customer/Cart/InfoCart";
 import { InfoSend } from "./components/Customer/Cart/InfoSend";
 import { AboutUs } from "./components/AboutUs/AboutUs";
 import { CustomerOrder } from "./components/Customer/CustomerOrder";
+import { Menu } from "./components/HomePage/Mobile/Menu";
 
 function App() {
   return (
@@ -26,8 +27,9 @@ function App() {
           path="/*"
           element={
             <div className="">
-              <div className="flex ">
+              <div className="flex relative ">
                 <Sidebar />
+                <Menu/>
                 <div className="main  ">
                   <Header />
                   <HeaderMobile />
