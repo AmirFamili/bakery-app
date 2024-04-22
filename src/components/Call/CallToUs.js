@@ -44,7 +44,7 @@ export const CallToUs = () => {
       .catch((err) => console.log(err));
   };
   return (
-    <section className="  py-32 max-md:px-5 max-lg:mt-0 h-screen min-h-screen max-lg:pt-5 relative">
+    <section className="  py-32 max-md:px-5  h-screen min-h-screen max-lg:pt-5 max-lg:mt-20 relative">
       <h1 className="py-5 iranyekan-very-bold px-10">ارتباط با ما</h1>
       <div className="flex justify-between  ">
         <div className="mt-5 w-1/2  max-lg:w-full overflow-hidden relative">

@@ -11,7 +11,7 @@ export const Cart = () => {
   const isActive_3 = useMatch({ path: "/", end: true });
 
   return (
-    <section className="  mt-2 px-10 py-28 max-md:px-5 max-lg:mt-0 h-full min-h-screen max-lg:pt-5 ">
+    <section className="  mt-2 px-10 py-28 max-md:px-5  h-full min-h-screen max-lg:pt-5 max-lg:mt-20">
       <h1 className="py-5 iranyekan-very-bold ">سبد خرید شما</h1>
 
       <div className="flex  pt-3 mb-7  max-md:pr-5">

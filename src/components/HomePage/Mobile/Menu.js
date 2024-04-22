@@ -23,7 +23,7 @@ export const Menu = () => {
 
   return (
     <section
-      className={`hidden transition duration-200 ease-in-out w-2/6 mt-23 h-lvh fixed bg-gray-main z-50 rounded-l-2xl shadow-xl max-lg:block max-sm:w-1/2 ${
+      className={`hidden transition duration-200 ease-in-out w-2/6 mt-20 h-lvh fixed bg-gray-main z-50 rounded-l-2xl shadow-xl max-lg:block max-sm:w-1/2 ${
         showMenu ? "" : " translate-x-80 "
       }`}
     >

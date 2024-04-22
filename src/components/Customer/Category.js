@@ -20,7 +20,7 @@ export const Category = () => {
   }, []);
 
   return (
-    <section className="py-6 px-10 pt-28 max-md:px-5 max-lg:mt-0 h-screen max-lg:pt-5 max-md:h-auto">
+    <section className="py-6 px-10 pt-28 max-md:px-5 h-screen max-lg:pt-5 max-md:h-auto max-lg:mt-20">
       <h1 className="py-5 iranyekan-very-bold ">دسته بندی محصولات</h1>
       {categoryPage && (
         <div className="flex border-b pt-3 mb-10 ">
