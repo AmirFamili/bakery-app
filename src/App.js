@@ -18,6 +18,8 @@ import { InfoSend } from "./components/Cart/InfoSend";
 import { AboutUs } from "./components/AboutUs/AboutUs";
 import { CustomerOrder } from "./components/Customer/CustomerOrder";
 import { Menu } from "./components/HomePage/Mobile/Menu";
+import { SeeAllDiscount } from "./components/SeeAll/SeeAllDiscount";
+import { SeeAllNewProduct } from "./components/SeeAll/SeeAllNew";
 
 function App() {
   return (
@@ -54,6 +56,9 @@ function App() {
           <Route path="history" element={<History />}></Route>
           <Route path="profile" element={<Profile />}></Route>
           <Route path="about-us" element={<AboutUs />}></Route>
+          <Route path="see-all-discount" element={<SeeAllDiscount/>}></Route>
+          <Route path="see-all-new-product" element={< SeeAllNewProduct/>}></Route>
+         
         </Route>
         <Route path="/singup" element={<SignUp />}></Route>
         <Route path="/login" element={<Login />}></Route>

@@ -49,7 +49,6 @@ const ContextWrapper = (props) => {
   const [accessToken, setAccessToken] = useState(null);
   const [deliveryPrice, setDeliveryPrice] = useState(0);
   const [deliveryId, setDeliveryId] = useState(null);
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -191,7 +190,6 @@ const ContextWrapper = (props) => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
-
   useEffect(() => {
     const abortController = new AbortController();
     const signal = abortController.signal;
@@ -207,7 +205,6 @@ const ContextWrapper = (props) => {
       abortController.abort();
     };
   }, []);
-
 
   const togglePopup = () => {
     setShowProductModel(!showProductModel);
