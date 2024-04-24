@@ -1,8 +1,4 @@
-import React, {
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Routes, Route, Outlet } from "react-router-dom";
 import { Login } from "./components/Register/Login";
 import { SignUp } from "./components/Register/SingUp";
@@ -27,11 +23,11 @@ import { SeeAllNewProduct } from "./components/SeeAll/SeeAllNew";
 import { GlobalContext } from "./context/ContextWrapper";
 import axios from "./api/axios";
 import { Product } from "./components/Product/Product";
-import BackIcon from './images/icons/arrow-right.png';
-
+import BackIcon from "./images/icons/arrow-right.png";
 
 function App() {
-  const { showSearchPage,setShowSearchPage, search,setSearch } = useContext(GlobalContext);
+  const { showSearchPage, search, setSearch } =
+    useContext(GlobalContext);
   const [searchProduct, setSearchProduct] = useState(null);
 
   useEffect(() => {
@@ -73,7 +69,17 @@ function App() {
                         showSearchPage ? "" : "-translate-x-full"
                       }`}
                     >
-                            <button onClick={()=>setSearch('')} className="flex justify-start items-center iranyekan-font text-lg text"><img src={BackIcon} alt="back" className='w-6 m-6 ml-3' /> بازگشت</button>
+                      <button
+                        onClick={() => setSearch("")}
+                        className="flex justify-start items-center iranyekan-font text-lg text"
+                      >
+                        <img
+                          src={BackIcon}
+                          alt="back"
+                          className="w-6 m-6 ml-3"
+                        />{" "}
+                        بازگشت
+                      </button>
 
                       <div className="flex justify-start  flex-wrap p-5">
                         {searchProduct &&
