@@ -64,14 +64,14 @@ export const InfoCart = () => {
   };
 
   return (
-    <div className="min-h-96 mt-5 p-1 pb-0 flex justify-center  border  rounded-2xl bg-white max-md:block ">
+    <div className="min-h-96 mt-5 p-1 pb-0 flex justify-center  border  rounded-2xl bg-white max-md:block  max-md:min-h-52">
       <div className="w-2/3  border-l max-md:border-0 max-md:w-full">
         <table className="w-full ">
           <thead>
-            <tr className="iranyekan-little-light text-gray-400 border-b  ">
-              <th className="border-l w-10 p-6 "></th>
-              <th className="w-52">نام محصول</th>
-              <th className="w-52">قیمت</th>
+            <tr className="iranyekan-little-light text-gray-400 border-b ">
+              <th className="border-l w-10 p-3 "></th>
+              <th className="w-52 p-3">نام محصول</th>
+              <th className="w-52 max-sm:hidden">قیمت</th>
               <th className="w-52">تعداد</th>
               <th className="w-52">مجموع قیمت</th>
               <th className="w-32"></th>
@@ -91,7 +91,7 @@ export const InfoCart = () => {
           <h3 className="iranyekan-little-light"> نحوه تحویل سفارش:</h3>
           {delivery &&
             delivery.map((delivey) => (
-              <div key={delivey.id} className="flex mt-5">
+              <div key={delivey.id} className="flex mt-5 z-30">
                 <input
                   type="radio"
                   checked={selectedDelivery === delivey.id}
@@ -112,7 +112,7 @@ export const InfoCart = () => {
               </div>
             ))}
         </div>
-        <div className="absolute inset-0 flex justify-center items-end max-md:static max-md:mt-10">
+        <div className="absolute inset-x-0 bottom-5 flex justify-center items-end max-md:static max-md:mt-10 z-0">
          
             <button
               onClick={clickHandler}

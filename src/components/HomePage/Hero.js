@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import CakeImg from "../../images/assortment-pieces-cake.png";
 import ArrowLeftICon from "../../images/icons/arrow-circle-left.png";
 import { Link } from "react-router-dom";
 import axios from "../../api/axios";
+import { GlobalContext } from "../../context/ContextWrapper";
 
 export const Hero = () => {
   const [images, setImages] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const {info } =
+  useContext(GlobalContext);
+
 const second=10000;
   useEffect(() => {
 
@@ -43,12 +47,12 @@ const second=10000;
           className=" w-full h-86 rounded-3xl "
         />
         <div className="absolute top-20 right-16 z-10 max-lg:hidden">
-          <h1 className="vazir-very-bold text-primary ">بلو کیک</h1>
+          <h1 className="vazir-very-bold text-primary ">{info && info.website}</h1>
           <h3 className=" mt-5 mb-4 vazir-bold  text-primary">
-            یک لحظه شیرین را با ما تجربه کنید.
+          {info && info.title}
           </h3>
           <h4 className="vazir-light text-primary">
-            یک لحظه شیرین را با ما تجربه کنید.
+          {info && info.explanation}
           </h4>
         </div>
       </div>
