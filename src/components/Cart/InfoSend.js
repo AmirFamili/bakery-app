@@ -76,7 +76,7 @@ export const InfoSend = () => {
         <div className="">
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className=" mr-10 my-7 w-3/6  max-sm:text-sm max-lg:w-4/5 max-md:mr-5 "
+            className=" mr-10 my-7 w-3/6  max-sm:text-sm max-lg:w-4/5 max-lg:mx-auto "
           >
             <div className="pb-3">
               <div className="flex relative">
@@ -192,7 +192,7 @@ export const InfoSend = () => {
           </div>
         </div>
       </div>
-      <div className="w-1/3 p-5 relative max-lg:w-5/6  ">
+      <div className="w-1/3 p-5 relative max-lg:w-full  ">
         <div className="mt-3">
           <div className="flex justify-between items-center text-gray-600">
             <h3 className="iranyekan-little-light"> مجموع تخفیف:</h3>
@@ -224,10 +224,10 @@ export const InfoSend = () => {
           </div>
         </div>
 
-        <div className="absolute bottom-5 right-8 flex max-lg:left-5 max-lg:static max-lg:mt-5 max-lg:justify-end">
+        <div className="absolute inset-0 flex justify-center items-end max-lg:static max-lg:mt-5 max-lg:justify-center">
           <Link to={"/cart"}>
             {" "}
-            <button className=" w-40 text-center  my-6 mx-3 bg-blue-very-light  rounded-xl shadow-xl py-3  vazir-regular max-xl:w-28 max-lg:w-32 max-md:w-28">
+            <button className=" w-40 text-center  my-6 ml-3 bg-blue-very-light  rounded-xl shadow-xl py-3  vazir-regular max-xl:w-28 max-lg:w-32 ">
               مرحله قبل
             </button>
           </Link>

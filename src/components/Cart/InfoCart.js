@@ -86,7 +86,7 @@ export const InfoCart = () => {
         </table>
         <div className=""></div>
       </div>
-      <div className="w-1/3 p-5 relative max-md:w-full  max-md:flex max-md:justify-between max-md:p-2">
+      <div className="w-1/3 p-5  relative max-md:w-full  max-md:flex max-md:justify-between max-md:p-2">
         <div className="mt-3">
           <h3 className="iranyekan-little-light"> نحوه تحویل سفارش:</h3>
           {delivery &&
@@ -112,12 +112,12 @@ export const InfoCart = () => {
               </div>
             ))}
         </div>
-        <div className="absolute bottom-5 right-28 max-xl:right-12 max-md:static max-md:mt-10">
+        <div className="absolute inset-0 flex justify-center items-end max-md:static max-md:mt-10">
          
             <button
               onClick={clickHandler}
               disabled={countAll === 0 ? true : selectedDelivery ? false : true}
-              className=" text-center w-52 flex justify-center items-center my-5 bg-primary text-font-white  rounded-xl shadow-xl py-2 px-1 vazir-regular  max-lg:max-w-48  max-md:w-32"
+              className=" text-center w-52 flex justify-center items-center my-5 bg-primary text-font-white  rounded-xl shadow-xl py-2 px-3 vazir-regular  max-lg:max-w-48  max-md:w-32"
             >
               تایید و تکمیل سفارش
               <img src={ArrowLeftIcon} alt=" Arrow Left" className="w-5 mx-2 max-md:hidden" />
