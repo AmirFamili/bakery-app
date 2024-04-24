@@ -49,8 +49,11 @@ const ContextWrapper = (props) => {
   const [accessToken, setAccessToken] = useState(null);
   const [deliveryPrice, setDeliveryPrice] = useState(0);
   const [deliveryId, setDeliveryId] = useState(null);
+  const [showSearchPage, setShowSearchPage] = useState(false);
+  const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
+ 
   useEffect(() => {
     const refreshTokens = async () => {
       if (localStorage.refresh) {
@@ -257,6 +260,9 @@ const ContextWrapper = (props) => {
         totalPayment,
         showMenu,
         setShowMenu,
+        showSearchPage,
+        setShowSearchPage,
+        search, setSearch
       }}
     >
       {props.children}
