@@ -65,7 +65,7 @@ function App() {
                   <main className="bg-gray-main relative">
                     <Outlet />
                     <div
-                      className={`transition-all pt-32 delay-200 fixed w-11/12 h-screen top-0 left-0 z-30 bg-gray-main max-lg:w-full  ${
+                      className={` pt-32 fixed w-11/12 h-screen top-0 left-0 z-30 bg-gray-main max-lg:w-full  ${
                         showSearchPage ? "" : "-translate-x-full"
                       }`}
                     >
