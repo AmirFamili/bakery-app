@@ -4,8 +4,16 @@ import { Order } from "./Order";
 import axios from "../../api/axios";
 
 export const History = () => {
-  const { accessToken } = useContext(GlobalContext);
+  const { accessToken,loggedIn,navigate } = useContext(GlobalContext);
   const [orders, setOrders] = useState(null);
+
+  useEffect(()=>{
+    if(!loggedIn){
+      navigate('/');
+    }
+  },[])
+
+
   useEffect(() => {
     if (accessToken) {
       const getProduct = async () => {

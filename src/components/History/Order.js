@@ -3,7 +3,7 @@ import { GlobalContext } from "../../context/ContextWrapper";
 import GroupPointIcon from "../../images/icons/group-point.png";
 
 export const Order = ({ order, index }) => {
-  console.log(order);
+
   const { convertNumberToFarsi } = useContext(GlobalContext);
   return (
     <tr className=" iranyekan-little-light  border-b  text-center">

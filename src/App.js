@@ -21,8 +21,9 @@ import { Menu } from "./components/HomePage/Mobile/Menu";
 import { SeeAllDiscount } from "./components/SeeAll/SeeAllDiscount";
 import { SeeAllNewProduct } from "./components/SeeAll/SeeAllNew";
 import { GlobalContext } from "./context/ContextWrapper";
-import axios from "./api/axios";
 import { Product } from "./components/Product/Product";
+import {ConfirmNewPassword } from "./components/Register/ConfirmNewPassword";
+import axios from "./api/axios";
 import BackIcon from "./images/icons/arrow-right.png";
 
 function App() {
@@ -116,6 +117,8 @@ function App() {
         <Route path="/singup" element={<SignUp />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/change-password" element={<ChangePassword />}></Route>
+        <Route path="/confirm-new-password" element={<ConfirmNewPassword/>}></Route>
+
       </Routes>
     </div>
   );

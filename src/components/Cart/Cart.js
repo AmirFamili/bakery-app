@@ -1,16 +1,26 @@
-import React from "react";
+import React, { useEffect,useContext} from "react";
 import CartOrangeIcon from "../../images/icons/shopping-cart-orange.png";
 import LocationGrayIcon from "../../images/icons/location-tick-gray.png";
 import LocationOrangeIcon from "../../images/icons/Location-tick-orange.png";
 import CardTickGrayIcon from "../../images/icons/card-tick.png";
-import { Outlet } from "react-router-dom";
-import { useMatch } from "react-router-dom";
+import { Outlet, useMatch } from "react-router-dom";
+import { GlobalContext } from "../../context/ContextWrapper";
+
 
 export const Cart = () => {
   const isActive_2 = useMatch({ path: "/cart/show-info", end: true });
   const isActive_3 = useMatch({ path: "/", end: true });
+  const { loggedIn,navigate } = useContext(GlobalContext);
+
+
+  useEffect(()=>{
+    if(!loggedIn){
+      navigate('/');
+    }
+  },[])
 
   return (
+   
     <section className="  mt-2 px-10 py-28 max-md:px-5  h-full min-h-screen max-lg:pt-5 max-lg:mt-20">
       <h1 className="py-5 iranyekan-very-bold ">سبد خرید شما</h1>
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import CakeImg from "../../images/assortment-pieces-cake.png";
 import ArrowLeftICon from "../../images/icons/arrow-circle-left.png";
 import { Link } from "react-router-dom";
@@ -8,17 +8,15 @@ import { GlobalContext } from "../../context/ContextWrapper";
 export const Hero = () => {
   const [images, setImages] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const {info } =
-  useContext(GlobalContext);
+  const { info } = useContext(GlobalContext);
 
-const second=10000;
+  const second = 10000;
   useEffect(() => {
-
     const abortController = new AbortController();
     const signal = abortController.signal;
     async function getImages() {
       await axios
-        .get("/bakery/promotion/",{signal})
+        .get("/bakery/promotion/", { signal })
         .then((response) => setImages(response.data))
         .catch((err) => console.log(err));
     }
@@ -29,11 +27,10 @@ const second=10000;
   }, []);
 
   useEffect(() => {
-    const intervalId =  setInterval(() => {
+    const intervalId = setInterval(() => {
       images && currentImageIndex === images.length - 1
         ? setCurrentImageIndex(0)
         : setCurrentImageIndex(currentImageIndex + 1);
-    
     }, second);
     return () => clearInterval(intervalId);
   }, [currentImageIndex]);
@@ -46,14 +43,20 @@ const second=10000;
           alt="assortment-pieces-cake"
           className=" w-full h-86 rounded-3xl "
         />
-        <div className="absolute top-20 right-16 z-10 max-lg:hidden">
-          <h1 className="vazir-very-bold text-primary ">{info && info.website}</h1>
-          <h3 className=" mt-5 mb-4 vazir-bold  text-primary">
-          {info && info.title}
+        <div className="absolute top-20 right-16 z-10 max-lg:hidden max-xl:top-14 ">
+          <h1 className="vazir-very-bold text-primary ">
+            {info && info.website}
+          </h1>
+          <h3 className=" mt-5 mb-4 vazir-bold  text-primary max-xl:mt-3">
+            {info && info.title}
           </h3>
-          <h4 className="vazir-light text-primary">
-          {info && info.explanation}
+          <h4 className="vazir-light text-primary ">
+            {info && info.explanation}
           </h4>
+          
+          <h5 className="mt-10"><Link className=" bg-primary text-font-white rounded-xl shadow-lg py-2 px-9  vazir-regular ">
+            کیک خودتو بساز
+          </Link></h5>
         </div>
       </div>
       <div className="px-1 relative max-sm:px-0 w-3/12 overflow-hidden rounded-3xl ">
