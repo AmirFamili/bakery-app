@@ -161,7 +161,7 @@ export const Login = () => {
 
 
   return (
-    <section className="bg-gray-main h-screen w-full flex justify-center items-center">
+    <section className="bg-gray-main py-10 w-full flex justify-center items-center">
       <div className=" bg-white border w-2/5  rounded-2xl p-5 relative max-md:w-4/5 pb-20">
         <div className="flex justify-center items-center p-2">
           <img src={logo} alt="بلو کیک" className="w-24 max-md:w-20 " />
