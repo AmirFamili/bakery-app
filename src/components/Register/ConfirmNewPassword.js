@@ -45,7 +45,7 @@ export const ConfirmNewPassword = () => {
       .min(8, "رمز عبور باید بیشتر از ۸ کاراکتر باشد."),
     confirmNewPassword: Yup.string()
       .required("لطفا این قسمت را خالی نگذارید.")
-      .oneOf([Yup.ref("password")], "رمز عبور یکی نمی باشد."),
+      .oneOf([Yup.ref("Newpassword")], "رمز عبور یکی نمی باشد."),
   });
 
   const {
@@ -56,13 +56,12 @@ export const ConfirmNewPassword = () => {
 
   const onSubmit = async (values) => {
     await axios
-      .post(`/auth/password_reset_confirm/${token}`, {
+      .post(`/auth/password_reset_confirm/${token}/`, {
        new_password: values.Newpassword,
        confirm_new_password: values.confirmNewPassword,
       })
       .then((response) => {
-        console.log(response);
-       
+        navigate("/login");
       });
   };
 
