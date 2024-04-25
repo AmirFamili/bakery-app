@@ -32,7 +32,6 @@ export const ChangePassword = () => {
     handleSubmit,
     formState: { errors },
     setError,
-    reset,
   } = useForm({ resolver: yupResolver(validationSchema) });
 
   const onSubmit = async (values) => {
