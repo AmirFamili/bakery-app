@@ -15,6 +15,7 @@ export const ConfirmNewPassword = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showRePassword, setShowRePassword] = useState(false);
+  const [token,setToken]=useState(null)
   const params = useParams();
 
 
@@ -28,8 +29,8 @@ export const ConfirmNewPassword = () => {
   useEffect(() => {
    
     if (params) {
-      console.log(params);
-    // params.id.split(":")[1];
+     
+      setToken( params.id.split(":")[1]);
     } else {
       navigate("/");
     }
@@ -55,7 +56,7 @@ export const ConfirmNewPassword = () => {
 
   const onSubmit = async (values) => {
     await axios
-      .post(`/auth/password_reset_confirm/`, {
+      .post(`/auth/password_reset_confirm/${token}`, {
        new_password: values.Newpassword,
        confirm_new_password: values.confirmNewPassword,
       })
