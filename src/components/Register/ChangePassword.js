@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import EmailGrayIcon from "../../images/icons/email-gray.png";
 import ArrowRightIcon from "../../images/icons/arrow-right.png";
 import { Link } from "react-router-dom";
@@ -11,7 +11,15 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export const ChangePassword = () => {
-  const { logo } = useContext(GlobalContext);
+  const { logo, navigate,loggedIn} = useContext(GlobalContext);
+
+
+  useEffect(()=>{
+    if(loggedIn){
+      navigate('/');
+    }
+  },[])
+
 
   const validationSchema = Yup.object().shape({
     email: Yup.string()

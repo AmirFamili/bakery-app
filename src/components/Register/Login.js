@@ -22,8 +22,15 @@ export const Login = () => {
   const [time, setTime] = useState(initialTime);
   const [timerActive, setTimerActive] = useState(false);
 
-  const navigate = useNavigate();
-  const { setLoggedIn, logo } = useContext(GlobalContext);
+  const { loggedIn,setLoggedIn, logo,navigate } = useContext(GlobalContext);
+
+
+  useEffect(()=>{
+    if(loggedIn){
+      navigate('/');
+    }
+  },[])
+
 
   useEffect(() => {
     let interval;

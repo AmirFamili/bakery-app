@@ -1,17 +1,42 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext,useEffect,useState } from "react";
 import KeyIcon from "../../images/icons/key.png";
 import EyeIcon from "../../images/icons/eye.png";
 import axios from "../../api/axios";
+import {useParams } from 'react-router-dom'
 import { GlobalContext } from "../../context/ContextWrapper";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
+
 export const ConfirmNewPassword = () => {
-  const { logo } = useContext(GlobalContext);
+
+  const { logo ,navigate,loggedIn} = useContext(GlobalContext);
 
   const [showPassword, setShowPassword] = useState(false);
   const [showRePassword, setShowRePassword] = useState(false);
+  const params = useParams();
+
+
+  useEffect(()=>{
+    if(loggedIn){
+      navigate('/');
+    }
+  },[])
+
+
+  useEffect(() => {
+   
+    if (params) {
+      console.log(params);
+    // params.id.split(":")[1];
+    } else {
+      navigate("/");
+    }
+    
+  }, []);
+
+
 
   const validationSchema = Yup.object().shape({
     Newpassword: Yup.string()
@@ -31,13 +56,16 @@ export const ConfirmNewPassword = () => {
   const onSubmit = async (values) => {
     await axios
       .post(`/auth/password_reset_confirm/`, {
-        new_password: values.Newpassword,
-        confirm_new_password: values.confirmNewPassword,
+       new_password: values.Newpassword,
+       confirm_new_password: values.confirmNewPassword,
       })
       .then((response) => {
         console.log(response);
+       
       });
   };
+
+
 
   return (
     <section className="bg-gray-main h-screen w-full flex justify-center items-center">
@@ -53,7 +81,7 @@ export const ConfirmNewPassword = () => {
           onSubmit={handleSubmit(onSubmit)}
           className=" mx-auto my-7 w-3/5  max-sm:text-sm max-md:w-4/5 "
         >
-          <div className="pb-3">
+         <div className="pb-3">
             <div className="flex relative">
               <img
                 src={KeyIcon}
@@ -123,6 +151,7 @@ export const ConfirmNewPassword = () => {
             </button>
           </div>
         </form>
+       
       </div>
     </section>
   );
