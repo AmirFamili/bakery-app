@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { GlobalContext } from "../../context/ContextWrapper";
 
 export const Popup = ({ onClose }) => {
-  const { setActiveMeasure } = useContext(GlobalContext);
+  const {} = useContext(GlobalContext);
 
   return (
     <div
