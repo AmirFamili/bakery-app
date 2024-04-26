@@ -254,6 +254,15 @@
   .vazir-regular-bold {
     font-size: 13px;
   }
+  .vazir-light{
+    font-size: 16px;
+  }
+  .vazir-bold{
+    font-size: 20px;
+  }
+  .vazir-very-bold{
+    font-size: 32px;
+  }
 }
 
 @media (max-width: 680px) {
@@ -262,6 +271,15 @@
   }
   .vazir-regular {
     font-size: 12px;
+  }
+  .vazir-light{
+    font-size: 14px;
+  }
+  .vazir-bold{
+    font-size: 16px;
+  }
+  .vazir-very-bold{
+    font-size: 26px;
   }
 }
 
@@ -280,6 +298,16 @@
   }
   .iranyekan-very-light-white {
     font-size: 10px;
+  }
+
+  .vazir-light{
+    font-size: 10px;
+  }
+  .vazir-bold{
+    font-size: 11px;
+  }
+  .vazir-very-bold{
+    font-size: 14px;
   }
 }
 

@@ -36,30 +36,30 @@ export const Hero = () => {
   }, [currentImageIndex]);
 
   return (
-    <section className="hero bg-hero mt-28 flex p-5 pb-20 relative max-lg:mt-20 ">
-      <div className="px-1 w-9/12  ">
+    <section className="hero bg-hero mt-28 flex p-5 pb-20 relative max-lg:mt-20 max-sm:px-3">
+      <div className="px-1 w-9/12 max-xl:w-full ">
         <img
           src={CakeImg}
           alt="assortment-pieces-cake"
           className=" w-full h-86 rounded-3xl "
         />
-        <div className="absolute top-20 right-16 z-10 max-lg:hidden max-xl:top-14 ">
+        <div className="absolute top-20 right-16 z-10  max-xl:top-14  max-md:top-12 max-sm:top-8 max-sm:right-10">
           <h1 className="vazir-very-bold text-primary ">
             {info && info.website}
           </h1>
-          <h3 className=" mt-5 mb-4 vazir-bold  text-primary max-xl:mt-3">
+          <h3 className=" mt-5 mb-4 vazir-bold  text-primary max-xl:mt-4 max-md:mb-3 max-sm:mb-2 max-md:mt-2">
             {info && info.title}
           </h3>
           <h4 className="vazir-light text-primary ">
             {info && info.explanation}
           </h4>
           
-          <h5 className="mt-10"><Link className=" bg-primary text-font-white rounded-xl shadow-lg py-2 px-9  vazir-regular ">
+          <h5 className="mt-10 max-md:mt-5 "><Link className=" bg-primary text-font-white rounded-xl shadow-lg py-2 px-9  vazir-regular max-sm:px-3  max-sm:py-2 ">
             کیک خودتو بساز
           </Link></h5>
         </div>
       </div>
-      <div className="px-1 relative max-sm:px-0 w-3/12 overflow-hidden rounded-3xl ">
+      <div className="px-1 relative max-sm:px-0 w-3/12 overflow-hidden rounded-3xl max-xl:hidden">
         <img
           src={images && images[currentImageIndex].image}
           alt={images && images[currentImageIndex].description}
