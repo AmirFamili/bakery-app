@@ -51,6 +51,8 @@ const ContextWrapper = (props) => {
   const [deliveryId, setDeliveryId] = useState(null);
   const [showSearchPage, setShowSearchPage] = useState(false);
   const [search, setSearch] = useState("");
+  const [showSituation, setShowSituation] = useState(false);
+
   const navigate = useNavigate();
 
  
@@ -211,6 +213,7 @@ const ContextWrapper = (props) => {
 
   const togglePopup = () => {
     setShowProductModel(!showProductModel);
+    setShowSituation(false)
   };
 
   useEffect(() => {
@@ -218,13 +221,16 @@ const ContextWrapper = (props) => {
       if (showProductModel) {
         setShowProductModel(false);
       }
+      if(showSituation){
+        setShowSituation(false)
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [showProductModel]);
+  }, [showProductModel,showSituation]);
 
   return (
     <GlobalContext.Provider
@@ -262,7 +268,7 @@ const ContextWrapper = (props) => {
         setShowMenu,
         showSearchPage,
         setShowSearchPage,
-        search, setSearch
+        search, setSearch,showSituation, setShowSituation
       }}
     >
       {props.children}
