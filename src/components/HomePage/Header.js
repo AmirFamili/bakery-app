@@ -5,14 +5,40 @@ import ShoppingCartWhiteIcon from "../../images/icons/shopping-cart-white.png";
 import ExitIcon from "../../images/icons/exit.png";
 import TaskIcon from "../../images/icons/task.png";
 import SettingIcon from "../../images/icons/setting.png";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { GlobalContext } from "../../context/ContextWrapper";
 
 export const Header = () => {
-  const { countAll, convertNumberToFarsi, loggedIn, setLoggedIn, info,navigate, profile,imageProfile } =
-    useContext(GlobalContext);
+  const {
+    countAll,
+    convertNumberToFarsi,
+    loggedIn,
+    setLoggedIn,
+    info,
+    navigate,
+    profile,
+    imageProfile,
+    setShowSearchPage,
+    search,
+    setSearch,
+  } = useContext(GlobalContext);
 
   const [showMenu, setShowMenu] = useState(false);
+  const [showX, setShowX] = useState(false);
+
+  useEffect(() => {
+    if (search === "") {
+      setShowSearchPage(false);
+      setShowX(false);
+    } else {
+      setShowSearchPage(true);
+      setShowX(true);
+    }
+  }, [search]);
+
+  const handleSearch = (event) => {
+    setSearch(event.target.value);
+  };
 
   const handlerLogOut = () => {
     localStorage.removeItem("access");
@@ -20,6 +46,7 @@ export const Header = () => {
     setLoggedIn(false);
     navigate("/");
   };
+
   return (
     <header className="fixed w-11/12 z-40 iranyekan-light flex justify-between items-center bg-white px-2 py-4 border-r-2 border-gray-main max-lg:hidden">
       <div className="mr-5 w-1/2 max-xl:w-2/5 ">
@@ -27,10 +54,29 @@ export const Header = () => {
           <input
             type="text"
             name="search"
-            className=" rounded-3xl px-4 w-full outline-none bg-gray-main"
+            value={search}
+            onChange={handleSearch}
+            className=" rounded-3xl px-4 w-full outline-none bg-gray-main "
             placeholder="جستوجو..."
           />
-          <button className="bg-primary m-1  p-2  rounded-full">
+          <div className="w-6">
+            <svg
+              onClick={() => setSearch("")}
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className={`w-6 h-6 cursor-pointer  ${!showX && "hidden"}`}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18 18 6M6 6l12 12"
+              />
+            </svg>
+          </div>
+          <button className="bg-primary m-1  p-2 w-10 rounded-full">
             <img src={SearchIcon} alt="search" className=" w-5" />
           </button>
         </div>
@@ -99,7 +145,7 @@ export const Header = () => {
             />
           </Link>
         )}
-        
+
         {!loggedIn && (
           <Link
             to="/singup"
@@ -118,7 +164,7 @@ export const Header = () => {
               src={
                 profile && profile.avatar === null
                   ? ProfileIcon
-                  :imageProfile  && imageProfile 
+                  : imageProfile && imageProfile
               }
               alt="حساب کاربری"
               className="border rounded-full w-12 h-12 m-3 cursor-pointer"
@@ -130,7 +176,11 @@ export const Header = () => {
               }`}
             >
               {" "}
-              <Link to="/profile" onClick={()=>setShowMenu(false)} className="cursor-pointer flex border-b p-3">
+              <Link
+                to="/profile"
+                onClick={() => setShowMenu(false)}
+                className="cursor-pointer flex border-b p-3"
+              >
                 <img
                   src={SettingIcon}
                   alt="settings"
@@ -138,7 +188,11 @@ export const Header = () => {
                 />{" "}
                 تنظیمات حساب کاربری
               </Link>
-              <Link to="/history" onClick={()=>setShowMenu(false)}  className="cursor-pointer flex border-b p-3">
+              <Link
+                to="/history"
+                onClick={() => setShowMenu(false)}
+                className="cursor-pointer flex border-b p-3"
+              >
                 <img src={TaskIcon} alt="settings" className="w-5 h-5 ml-2" />
                 سفارشات شما
               </Link>

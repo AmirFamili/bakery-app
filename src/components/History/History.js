@@ -2,10 +2,19 @@ import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../../context/ContextWrapper";
 import { Order } from "./Order";
 import axios from "../../api/axios";
+import { Popup } from "./Popup";
 
 export const History = () => {
-  const { accessToken } = useContext(GlobalContext);
+  const { accessToken,loggedIn,navigate,togglePopup,showSituation } = useContext(GlobalContext);
   const [orders, setOrders] = useState(null);
+
+  useEffect(()=>{
+    if(!loggedIn){
+      navigate('/');
+    }
+  },[])
+
+
   useEffect(() => {
     if (accessToken) {
       const getProduct = async () => {
@@ -43,7 +52,7 @@ export const History = () => {
         <table className="w-full table bg-white ">
           <thead>
             <tr className="iranyekan-little-light text-gray-400 border-b  ">
-              <th className="border-l w-10 p-6 "></th>
+              <th className="border-l w-10 py-6  "></th>
               <th className="w-52">سفارش</th>
               <th className="w-52">وضعیت</th>
               <th className="w-52">پرداخت شده</th>
@@ -55,10 +64,12 @@ export const History = () => {
           <tbody>
             {orders &&
               orders.map((order, index) => (
-                <Order key={order.id} order={order} index={index} />
+              <Order key={order.id} order={order} index={index} />
               ))}
           </tbody>
         </table>
+        {showSituation && showSituation &&
+        <Popup onClose={togglePopup}  />}
       </div>
     </section>
   );

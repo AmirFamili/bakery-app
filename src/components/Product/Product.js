@@ -144,7 +144,7 @@ navigate('/login')
   };
 
   return (
-    <div className=" group p-6 ml-5 my-10 w-56 h-64 bg-white shadow-lg rounded-2xl  hover:bg-primary hover:text-white max-md:w-36 max-md:h-44 max-md:p-3">
+    <div className=" group p-6 ml-5 my-10 w-56 h-64 bg-white shadow-lg rounded-2xl  hover:bg-primary hover:text-white max-md:w-48 max-md:h-52 max-sm:w-36 max-sm:h-44 max-md:p-3">
       <img
         src={product.image}
         alt="cup cake"

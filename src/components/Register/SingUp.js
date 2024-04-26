@@ -21,7 +21,16 @@ export const SignUp = () => {
   const [time, setTime] = useState(initialTime);
   const [timerActive, setTimerActive] = useState(false);
 
-  const { logo } = useContext(GlobalContext);
+  const { logo ,loggedIn, navigate,} = useContext(GlobalContext);
+
+
+  useEffect(()=>{
+    if(loggedIn){
+      navigate('/');
+    }
+  },[])
+
+
 
   useEffect(() => {
     let interval;
@@ -335,7 +344,7 @@ export const SignUp = () => {
         <div className="flex items-center justify-center ">
           <button className="flex items-center  justify-center border shadow-xl vazir-regular p-3 rounded-2xl text-center w-4/6  max-md:w-5/6">
             <img src={GoogleIcon} alt="گوگل" className="w-7 ml-3 max-md:w-6" />
-            ورود با حساب کاربری گوگل{" "}
+            ثبت نام با حساب کاربری گوگل
           </button>
         </div>
         <h3 className="iranyekan-little-light text-center mt-10">

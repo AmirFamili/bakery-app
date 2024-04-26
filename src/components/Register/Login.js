@@ -2,7 +2,8 @@ import React, { useState, useContext,useEffect} from "react";
 import EmailGrayIcon from "../../images/icons/email-gray.png";
 import KeyIcon from "../../images/icons/key.png";
 import EyeIcon from "../../images/icons/eye.png";
-import { Link, useNavigate } from "react-router-dom";
+import GoogleIcon from "../../images/icons/google.png";
+import { Link} from "react-router-dom";
 import axios from "../../api/axios";
 import { GlobalContext } from "../../context/ContextWrapper";
 import { useForm } from "react-hook-form";
@@ -22,8 +23,15 @@ export const Login = () => {
   const [time, setTime] = useState(initialTime);
   const [timerActive, setTimerActive] = useState(false);
 
-  const navigate = useNavigate();
-  const { setLoggedIn, logo } = useContext(GlobalContext);
+  const { loggedIn,setLoggedIn, logo,navigate } = useContext(GlobalContext);
+
+
+  useEffect(()=>{
+    if(loggedIn){
+      navigate('/');
+    }
+  },[])
+
 
   useEffect(() => {
     let interval;
@@ -153,7 +161,7 @@ export const Login = () => {
 
 
   return (
-    <section className="bg-gray-main h-screen w-full flex justify-center items-center">
+    <section className="bg-gray-main py-10 w-full flex justify-center items-center">
       <div className=" bg-white border w-2/5  rounded-2xl p-5 relative max-md:w-4/5 pb-20">
         <div className="flex justify-center items-center p-2">
           <img src={logo} alt="بلو کیک" className="w-24 max-md:w-20 " />
@@ -240,6 +248,18 @@ export const Login = () => {
             </button>
           </div>
         </form>
+        <div className=" flex items-center mx-auto my-7 w-4/6  max-md:w-5/6">
+          <div className="border-b border-gray-300 w-1/2"></div>
+          <div className="iranyekan-little-light px-3"> یا </div>
+          <div className="border-b border-gray-300 w-1/2"></div>
+        </div>
+
+        <div className="flex items-center justify-center ">
+          <button className="flex items-center  justify-center border shadow-xl vazir-regular p-3 rounded-2xl text-center w-4/6  max-md:w-5/6">
+            <img src={GoogleIcon} alt="گوگل" className="w-7 ml-3 max-md:w-6" />
+            ورود با حساب کاربری گوگل
+          </button>
+        </div>
 
         <h3 className="iranyekan-little-light text-center mt-10">
           حساب کاربری ندارید؟{" "}

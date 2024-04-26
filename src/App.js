@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Routes, Route, Outlet } from "react-router-dom";
 import { Login } from "./components/Register/Login";
 import { SignUp } from "./components/Register/SingUp";
@@ -18,8 +18,38 @@ import { InfoSend } from "./components/Cart/InfoSend";
 import { AboutUs } from "./components/AboutUs/AboutUs";
 import { CustomerOrder } from "./components/Customer/CustomerOrder";
 import { Menu } from "./components/HomePage/Mobile/Menu";
+import { SeeAllDiscount } from "./components/SeeAll/SeeAllDiscount";
+import { SeeAllNewProduct } from "./components/SeeAll/SeeAllNew";
+import { GlobalContext } from "./context/ContextWrapper";
+import { Product } from "./components/Product/Product";
+import {ConfirmNewPassword } from "./components/Register/ConfirmNewPassword";
+import axios from "./api/axios";
+import BackIcon from "./images/icons/arrow-right.png";
 
 function App() {
+  const { showSearchPage, search, setSearch } =
+    useContext(GlobalContext);
+  const [searchProduct, setSearchProduct] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `/bakery/search_cake/?search=${search}`
+        );
+        setSearchProduct(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    if (search.length > 0) {
+      fetchData();
+    } else {
+      setSearchProduct([]);
+    }
+  }, [search]);
+
   return (
     <div dir="rtl" className="App relative">
       <Routes>
@@ -29,12 +59,36 @@ function App() {
             <div className="">
               <div className="flex relative ">
                 <Sidebar />
-                <Menu/>
-                <div className="main  ">
+                <Menu />
+                <div className="main ">
                   <Header />
                   <HeaderMobile />
-                  <main className="bg-gray-main ">
+                  <main className="bg-gray-main relative">
                     <Outlet />
+                    <div
+                      className={` pt-32 fixed w-11/12 h-screen top-0 left-0 z-30 bg-gray-main max-lg:w-full  ${
+                        showSearchPage ? "" : "-translate-x-full"
+                      }`}
+                    >
+                      <button
+                        onClick={() => setSearch("")}
+                        className="flex justify-start items-center iranyekan-font text-lg text"
+                      >
+                        <img
+                          src={BackIcon}
+                          alt="back"
+                          className="w-6 m-6 ml-3"
+                        />{" "}
+                        بازگشت
+                      </button>
+
+                      <div className="flex justify-start  flex-wrap p-5">
+                        {searchProduct &&
+                          searchProduct.map((product) => (
+                            <Product product={product} />
+                          ))}
+                      </div>
+                    </div>
                   </main>
                 </div>
               </div>
@@ -54,10 +108,17 @@ function App() {
           <Route path="history" element={<History />}></Route>
           <Route path="profile" element={<Profile />}></Route>
           <Route path="about-us" element={<AboutUs />}></Route>
+          <Route path="see-all-discount" element={<SeeAllDiscount />}></Route>
+          <Route
+            path="see-all-new-product"
+            element={<SeeAllNewProduct />}
+          ></Route>
         </Route>
         <Route path="/singup" element={<SignUp />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/change-password" element={<ChangePassword />}></Route>
+        <Route path="/confirm-new-password/:id" element={<ConfirmNewPassword/>}></Route>
+
       </Routes>
     </div>
   );

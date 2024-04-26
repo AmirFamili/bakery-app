@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext} from "react";
 import { Outlet, Link, useParams } from "react-router-dom";
 import { GlobalContext } from "../../context/ContextWrapper";
 
@@ -7,7 +7,6 @@ export const Category = () => {
   const { categoryPage, setCategoryPage, categories, navigate } =
     useContext(GlobalContext);
   const params = useParams();
-  const [birthdayCake, setBirthdayCake] = useState(false);
 
   useEffect(() => {
    
@@ -51,21 +50,7 @@ export const Category = () => {
         </div>
       )}
       <div className="mt-5">
-        <div
-          className={`border rounded-xl px-5 flex justify-between items-center ${
-            birthdayCake ? "block" : "hidden"
-          }`}
-        >
-          <h4 className="iranyekan ">
-            شما می توانید کیک مورد نظر را از کیک های موجود انتخاب کنید و یا کیک
-            خود را<span className="font-extrabold"> سفارش دهید</span>.
-          </h4>
-          <Link to="/customer-order">
-            <button className=" text-center w-40 m-3  bg-primary text-font-white  rounded-xl shadow-xl py-3  vazir-regular max-xl:w-28 max-lg:w-28 ">
-              سفارش کیک
-            </button>
-          </Link>
-        </div>
+    
         <div className="h-dvh hidden max-md:block">
           <Outlet />
         </div>

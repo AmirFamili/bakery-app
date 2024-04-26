@@ -9,7 +9,7 @@ import SuccessIcon from "../../images/icons/success.png";
 import * as Yup from "yup";
 
 export const Profile = () => {
-  const { accessToken, convertNumberToFarsi, profile, setImageProfile } =
+  const { accessToken, convertNumberToFarsi, profile, setImageProfile , loggedIn,navigate} =
     useContext(GlobalContext);
 
   const [firstName, setFirstName] = useState("");
@@ -25,6 +25,15 @@ export const Profile = () => {
       setShowPopUP(false);
     }, 2500);
   };
+
+
+  useEffect(()=>{
+    if(!loggedIn){
+      navigate('/');
+    }
+  },[])
+
+
 
   useEffect(() => {
     if (profile) {

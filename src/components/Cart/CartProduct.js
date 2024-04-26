@@ -111,19 +111,19 @@ export const CartProduct = ({ product, number }) => {
   };
 
   return (
-    <tr className="iranyekan-little-light  border-b  text-center">
-      <td className="border-l w-10 p-7 max-md:w-5 max-md:p-5">{number + 1}</td>
+    <tr className="iranyekan-little-light h-16  border-b  text-center">
+      <td className="border-l ">{number + 1}</td>
       <td className="w-64 ">
-        <div className="flex justify-start items-center text-gray-400 mr-5">
+        <div className="flex justify-start items-center w-full  text-gray-400 mr-5 max-md:mr-1">
           <img
             src={product.cake.image}
             alt={product.cake.title}
-            className="w-10 h-10 ml-2 rounded-full max-md:w-8  max-md:h-8"
+            className="w-10 h-10 ml-2 rounded-full max-md:min-w-7  max-md:min-h-7 "
           />
-          <p className="">{product.cake.title}</p>
+          <p className="text-right">{product.cake.title}</p>
         </div>
       </td>
-      <td className="w-52 ">{price} تومان</td>
+      <td className="w-52 max-sm:hidden">{price} تومان</td>
       <td className="w-52 ">
         {" "}
         <div className="flex justify-center items-center">
