@@ -54,7 +54,7 @@ export const Hero = () => {
             {info && info.explanation}
           </h4>
           
-          <h5 className="mt-10 max-md:mt-5 "><Link className=" bg-primary text-font-white rounded-xl shadow-lg py-2 px-9  vazir-regular max-sm:px-3  max-sm:py-2 ">
+          <h5 className="mt-10 max-md:mt-5 "><Link className=" bg-primary text-font-white rounded-xl shadow-lg py-2 px-9  vazir-regular max-sm:px-3  max-sm:py-1.5 ">
             کیک خودتو بساز
           </Link></h5>
         </div>
