@@ -17,20 +17,50 @@ export const InfoSend = () => {
     deliveryPrice,
     totalPayment,
     setCountAll,
-    profile
-   
+    profile,
   } = useContext(GlobalContext);
 
+  useEffect(() => {
+    if (accessToken) {
+      const abortController = new AbortController();
+      const signal = abortController.signal;
+
+      async function getProfile() {
+        await axios
+          .get(
+            "/profile/phone_number/",
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${accessToken}`,
+              },
+            },
+            { signal }
+          )
+          .then((response) => {
+            setValue("phone", response.data.phone_number);
+          })
+          .catch((error) => {
+            console.error("Error fetching data:", error);
+          });
+        return () => {
+          abortController.abort();
+        };
+      }
+
+      getProfile();
+    }
+  }, [accessToken]);
+
+  
   useEffect(() => {
     if (profile) {
       setValue("firstName", profile.first_name);
       setValue("lastName", profile.last_name);
-      setValue("phone", profile.phone_number);
       setValue("postalCode", profile.post_code);
       setValue("address", profile.address);
     }
   }, [profile]);
-
 
   const validationSchema = Yup.object().shape({
     firstName: Yup.string()
@@ -57,7 +87,7 @@ export const InfoSend = () => {
     register,
     handleSubmit,
     formState: { errors },
-    setValue
+    setValue,
   } = useForm({ resolver: yupResolver(validationSchema) });
 
   const onSubmit = async (values) => {
@@ -76,7 +106,7 @@ export const InfoSend = () => {
         setCountAll(0);
         localStorage.removeItem("cart");
         setCart(null);
-        window.location.href = "http://localhost:3000/history"
+        window.location.href = "http://localhost:3000/history";
       })
       .catch((err) => console.log(err));
   };
@@ -84,11 +114,23 @@ export const InfoSend = () => {
   return (
     <div className=" mt-5 p-1 pb-0 flex justify-center  border  rounded-2xl bg-white max-lg:block ">
       <div className="w-2/3  border-l max-lg:border-0 max-lg:w-full">
-        <div className="">
+        <div className="flex items-end pb-10">
           <form
             onSubmit={handleSubmit(onSubmit)}
             className=" mr-10 my-7 w-3/6  max-sm:text-sm max-lg:w-4/5 max-lg:mx-auto "
           >
+            <div className="pb-3">
+              <div className="flex relative">
+                <select
+                  name="address"
+                  
+                  className="border w-full mb-7 rounded-md h-10 mt-1  py-2 px-5 outline-none iranyekan-very-light max-md:px-4"
+                >
+                  <option value='انتخاب آدرس'>انتخاب آدرس</option>
+                </select>
+              </div>
+            </div>
+
             <div className="pb-3">
               <div className="flex relative">
                 <input
@@ -96,7 +138,7 @@ export const InfoSend = () => {
                   type="text"
                   name="firstName"
                   placeholder="نام"
-                  className={` border w-full rounded-md h-10 mt-1  py-2 px-8 outline-none iranyekan-very-light max-md:px-4${
+                  className={` border w-full rounded-md h-10 mt-1  py-2 px-6 outline-none iranyekan-very-light max-md:px-4${
                     errors.firstName ? "border-red-500" : ""
                   }`}
                 />
@@ -115,7 +157,7 @@ export const InfoSend = () => {
                   type="text"
                   name="lastName"
                   placeholder="نام خانوادگی"
-                  className={` border w-full rounded-md h-10 mt-1  py-2 px-8 outline-none iranyekan-very-light max-md:px-4${
+                  className={` border w-full rounded-md h-10 mt-1  py-2 px-6 outline-none iranyekan-very-light max-md:px-4${
                     errors.lastName ? "border-red-500" : ""
                   }`}
                 />
@@ -134,7 +176,7 @@ export const InfoSend = () => {
                   type="phone"
                   name="phone"
                   placeholder="شماره تماس"
-                  className={` border w-full rounded-md h-10 mt-1  py-2 px-8 outline-none iranyekan-very-light max-md:px-4${
+                  className={` border w-full rounded-md h-10 mt-1  py-2 px-6 outline-none iranyekan-very-light max-md:px-4${
                     errors.phone ? "border-red-500" : ""
                   }`}
                 />
@@ -153,7 +195,7 @@ export const InfoSend = () => {
                   type="text"
                   name="postalCode"
                   placeholder="کدپستی"
-                  className={` border w-full rounded-md h-10 mt-1  py-2 px-8 outline-none iranyekan-very-light max-md:px-4 ${
+                  className={` border w-full rounded-md h-10 mt-1  py-2 px-6 outline-none iranyekan-very-light max-md:px-4 ${
                     errors.postalCode ? "border-red-500" : ""
                   }`}
                 />
@@ -172,7 +214,7 @@ export const InfoSend = () => {
                   type="text"
                   name="address"
                   placeholder="آدرس"
-                  className={` border w-full rounded-md h-20 mt-1  py-2 px-8 outline-none iranyekan-very-light max-md:px-4${
+                  className={` border w-full rounded-md h-20 mt-1  py-2 px-6 outline-none iranyekan-very-light max-md:px-4${
                     errors.address ? "border-red-500" : ""
                   }`}
                 />
@@ -185,18 +227,18 @@ export const InfoSend = () => {
             </div>
           </form>
           <div className="m-10 max-md:hidden">
-            <h4 className="iranyekan-very-light-white text-gray-500 h-8">
+            <h4 className="iranyekan-very-light-white text-gray-500 mb-2 ">
               نکات مربوط به ارسال سفارشات
             </h4>
-            <p className="iranyekan-very-light-white text-gray-400 h-8">
+            <p className="iranyekan-very-light-white text-gray-400 mt-3">
               * یک روز کاری بعد از اینکه سفارش‌تان را در سایت ثبت کردید، تحویل
               شرکت پست می‌شوند.
             </p>
-            <p className="iranyekan-very-light-white text-gray-400 h-8">
+            <p className="iranyekan-very-light-white text-gray-400 mt-3">
               * بین ۲ تا ۵ روز کاری بعد از اینکه سفارش شما تحویل پست شود، سفارش
               به دست شما خواهند رسید.
             </p>
-            <p className="iranyekan-very-light-white text-gray-400 h-8">
+            <p className="iranyekan-very-light-white text-gray-400 mt-3">
               *دو روز بعد از ثبت سفارش کد رهگیری به شماره موبایل ثبت‌شده پیامک
               می‌شود.
             </p>
@@ -208,7 +250,7 @@ export const InfoSend = () => {
           <div className="flex justify-between items-center text-gray-600">
             <h3 className="iranyekan-little-light"> مجموع تخفیف:</h3>
             <h3 className="iranyekan-little-light">
-              {convertNumberToFarsi( totalDiscount)} تومان
+              {convertNumberToFarsi(totalDiscount)} تومان
             </h3>
           </div>
 

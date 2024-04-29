@@ -1,30 +1,32 @@
-import React, { useEffect,useContext} from "react";
+import React, { useEffect, useContext } from "react";
 import CartOrangeIcon from "../../images/icons/shopping-cart-orange.png";
 import LocationGrayIcon from "../../images/icons/location-tick-gray.png";
 import LocationOrangeIcon from "../../images/icons/Location-tick-orange.png";
 import CardTickGrayIcon from "../../images/icons/card-tick.png";
-import { Outlet, useMatch } from "react-router-dom";
+import { Outlet, useMatch,Link } from "react-router-dom";
 import { GlobalContext } from "../../context/ContextWrapper";
-
 
 export const Cart = () => {
   const isActive_2 = useMatch({ path: "/cart/show-info", end: true });
   const isActive_3 = useMatch({ path: "/", end: true });
-  const { loggedIn,navigate } = useContext(GlobalContext);
+  const { loggedIn, navigate, countAll } = useContext(GlobalContext);
 
-
-  useEffect(()=>{
-    if(!loggedIn){
-      navigate('/');
+  useEffect(() => {
+    if (!loggedIn) {
+      navigate("/");
     }
-  },[])
+  }, []);
 
   return (
-   
-    <section className="  mt-2 px-10 py-28 max-md:px-5  h-full min-h-screen max-lg:pt-5 max-lg:mt-20">
+    <section className=" relative mt-2 px-10 py-28 max-md:px-5  h-full min-h-screen max-lg:pt-5 max-lg:mt-20">
       <h1 className="py-5 iranyekan-very-bold ">سبد خرید شما</h1>
-
-      <div className="flex  pt-3 mb-7  max-md:pr-5">
+      <div className= {`absolute flex flex-col justify-center items-center h-1/2 w-11/12 ${countAll>0 && 'hidden'}`}>
+        <h2 className="iranyekan-medium text-gray-400" >سبد خرید شما خالی می باشد.</h2>
+        <Link to='/' className="border rounded-xl text-primary shadow-lg p-2 mt-16 vazir-regular max-md:mt-10">بازگشت به صفحه خانه</Link>
+      </div>
+      <div
+        className={`flex  pt-3 mb-7  max-md:pr-5 ${countAll === 0 && "hidden"}`}
+      >
         <div className="flex justify-center items-center pl-24 max-md:pl-0">
           <img src={CartOrangeIcon} className="w-5 h-5 ml-2" alt="سبد خرید" />
           <p className="text-secondry iranyekan w-20">سبد خرید</p>
@@ -67,5 +69,3 @@ export const Cart = () => {
     </section>
   );
 };
-
-

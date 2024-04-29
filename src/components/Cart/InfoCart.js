@@ -64,7 +64,7 @@ export const InfoCart = () => {
   };
 
   return (
-    <div className="min-h-96 mt-5 p-1 pb-0 flex justify-center  border  rounded-2xl bg-white max-md:block  max-md:min-h-52">
+    <div className={`min-h-96 mt-5 p-1 pb-0 flex justify-center  border  rounded-2xl bg-white max-md:block  max-md:min-h-52 ${countAll===0 && 'hidden max-md:hidden'}`}>
       <div className="w-2/3  border-l max-md:border-0 max-md:w-full">
         <table className="w-full ">
           <thead>

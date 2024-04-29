@@ -9,8 +9,14 @@ import SuccessIcon from "../../images/icons/success.png";
 import * as Yup from "yup";
 
 export const Profile = () => {
-  const { accessToken, convertNumberToFarsi, profile, setImageProfile , loggedIn,navigate} =
-    useContext(GlobalContext);
+  const {
+    accessToken,
+    convertNumberToFarsi,
+    profile,
+    setImageProfile,
+    loggedIn,
+    navigate,
+  } = useContext(GlobalContext);
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -23,17 +29,46 @@ export const Profile = () => {
   const goBackBox = () => {
     setTimeout(() => {
       setShowPopUP(false);
-    }, 2500);
+    }, 3500);
   };
 
-
-  useEffect(()=>{
-    if(!loggedIn){
-      navigate('/');
+  useEffect(() => {
+    if (!loggedIn) {
+      navigate("/");
     }
-  },[])
+  }, []);
 
+  useEffect(() => {
+    if (accessToken) {
+      const abortController = new AbortController();
+      const signal = abortController.signal;
 
+      async function getProfile() {
+        await axios
+          .get(
+            "/profile/phone_number/",
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${accessToken}`,
+              },
+            },
+            { signal }
+          )
+          .then((response) => {
+            setValuePhoneNumber("phone", response.data.phone_number);
+          })
+          .catch((error) => {
+            console.error("Error fetching data:", error);
+          });
+        return () => {
+          abortController.abort();
+        };
+      }
+
+      getProfile();
+    }
+  }, [accessToken]);
 
   useEffect(() => {
     if (profile) {
@@ -41,7 +76,6 @@ export const Profile = () => {
       setLastName(profile.last_name);
       setValue("firstName", profile.first_name);
       setValue("lastName", profile.last_name);
-      setValue("phone", profile.phone_number);
       setValue("postalCode", profile.post_code);
       setValue("address", profile.address);
     }
@@ -54,12 +88,6 @@ export const Profile = () => {
     lastName: Yup.string()
       .required("لطفا این قسمت را خالی نگذارید.")
       .min(3, "نام خانوادگی خود را کامل وارد کنید."),
-    phone: Yup.string()
-      .required("لطفا این قسمت را خالی نگذارید.")
-      .matches(
-        /(0|\+98)?([ ]|-|[()]){0,2}9[1|2|3|4]([ ]|-|[()]){0,2}(?:[0-9]([ ]|-|[()]){0,2}){8}/,
-        "شماره تلفن نامعتبر می باشد."
-      ),
     postalCode: Yup.string()
       .required("لطفا این قسمت را خالی نگذارید.")
       .min(10, "کد پستی نامعتبر می باشد.")
@@ -76,6 +104,22 @@ export const Profile = () => {
     setValue,
   } = useForm({ resolver: yupResolver(validationSchema) });
 
+  const validationPhoneNumber= Yup.object().shape({
+    phone: Yup.string()
+    .required("لطفا این قسمت را خالی نگذارید.")
+    .matches(
+      /(0|\+98)?([ ]|-|[()]){0,2}9[1|2|3|4]([ ]|-|[()]){0,2}(?:[0-9]([ ]|-|[()]){0,2}){8}/,
+      "شماره تلفن نامعتبر می باشد."
+    ),
+  })
+
+  const {
+    register:registerPhonenUmber,
+    handleSubmit: handleSubmitPhoneNumber,
+    formState: {errors : errorsPhoneNumber },
+    setValue: setValuePhoneNumber,
+  } = useForm({ resolver: yupResolver(validationPhoneNumber) });
+
   const handleImageChange = async (event) => {
     setSelectedImageShow(URL.createObjectURL(event.target.files[0]));
     setSelectedImage(event.target.files[0]);
@@ -90,7 +134,6 @@ export const Profile = () => {
     formData.append("post_code", values.postalCode);
     formData.append("first_name", values.firstName);
     formData.append("last_name", values.lastName);
-    formData.append("phone_number", values.phone);
 
     await axios
       .patch("/profile/me/", formData, {
@@ -111,6 +154,27 @@ export const Profile = () => {
         console.log(err);
       });
   };
+  const onSubmitPhoneNumber=async(value)=>{
+    console.log(value.phone);
+    await axios
+    .patch("/profile/phone_number/", {
+      phone_number:value.phone
+    }, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    .then((response) => {
+      setShowPopUP(true);
+      setImageProfile(response.data.avatar);
+      setTextPopUP("شماره تماس به روز شد.");
+    })
+    .catch((err) => {
+      setTextPopUP("مشکلی در بروز شدن شماره تماس وجود داشت.");
+      setShowPopUP(true);
+      console.log(err);
+    });
+  }
 
   return (
     <section className=" overflow-hidden relative mt-2 px-10 py-28 max-md:px-5  h-full min-h-screen max-lg:pt-5 max-lg:mt-20">
@@ -226,24 +290,30 @@ export const Profile = () => {
                   </div>
                 </div>
                 <div className="flex w-full max-md:block">
-                  <div className="pb-3 w-1/2 ml-1.5 max-md:w-full  max-md:ml-0">
-                    <div className="flex relative">
-                      <input
-                        {...register("phone")}
-                        type="phone"
-                        name="phone"
-                        placeholder="شماره تماس"
-                        className={` border w-full rounded-xl h-10 mt-1  py-2 px-8 outline-none iranyekan-very-light ${
-                          errors.phone ? "border-red-500" : ""
-                        }`}
-                      />
+
+                  <form  onSubmit={handleSubmitPhoneNumber(onSubmitPhoneNumber)} className="flex justify-between  w-1/2 ">
+
+                    <div className="pb-3 w-2/3 ml-1.5 max-md:w-full  max-md:ml-0">
+                      <div className="flex relative">
+                        <input
+                          {...registerPhonenUmber("phone")}
+                          type="phone"
+                          name="phone"
+                          placeholder="شماره تماس"
+                          className={` border w-full rounded-xl h-10 mt-1  py-2 px-8 outline-none iranyekan-very-light ${
+                            errorsPhoneNumber.phone ? "border-red-500" : ""
+                          }`}
+                        />
+                      </div>
+                      {errorsPhoneNumber.phone && (
+                        <span className="error text-red-600 iranyekan-very-light-white">
+                          {errorsPhoneNumber.phone.message}
+                        </span>
+                      )}
                     </div>
-                    {errors.phone && (
-                      <span className="error text-red-600 iranyekan-very-light-white">
-                        {errors.phone.message}
-                      </span>
-                    )}
-                  </div>
+
+                    <button onClick={handleSubmitPhoneNumber(onSubmitPhoneNumber)} className="w-1/3 border rounded-xl h-10 mt-1">change</button>
+                  </form>
 
                   <div className="pb-3 w-1/2 mr-1.5 max-md:w-full max-md:mr-0">
                     <div className="flex relative">
