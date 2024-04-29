@@ -11,7 +11,6 @@ export const AboutUs = () => {
       await axios
         .get("/settings/about/", { signal })
         .then((response) => {setAbout(response.data)
-        console.log(response.data);
         })
         .catch((err) => console.log(err));
     }
