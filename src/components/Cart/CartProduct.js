@@ -10,6 +10,8 @@ export const CartProduct = ({ product, number }) => {
   const [price, setPrice] = useState();
   const [measureId, setMeasureId] = useState(null);
   const [count, setCount] = useState(product.quantity);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+
   const { convertNumberToFarsi, countAll, setCountAll, accessToken } =
     useContext(GlobalContext);
 
@@ -82,6 +84,7 @@ export const CartProduct = ({ product, number }) => {
             });
         }
       } else if (product.quantity === 1) {
+        setButtonDisabled(true);
         await axios
           .delete(`/order/items/${id}/`, {
             headers: {
@@ -93,11 +96,15 @@ export const CartProduct = ({ product, number }) => {
             setCountAll(countAll - 1);
             setCount(count - 1);
           });
+          setTimeout(() => {
+            setButtonDisabled(false);
+          }, 3000);
       }
     }
   };
 
   const handlerDelete = async () => {
+    setButtonDisabled(true);
     await axios
       .delete(`/order/items/${id}/`, {
         headers: {
@@ -108,6 +115,9 @@ export const CartProduct = ({ product, number }) => {
       .then((response) => {
         setCountAll(countAll - count);
       });
+      setTimeout(() => {
+        setButtonDisabled(false);
+      }, 3000);
   };
 
   return (
@@ -129,6 +139,7 @@ export const CartProduct = ({ product, number }) => {
         <div className="flex justify-center items-center">
           <button
             onClick={handlerDecrease}
+            disabled={buttonDisabled}
             className="minus rounded-full w-7 bg-primary   max-md:w-4"
           >
             <img src={MinusIcon} alt="minus" />

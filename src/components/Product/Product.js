@@ -8,6 +8,8 @@ import axios from "../../api/axios";
 export const Product = ({ product }) => {
   const [count, setCount] = useState(0);
   const [id, setId] = useState(null);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+
   const {
   loggedIn,
     convertNumberToFarsi,
@@ -125,7 +127,7 @@ navigate('/login')
              });
         }
       } else if (count === 1) {
-       
+        setButtonDisabled(true);
         await axios
           .delete(`/order/items/${id}/`, {
             headers: {
@@ -139,6 +141,9 @@ navigate('/login')
             setCountAll(countAll - 1);
            
           });
+          setTimeout(() => {
+            setButtonDisabled(false);
+          }, 3000);
       }
     }
   };
@@ -196,6 +201,7 @@ navigate('/login')
           <div className="flex">
             <button
               onClick={handlerDecrease}
+              disabled={buttonDisabled}
               className={`minus rounded-full w-7 bg-blue-light hidden max-md:w-5 ${handlerCheckCount()} `}
             >
               <img src={MinusIcon} alt="minus" />
