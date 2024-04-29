@@ -23,7 +23,7 @@ export const AboutUs = () => {
   }, []);
 
   return (
-    <section className="py-32 max-md:px-5  min-h-screen max-lg:pt-5 max-lg:mt-20 relative w-full">
+    <section className="py-32 max-md:px-5 h-screen min-h-screen max-lg:pt-5 max-lg:mt-20 relative w-full max-lg:h-auto">
       <h1 className="py-5 iranyekan-very-bold px-10"> درباره ما</h1>
       
   <div className="flex justify-between items-center px-5 h-full max-lg:block">
