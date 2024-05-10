@@ -3,13 +3,24 @@ import ArrowLeftIcon from "../../images/icons/arrow-left.png";
 import { GlobalContext } from "../../context/ContextWrapper";
 import { CartProduct } from "./CartProduct";
 import axios from "../../api/axios";
+import { DatePicker } from "@kasraghoreyshi/datepicker";
+import "@kasraghoreyshi/calendar/styles.css";
+import "@kasraghoreyshi/datepicker/styles.css";
 
 export const InfoCart = () => {
-  const { convertNumberToFarsi, products, accessToken, countAll, cart,navigate,deliveryId  } =
-    useContext(GlobalContext);
+  const {
+    convertNumberToFarsi,
+    products,
+    accessToken,
+    countAll,
+    cart,
+    navigate,
+    deliveryId,
+  } = useContext(GlobalContext);
 
   const [delivery, setDelivery] = useState();
   const [selectedDelivery, setSelectedDelivery] = useState(deliveryId);
+  const [selectedDate, setSelectedDate] = useState(null);
 
   useEffect(() => {
     if (accessToken) {
@@ -43,28 +54,58 @@ export const InfoCart = () => {
 
   const clickHandler = async () => {
     if (cart) {
-      await axios
-        .patch(
-          `/order/cart/${cart}/`,
-          {
-            delivery_method: selectedDelivery,
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
+      if (selectedDate) {
+        await axios
+          .patch(
+            `/order/cart/${cart}/`,
+            {
+              delivery_method: selectedDelivery,
             },
-          }
-        )
-        .then((response) => {
-          navigate("/cart/show-info") 
-        })
-        .catch((err) => console.log(err));
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${accessToken}`,
+              },
+            }
+          )
+          .then(async (response) => {
+            await axios
+              .patch(
+                `/order/cart/${cart}/date_time/`,
+                {
+                  delivery_date_time: selectedDate,
+                },
+                {
+                  headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${accessToken}`,
+                  },
+                }
+              )
+              .then((response) => {
+                console.log(response.data);
+              
+              })
+              .catch((err) => console.log(err));
+          })
+          .catch((err) => console.log(err));
+      }else{
+
+      }
+      navigate("/cart/show-info");
     }
   };
 
+  const handlerChangeDate = (date) => {
+    setSelectedDate(date);
+  };
+
   return (
-    <div className={`min-h-96 mt-5 p-1 pb-0 flex justify-center  border  rounded-2xl bg-white max-md:block  max-md:min-h-52 ${countAll===0 && 'hidden max-md:hidden'}`}>
+    <div
+      className={`min-h-96 mt-5 p-1 pb-0 flex justify-center  border  rounded-2xl bg-white max-md:block  max-md:min-h-52 ${
+        countAll === 0 && "hidden max-md:hidden"
+      }`}
+    >
       <div className="w-2/3  border-l max-md:border-0 max-md:w-full">
         <table className="w-full ">
           <thead>
@@ -112,17 +153,22 @@ export const InfoCart = () => {
               </div>
             ))}
         </div>
-        <div className="absolute inset-x-0 bottom-5 flex justify-center items-end max-md:static max-md:mt-10 z-0">
-         
-            <button
-              onClick={clickHandler}
-              disabled={countAll === 0 ? true : selectedDelivery ? false : true}
-              className=" text-center w-52 flex justify-center items-center my-5 bg-primary text-font-white  rounded-xl shadow-xl py-2 px-3 vazir-regular  max-lg:max-w-48  max-md:w-32"
-            >
-              تایید و تکمیل سفارش
-              <img src={ArrowLeftIcon} alt=" Arrow Left" className="w-5 mx-2 max-md:hidden" />
-            </button>
-         
+        <div className="border-t my-7"></div>
+        <div className=" z-50 flex justify-between items-center">
+          <h3 className="iranyekan">تاریخ تحویل:</h3>
+          <DatePicker dateFormat=" d / M / yyyy" onChange={handlerChangeDate}/>
+        </div>
+
+        <div className="absolute inset-x-0 bottom-5 flex justify-center items-end max-md:static max-md:mt-10 ">
+          <button
+            onClick={clickHandler}
+            disabled={countAll === 0 ? true : selectedDelivery ? selectedDate? false : true: true}
+            className=" text-center w-52 flex justify-center items-center my-5 bg-primary text-font-white  rounded-xl shadow-xl py-2 px-3 vazir-regular  max-lg:max-w-48  max-md:w-32"
+          >تایید و تکمیل سفارش  <img
+              src={ArrowLeftIcon}
+              alt=" Arrow Left"
+              className="w-5 mx-2 max-md:hidden"
+            /></button>
         </div>
       </div>
     </div>

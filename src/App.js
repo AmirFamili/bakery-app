@@ -25,6 +25,7 @@ import { Product } from "./components/Product/Product";
 import {ConfirmNewPassword } from "./components/Register/ConfirmNewPassword";
 import axios from "./api/axios";
 import BackIcon from "./images/icons/arrow-right.png";
+import { Payment } from "./components/Cart/Payment";
 
 function App() {
   const { showSearchPage, search, setSearch } =
@@ -103,6 +104,7 @@ function App() {
           <Route path="cart/*" element={<Cart />}>
             <Route path="" element={<InfoCart />}></Route>
             <Route path="show-info" element={<InfoSend />}></Route>
+            <Route path="payment" element={<Payment />}></Route>
           </Route>
           <Route path="call" element={<CallToUs />}></Route>
           <Route path="history" element={<History />}></Route>

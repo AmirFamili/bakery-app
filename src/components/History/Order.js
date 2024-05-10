@@ -5,6 +5,7 @@ import GroupPointIcon from "../../images/icons/group-point.png";
 export const Order = ({ order, index }) => {
 
   const { convertNumberToFarsi,setShowSituation } = useContext(GlobalContext);
+console.log(order);
   return (
     
     <tr onClick={()=>setShowSituation(true)} className="cursor-pointer iranyekan-little-light  border-b  text-center">
@@ -14,8 +15,8 @@ export const Order = ({ order, index }) => {
           {order &&
             order.items.map((item) => (
               <li key={item.id} className="text-right py-0.5 ">
-                {item.cake.title} - {convertNumberToFarsi(item.quantity)}{" "}
-                {item.cake.unit_measure}
+                {/* {item.cake.title} - {convertNumberToFarsi(item.quantity)}{" "}
+                {item.cake.unit_measure} */}
               </li>
             ))}
         </ul>

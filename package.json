@@ -5,6 +5,8 @@
   "private": true,
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
+    "@kasraghoreyshi/calendar": "^0.0.5",
+    "@kasraghoreyshi/datepicker": "^0.1.4",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
