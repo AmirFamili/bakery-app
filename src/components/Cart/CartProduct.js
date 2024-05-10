@@ -62,7 +62,7 @@ export const CartProduct = ({ product, number }) => {
   };
   const handlerDecrease = async () => {
     if (product.quantity > 0) {
-      if (product.quantity > 1) {
+      if (product.quantity > product.cake.limitation) {
         if (id) {
           await axios
             .patch(
@@ -83,7 +83,8 @@ export const CartProduct = ({ product, number }) => {
               setCount(count - 1);
             });
         }
-      } else if (product.quantity === 1) {
+       
+      } else if (product.quantity === product.cake.limitation) {
         setButtonDisabled(true);
         await axios
           .delete(`/order/items/${id}/`, {
@@ -93,8 +94,8 @@ export const CartProduct = ({ product, number }) => {
             },
           })
           .then((response) => {
-            setCountAll(countAll - 1);
-            setCount(count - 1);
+            setCountAll(countAll -  product.cake.limitation);
+            setCount(count -  product.cake.limitation);
           });
           setTimeout(() => {
             setButtonDisabled(false);

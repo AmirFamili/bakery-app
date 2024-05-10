@@ -3,7 +3,7 @@ import ArrowLeftIcon from "../../images/icons/arrow-left.png";
 import { GlobalContext } from "../../context/ContextWrapper";
 import { CartProduct } from "./CartProduct";
 import axios from "../../api/axios";
-// import { DatePicker } from "@kasraghoreyshi/datepicker";
+import { DatePicker } from "@kasraghoreyshi/datepicker";
 // import "@kasraghoreyshi/calendar/styles.css";
 // import "@kasraghoreyshi/datepicker/styles.css";
 
@@ -84,13 +84,11 @@ export const InfoCart = () => {
               )
               .then((response) => {
                 console.log(response.data);
-              
               })
               .catch((err) => console.log(err));
           })
           .catch((err) => console.log(err));
-      }else{
-
+      } else {
       }
       navigate("/cart/show-info");
     }
@@ -152,23 +150,29 @@ export const InfoCart = () => {
                 </p>
               </div>
             ))}
+          <div className="border-t my-7"></div>
+          <div className=" z-50 flex justify-between items-center">
+            <h3 className="iranyekan">تاریخ تحویل:</h3>
+            <DatePicker
+              dateFormat=" d / M / yyyy"
+              onChange={handlerChangeDate}
+            />
+          </div>
         </div>
-        {/* <div className="border-t my-7"></div> */}
-        {/* <div className=" z-50 flex justify-between items-center">
-          <h3 className="iranyekan">تاریخ تحویل:</h3>
-          <DatePicker dateFormat=" d / M / yyyy" onChange={handlerChangeDate}/>
-        </div> */}
 
         <div className="absolute inset-x-0 bottom-5 flex justify-center items-end max-md:static max-md:mt-10 ">
           <button
             onClick={clickHandler}
-            disabled={countAll === 0 ? true : selectedDelivery ?false : true}
+            disabled={countAll === 0 ? true : selectedDelivery ? false : true}
             className=" text-center w-52 flex justify-center items-center my-5 bg-primary text-font-white  rounded-xl shadow-xl py-2 px-3 vazir-regular  max-lg:max-w-48  max-md:w-32"
-          >تایید و تکمیل سفارش  <img
+          >
+            تایید و تکمیل سفارش{" "}
+            <img
               src={ArrowLeftIcon}
               alt=" Arrow Left"
               className="w-5 mx-2 max-md:hidden"
-            /></button>
+            />
+          </button>
         </div>
       </div>
     </div>

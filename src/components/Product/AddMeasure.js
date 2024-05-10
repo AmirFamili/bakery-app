@@ -57,7 +57,7 @@ export const AddMeasure = ({ measure, product }) => {
           `/order/items/`,
           {
             cake_id: product.id,
-            quantity: 1,
+            quantity: product.limitation,
             unit_measure: measure.unit_measure_id,
           },
           {
@@ -68,11 +68,11 @@ export const AddMeasure = ({ measure, product }) => {
           }
         )
         .then((response) => {
-          console.log(response);
+          setCount(count + product.limitation);
           setId(response.data.id);
-          setCountAll(countAll + 1);
+          setCountAll(countAll + product.limitation);
         });
-    } else if (count >= 1) {
+    } else if (count >= product.limitation) {
       if (id) {
         await axios
           .patch(
@@ -89,7 +89,7 @@ export const AddMeasure = ({ measure, product }) => {
             }
           )
           .then((response) => {
-            console.log(response);
+            setCount(count + 1);
             setCountAll(countAll + 1);
           });
       }
@@ -98,12 +98,12 @@ export const AddMeasure = ({ measure, product }) => {
   const handlerIncrease = () => {
     CheckCart();
 
-    setCount(count + 1);
+    
   };
 
   const handlerDecrease = async () => {
     if (count > 0) {
-      if (count > 1) {
+      if (count >  product.limitation) {
         if (id) {
           setCount(count - 1);
           await axios
@@ -124,8 +124,8 @@ export const AddMeasure = ({ measure, product }) => {
               setCountAll(countAll - 1);
             });
         }
-      } else if (count === 1) {
-        setCount(count - 1);
+      } else if (count ===  product.limitation) {
+        setCount(count -  product.limitation);
         await axios
           .delete(`/order/items/${id}/`, {
             headers: {
@@ -135,7 +135,7 @@ export const AddMeasure = ({ measure, product }) => {
           })
           .then((response) => {
             console.log(response);
-            setCountAll(countAll - 1);
+            setCountAll(countAll -  product.limitation);
           });
       }
     }
