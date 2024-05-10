@@ -5,7 +5,6 @@ import GroupPointIcon from "../../images/icons/group-point.png";
 export const Order = ({ order, index }) => {
 
   const { convertNumberToFarsi,setShowSituation } = useContext(GlobalContext);
-console.log(order);
   return (
     
     <tr onClick={()=>setShowSituation(true)} className="cursor-pointer iranyekan-little-light  border-b  text-center">
