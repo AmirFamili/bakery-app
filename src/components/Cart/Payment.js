@@ -15,7 +15,7 @@ const handlePayment=()=>{
   return (
     <div className=" mt-5 p-1 pb-0 flex justify-center min-h-96  border  rounded-2xl bg-white max-lg:block ">
       <div className="flex justify-between max-lg:block">
-        <div className="w-2/3 p-5">
+        <div className="w-7/12 p-5 max-lg:w-full">
           <h2 className=" iranyekan my-5">
             {" "}
             مبلغ قابل پرداخت: {convertNumberToFarsi(totalPayment)} تومان
@@ -43,13 +43,13 @@ const handlePayment=()=>{
             </span>
           </a>
         </div>
-        <div className="w-1/3 m-5 p-5 text-white relative">
-          <div className="bg-secondry p-10 rounded-xl">
+        <div className="w-5/12 m-5 p-5 text-white relative max-lg:w-full max-lg:mx-auto">
+          <div className="bg-secondry px-10  py-14 rounded-xl max-lg:py-10">
             <h3 className="iranyekan-medium">6037 - 9978 - 5698 - 6523</h3>
-            <h4 className="iranyekan mt-3 ">به نام: رعنا شیخی</h4>
+            <h4 className="iranyekan mt-5 ">به نام: رعنا شیخی</h4>
           </div>
-          <div className=" absolute bottom-0 left-5">
-            <button onClick={handlePayment} className="my-4  bg-primary text-font-white rounded-xl shadow-lg py-2 px-11 max-md:px-8 vazir-regular">
+          <div className=" absolute bottom-0 left-5 max-lg:relative max-lg:flex max-lg:justify-center max-lg:items-center max-lg:left-0 max-lg:mt-5">
+            <button onClick={handlePayment} className="my-4  bg-primary text-font-white rounded-xl shadow-lg py-2 px-11  vazir-regular">
                 تایید
               </button>
           </div>
