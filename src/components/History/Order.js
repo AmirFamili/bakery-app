@@ -15,8 +15,8 @@ console.log(order);
           {order &&
             order.items.map((item) => (
               <li key={item.id} className="text-right py-0.5 ">
-                {/* {item.cake.title} - {convertNumberToFarsi(item.quantity)}{" "}
-                {item.cake.unit_measure} */}
+                {item.cake.title} - {convertNumberToFarsi(item.quantity)}{" "}
+                {item.cake.unit_measure}
               </li>
             ))}
         </ul>

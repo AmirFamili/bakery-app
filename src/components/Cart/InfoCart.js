@@ -3,9 +3,9 @@ import ArrowLeftIcon from "../../images/icons/arrow-left.png";
 import { GlobalContext } from "../../context/ContextWrapper";
 import { CartProduct } from "./CartProduct";
 import axios from "../../api/axios";
-import { DatePicker } from "@kasraghoreyshi/datepicker";
-// import "@kasraghoreyshi/calendar/styles.css";
-// import "@kasraghoreyshi/datepicker/styles.css";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
+import { useForm } from "react-hook-form";
 
 export const InfoCart = () => {
   const {
@@ -18,9 +18,25 @@ export const InfoCart = () => {
     deliveryId,
   } = useContext(GlobalContext);
 
+  const validationSchema = Yup.object().shape({
+    date: Yup.string()
+      .required("لطفا این قسمت را خالی نگذارید.")
+      .matches(
+        /1[4][0-9][0-9]\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])/,
+        "تاریخ مورد نظر صحیح نمی باشد."
+      ),
+      time: Yup.string()
+      .required("لطفا این قسمت را خالی نگذارید.")
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ resolver: yupResolver(validationSchema) });
+
   const [delivery, setDelivery] = useState();
   const [selectedDelivery, setSelectedDelivery] = useState(deliveryId);
-  const [selectedDate, setSelectedDate] = useState(null);
 
   useEffect(() => {
     if (accessToken) {
@@ -52,50 +68,45 @@ export const InfoCart = () => {
     }
   }, [accessToken]);
 
-  const clickHandler = async () => {
+  const clickHandler = async (value) => {
+   
     if (cart) {
-      if (selectedDate) {
-        await axios
-          .patch(
-            `/order/cart/${cart}/`,
-            {
-              delivery_method: selectedDelivery,
+      await axios
+        .patch(
+          `/order/cart/${cart}/`,
+          {
+            delivery_method: selectedDelivery,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${accessToken}`,
             },
-            {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${accessToken}`,
+          }
+        )
+        .then(async (response) => {
+          await axios
+            .patch(
+              `/order/cart/${cart}/date_time/`,
+              {
+                delivery_date_time: value.date +' '+ value.time ,
               },
-            }
-          )
-          .then(async (response) => {
-            await axios
-              .patch(
-                `/order/cart/${cart}/date_time/`,
-                {
-                  delivery_date_time: selectedDate,
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${accessToken}`,
                 },
-                {
-                  headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${accessToken}`,
-                  },
-                }
-              )
-              .then((response) => {
-                console.log(response.data);
-              })
-              .catch((err) => console.log(err));
-          })
-          .catch((err) => console.log(err));
-      } else {
-      }
+              }
+            )
+            .then((response) => {
+              console.log(response.data);
+            })
+            .catch((err) => console.log(err));
+        })
+        .catch((err) => console.log(err));
+
       navigate("/cart/show-info");
     }
-  };
-
-  const handlerChangeDate = (date) => {
-    setSelectedDate(date);
   };
 
   return (
@@ -125,7 +136,7 @@ export const InfoCart = () => {
         </table>
         <div className=""></div>
       </div>
-      <div className="w-1/3 p-5  relative max-md:w-full  max-md:flex max-md:justify-between max-md:p-2">
+      <div className="w-1/3 px-5 py-2  relative max-md:w-full  max-md:flex max-md:justify-between max-md:p-2">
         <div className="mt-3">
           <h3 className="iranyekan-little-light"> نحوه تحویل سفارش:</h3>
           {delivery &&
@@ -150,19 +161,58 @@ export const InfoCart = () => {
                 </p>
               </div>
             ))}
-          <div className="border-t my-7"></div>
-          <div className=" z-50 flex justify-between items-center">
-            <h3 className="iranyekan">تاریخ تحویل:</h3>
-            <DatePicker
-              dateFormat=" d / M / yyyy"
-              onChange={handlerChangeDate}
-            />
-          </div>
+          <div className="border-t my-5"></div>
+          
+            <form  onSubmit={handleSubmit(clickHandler)}>
+              <div className=" flex justify-between items-cente max-md:block ">
+              <h3 className="iranyekan">تاریخ تحویل:</h3>
+              <div className="max-md:my-5 max-md:w-3/4 ">
+                <div className="flex relative">
+                  <input
+                    {...register("date")}
+                    type="text"
+                    name="date"
+                    placeholder="مثال ۱۴۰۳-۰۲-۲۵"
+                    className={` border w-full rounded-md h-10   py-2 px-6 outline-none iranyekan-very-light max-md:px-4 ${
+                      errors.date ? "border-red-500" : ""
+                    }`}
+                  />
+                </div>
+                {errors.date && (
+                  <span className="error text-red-600 iranyekan-very-light-white">
+                    {errors.date.message}
+                  </span>
+                )}
+              </div></div>
+
+              <div className=" flex mt-2 justify-between items-cente max-md:block ">
+              <h3 className="iranyekan">ساعت تحویل:</h3>
+              <div className="max-md:my-5 max-md:w-3/4 ">
+                <div className="flex relative">
+                  <input
+                    {...register("time")}
+                    type="time"
+                    name="time"
+                    placeholder="مثال ۱۵:۳۰"
+                    className={` border w-full rounded-md h-10   py-2 px-6 outline-none iranyekan-very-light max-md:px-4 ${
+                      errors.time ? "border-red-500" : ""
+                    }`}
+                  />
+                </div>
+                {errors.time && (
+                  <span className="error text-red-600 iranyekan-very-light-white">
+                    {errors.time.message}
+                  </span>
+                )}
+              </div></div>
+            </form>
+          
+         
         </div>
 
         <div className="absolute inset-x-0 bottom-5 flex justify-center items-end max-md:static max-md:mt-10 ">
           <button
-            onClick={clickHandler}
+            onClick={handleSubmit(clickHandler)}
             disabled={countAll === 0 ? true : selectedDelivery ? false : true}
             className=" text-center w-52 flex justify-center items-center my-5 bg-primary text-font-white  rounded-xl shadow-xl py-2 px-3 vazir-regular  max-lg:max-w-48  max-md:w-32"
           >

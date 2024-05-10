@@ -220,7 +220,7 @@ export const InfoSend = () => {
             }
           )
           .then((response) => {
-           
+            setCountAll(0)
             localStorage.removeItem("cart");
             setCart(null);
             navigate('cart/payment')
