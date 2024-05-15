@@ -5,12 +5,22 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import ProfileIcon from "../../images/icons/profile-xl.png";
 import SuccessIcon from "../../images/icons/success.png";
+import EditIcon from "../../images/icons/edit-black.png";
 
 import * as Yup from "yup";
 
 export const Profile = () => {
-  const { accessToken, convertNumberToFarsi, profile, setImageProfile , loggedIn,navigate} =
-    useContext(GlobalContext);
+  const [phoneNumber, setPhoneNumber] = useState(null);
+  const [editNumber, setEditNumber] = useState(false);
+
+  const {
+    accessToken,
+    convertNumberToFarsi,
+    profile,
+    setImageProfile,
+    loggedIn,
+    navigate,
+  } = useContext(GlobalContext);
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -23,17 +33,47 @@ export const Profile = () => {
   const goBackBox = () => {
     setTimeout(() => {
       setShowPopUP(false);
-    }, 2500);
+    }, 3500);
   };
 
-
-  useEffect(()=>{
-    if(!loggedIn){
-      navigate('/');
+  useEffect(() => {
+    if (!loggedIn) {
+      navigate("/");
     }
-  },[])
+  }, []);
 
+  useEffect(() => {
+    if (accessToken) {
+      const abortController = new AbortController();
+      const signal = abortController.signal;
 
+      async function getProfile() {
+        await axios
+          .get(
+            "/profile/phone_number/",
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${accessToken}`,
+              },
+            },
+            { signal }
+          )
+          .then((response) => {
+            setPhoneNumber(response.data.phone_number);
+            setValuePhoneNumber("phone", response.data.phone_number);
+          })
+          .catch((error) => {
+            console.error("Error fetching data:", error);
+          });
+        return () => {
+          abortController.abort();
+        };
+      }
+
+      getProfile();
+    }
+  }, [accessToken]);
 
   useEffect(() => {
     if (profile) {
@@ -41,7 +81,6 @@ export const Profile = () => {
       setLastName(profile.last_name);
       setValue("firstName", profile.first_name);
       setValue("lastName", profile.last_name);
-      setValue("phone", profile.phone_number);
       setValue("postalCode", profile.post_code);
       setValue("address", profile.address);
     }
@@ -54,12 +93,6 @@ export const Profile = () => {
     lastName: Yup.string()
       .required("لطفا این قسمت را خالی نگذارید.")
       .min(3, "نام خانوادگی خود را کامل وارد کنید."),
-    phone: Yup.string()
-      .required("لطفا این قسمت را خالی نگذارید.")
-      .matches(
-        /(0|\+98)?([ ]|-|[()]){0,2}9[1|2|3|4]([ ]|-|[()]){0,2}(?:[0-9]([ ]|-|[()]){0,2}){8}/,
-        "شماره تلفن نامعتبر می باشد."
-      ),
     postalCode: Yup.string()
       .required("لطفا این قسمت را خالی نگذارید.")
       .min(10, "کد پستی نامعتبر می باشد.")
@@ -76,6 +109,22 @@ export const Profile = () => {
     setValue,
   } = useForm({ resolver: yupResolver(validationSchema) });
 
+  const validationPhoneNumber = Yup.object().shape({
+    phone: Yup.string()
+      .required("لطفا این قسمت را خالی نگذارید.")
+      .matches(
+        /(0|\+98)?([ ]|-|[()]){0,2}9[1|2|3|4]([ ]|-|[()]){0,2}(?:[0-9]([ ]|-|[()]){0,2}){8}/,
+        "شماره تلفن نامعتبر می باشد."
+      ),
+  });
+
+  const {
+    register: registerPhonenUmber,
+    handleSubmit: handleSubmitPhoneNumber,
+    formState: { errors: errorsPhoneNumber },
+    setValue: setValuePhoneNumber,
+  } = useForm({ resolver: yupResolver(validationPhoneNumber) });
+
   const handleImageChange = async (event) => {
     setSelectedImageShow(URL.createObjectURL(event.target.files[0]));
     setSelectedImage(event.target.files[0]);
@@ -90,7 +139,6 @@ export const Profile = () => {
     formData.append("post_code", values.postalCode);
     formData.append("first_name", values.firstName);
     formData.append("last_name", values.lastName);
-    formData.append("phone_number", values.phone);
 
     await axios
       .patch("/profile/me/", formData, {
@@ -107,6 +155,34 @@ export const Profile = () => {
       })
       .catch((err) => {
         setTextPopUP("مشکلی در بروز شدن وجود داشت.");
+        setShowPopUP(true);
+        console.log(err);
+      });
+  };
+  const onSubmitPhoneNumber = async (value) => {
+    await axios
+      .patch(
+        "/profile/phone_number/",
+        {
+          phone_number: value.phone,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      )
+      .then((response) => {
+        setImageProfile(response.data.avatar);
+        setEditNumber(false);
+        if (response.data.status !== 400) {
+          setShowPopUP(true);
+          setPhoneNumber(response.data.phone_number);
+          setTextPopUP("شماره تماس به روز شد.");
+        }
+      })
+      .catch((err) => {
+        setTextPopUP("مشکلی در بروز شدن شماره تماس وجود داشت.");
         setShowPopUP(true);
         console.log(err);
       });
@@ -166,6 +242,15 @@ export const Profile = () => {
               <h3 className="iranyekan ">
                 {firstName} {lastName}{" "}
               </h3>
+              <div
+                onClick={() => setEditNumber(true)}
+                className="flex my-5 text-sm"
+              >
+                {" "}
+                <img src={EditIcon} alt="edit" className="w-4 ml-1" />{" "}
+                {phoneNumber && phoneNumber}
+              </div>
+
               <div className="flex mt-5 max-md:block max-md:mt-3">
                 <h4 className="iranyekan-very-light ml-5 max-xl:ml-3 max-md:ml-0 max-md:my-2">
                   کل سفارشات ثبت شده: <span>{convertNumberToFarsi(12)}</span>{" "}
@@ -186,84 +271,63 @@ export const Profile = () => {
                 onSubmit={handleSubmit(onSubmit)}
                 className=" w-full my-7  max-sm:text-sm  max-md:mr-0 "
               >
-                <div className="flex w-full max-md:block">
-                  <div className="pb-3 w-1/2 ml-1.5 max-md:w-full  max-md:ml-0">
-                    <div className="flex relative">
-                      <input
-                        {...register("firstName")}
-                        type="text"
-                        name="firstName"
-                        placeholder="نام"
-                        className={` border w-full rounded-xl h-10 mt-1  py-2 px-8 outline-none iranyekan-very-light ${
-                          errors.firstName ? "border-red-500" : ""
-                        }`}
-                      />
-                    </div>
-                    {errors.firstName && (
-                      <span className="error text-red-600 iranyekan-very-light-white">
-                        {errors.firstName.message}
-                      </span>
-                    )}
+                <div className="pb-3 w-full    ">
+                  <div className="flex relative">
+                    <input
+                      {...register("firstName")}
+                      type="text"
+                      name="firstName"
+                      placeholder="نام"
+                      className={` border w-full rounded-xl h-10 mt-1  py-2 px-8 outline-none iranyekan-very-light ${
+                        errors.firstName ? "border-red-500" : ""
+                      }`}
+                    />
                   </div>
-
-                  <div className="pb-3 w-1/2 mr-1.5 max-md:w-full  max-md:mr-0">
-                    <div className="flex relative">
-                      <input
-                        {...register("lastName")}
-                        type="text"
-                        name="lastName"
-                        placeholder="نام خانوادگی"
-                        className={` border w-full rounded-xl h-10 mt-1  py-2 px-8 outline-none iranyekan-very-light ${
-                          errors.lastName ? "border-red-500" : ""
-                        }`}
-                      />
-                    </div>
-                    {errors.lastName && (
-                      <span className="error text-red-600 iranyekan-very-light-white">
-                        {errors.lastName.message}
-                      </span>
-                    )}
-                  </div>
+                  {errors.firstName && (
+                    <span className="error text-red-600 iranyekan-very-light-white">
+                      {errors.firstName.message}
+                    </span>
+                  )}
                 </div>
-                <div className="flex w-full max-md:block">
-                  <div className="pb-3 w-1/2 ml-1.5 max-md:w-full  max-md:ml-0">
-                    <div className="flex relative">
-                      <input
-                        {...register("phone")}
-                        type="phone"
-                        name="phone"
-                        placeholder="شماره تماس"
-                        className={` border w-full rounded-xl h-10 mt-1  py-2 px-8 outline-none iranyekan-very-light ${
-                          errors.phone ? "border-red-500" : ""
-                        }`}
-                      />
-                    </div>
-                    {errors.phone && (
-                      <span className="error text-red-600 iranyekan-very-light-white">
-                        {errors.phone.message}
-                      </span>
-                    )}
-                  </div>
 
-                  <div className="pb-3 w-1/2 mr-1.5 max-md:w-full max-md:mr-0">
-                    <div className="flex relative">
-                      <input
-                        {...register("postalCode")}
-                        type="text"
-                        name="postalCode"
-                        placeholder="کدپستی"
-                        className={` border w-full rounded-xl h-10 mt-1  py-2 px-8 outline-none iranyekan-very-light ${
-                          errors.postalCode ? "border-red-500" : ""
-                        }`}
-                      />
-                    </div>
-                    {errors.postalCode && (
-                      <span className="error text-red-600 iranyekan-very-light-white">
-                        {errors.postalCode.message}
-                      </span>
-                    )}
+                <div className="pb-3 w-full    ">
+                  <div className="flex relative">
+                    <input
+                      {...register("lastName")}
+                      type="text"
+                      name="lastName"
+                      placeholder="نام خانوادگی"
+                      className={` border w-full rounded-xl h-10 mt-1  py-2 px-8 outline-none iranyekan-very-light ${
+                        errors.lastName ? "border-red-500" : ""
+                      }`}
+                    />
                   </div>
+                  {errors.lastName && (
+                    <span className="error text-red-600 iranyekan-very-light-white">
+                      {errors.lastName.message}
+                    </span>
+                  )}
                 </div>
+
+                <div className="pb-3 w-full ">
+                  <div className="flex relative">
+                    <input
+                      {...register("postalCode")}
+                      type="text"
+                      name="postalCode"
+                      placeholder="کدپستی"
+                      className={` border w-full rounded-xl h-10 mt-1  py-2 px-8 outline-none iranyekan-very-light ${
+                        errors.postalCode ? "border-red-500" : ""
+                      }`}
+                    />
+                  </div>
+                  {errors.postalCode && (
+                    <span className="error text-red-600 iranyekan-very-light-white">
+                      {errors.postalCode.message}
+                    </span>
+                  )}
+                </div>
+
                 <div className="">
                   <div className="flex relative max-md:block">
                     <textarea
@@ -310,6 +374,50 @@ export const Profile = () => {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+      <div
+        className={`fixed top-0 right-0  w-screen h-screen  justify-center items-center z-50 border text-black ${
+          editNumber ? "flex" : "hidden"
+        }`}
+      >
+        <div className="bg-white rounded-lg  border w-2/6 max-lg:w-3/6 max-md:w-5/6">
+          <h3 className="iranyekan-bold  text-center py-3 border-b">
+            ویرایش شماره
+          </h3>
+
+          <form
+            onSubmit={handleSubmitPhoneNumber(onSubmitPhoneNumber)}
+            className=" w-3/4 mt-10 mx-auto "
+          >
+            <div className="pb-3  ml-1.5 max-md:w-full  max-md:ml-0">
+              <div className="flex relative">
+                <input
+                  {...registerPhonenUmber("phone")}
+                  type="phone"
+                  name="phone"
+                  placeholder="شماره تماس"
+                  className={` border w-full rounded-xl h-10 mt-1  py-2 px-8 outline-none iranyekan-very-light ${
+                    errorsPhoneNumber.phone ? "border-red-500" : ""
+                  }`}
+                />
+              </div>
+              {errorsPhoneNumber.phone && (
+                <span className="error text-red-600 iranyekan-very-light-white">
+                  {errorsPhoneNumber.phone.message}
+                </span>
+              )}
+            </div>
+            <div className="flex justify-center">
+              {" "}
+              <button
+                onClick={handleSubmitPhoneNumber(onSubmitPhoneNumber)}
+                className="my-4  bg-primary text-font-white rounded-xl shadow-lg py-2 px-11 max-md:px-8 vazir-regular"
+              >
+                تایید
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </section>

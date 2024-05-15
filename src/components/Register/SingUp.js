@@ -328,7 +328,7 @@ export const SignUp = () => {
           <div className="flex justify-center items-center mt-5 ">
             <button
               className=" vazir-very-light  shadow-lg  bg-primary text-white py-3 px-14 rounded-2xl max-md:px-10 max-md:py-3 "
-              type="submit"
+              // type="submit"
             >
               ثبت نام
             </button>

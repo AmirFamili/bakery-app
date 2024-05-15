@@ -8,6 +8,8 @@ import axios from "../../api/axios";
 export const Product = ({ product }) => {
   const [count, setCount] = useState(0);
   const [id, setId] = useState(null);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+
   const {
   loggedIn,
     convertNumberToFarsi,
@@ -45,7 +47,7 @@ export const Product = ({ product }) => {
           `/order/items/`,
           {
             cake_id:product.id,
-            quantity:1,
+            quantity:product.limitation,
             unit_measure:product.pricemodel_set[0].unit_measure_id,
           
           },
@@ -57,12 +59,12 @@ export const Product = ({ product }) => {
           }
         )
         .then((response) => {
-          setCount(count + 1);
+          setCount(count + product.limitation);
           console.log(response);
           setId(response.data.id);
-          setCountAll(countAll + 1);
+          setCountAll(countAll + product.limitation);
         });
-    } else if (count >= 1) {
+    } else if (count >= product.limitation) {
       if (id) {
         await axios
           .patch(
@@ -101,7 +103,7 @@ navigate('/login')
   
   const handlerDecrease = async () => {
     if (count > 0) {
-      if (count > 1) {
+      if (count > product.limitation) {
         if (id) {
          
          
@@ -124,8 +126,8 @@ navigate('/login')
                setCountAll(countAll - 1);
              });
         }
-      } else if (count === 1) {
-       
+      } else if (count === product.limitation) {
+        setButtonDisabled(true);
         await axios
           .delete(`/order/items/${id}/`, {
             headers: {
@@ -134,11 +136,14 @@ navigate('/login')
             },
           })
           .then((response) => {
-            setCount(count - 1);
+            setCount(count -  product.limitation);
             console.log(response);
-            setCountAll(countAll - 1);
+            setCountAll(countAll -  product.limitation);
            
           });
+          setTimeout(() => {
+            setButtonDisabled(false);
+          }, 3000);
       }
     }
   };
@@ -196,6 +201,7 @@ navigate('/login')
           <div className="flex">
             <button
               onClick={handlerDecrease}
+              disabled={buttonDisabled}
               className={`minus rounded-full w-7 bg-blue-light hidden max-md:w-5 ${handlerCheckCount()} `}
             >
               <img src={MinusIcon} alt="minus" />

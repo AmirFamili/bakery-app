@@ -20,7 +20,7 @@ export const Popup = ({ onClose }) => {
               <div className="w-3 h-3 border-2 border-secondry  rounded-full mx-2 "></div>{" "}
               <h5 className="iranyekan-very-light-white text-secondry ">ثبت سفارش</h5>
             </div>
-            <h6 className="iranyekan-very-light-small">1402/11/25</h6>
+            {/* <h6 className="iranyekan-very-light-small">1402/11/25</h6> */}
           </div>
           <div className="h-5 border-dotted  border-r-2 mr-3"></div>
 

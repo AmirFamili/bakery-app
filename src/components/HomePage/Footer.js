@@ -8,40 +8,70 @@ import { GlobalContext } from "../../context/ContextWrapper";
 export const Footer = () => {
   const { convertNumberToFarsi, info } = useContext(GlobalContext);
   return (
-    <footer dir="ltr" className=" flex justify-start   ">
+    <footer dir="ltr" className=" flex justify-start  ">
       <div  className="trapezoid relative  w-3/4 max-md:w-11/12 max-md:pl-1 rounded-t-2xl ">
-        <div className="flex  items-center absolute top-6 ">
-          <a href={info && info.whatsapp}>
+        <div className="flex  items-center absolute top-6 w-full">
+          
+            <a href={info && info.whatsapp}>
             <img
               src={WhatsApp}
               alt="whatsapp"
-              className="w-6 my-1 ml-4 cursor-pointer max-md:w-5 max-md:mx-4 "
+              className="w-6 my-1 ml-10 cursor-pointer max-md:w-5 max-md:mx-4 max-sm:mx-2"
             />
           </a>
           <a href={info && info.telegram}>
             <img
               src={TelegramIcon}
               alt="telegram"
-              className="w-5 my-1 mx-4 cursor-pointer max-md:w-4"
+              className="w-5 my-1 mx-10 cursor-pointer max-md:w-4 max-md:mx-5 max-sm:mx-3"
             />
           </a>
           <a
             dir="ltr"
             href={`mailto:${info && info.instagram}`}
-            className="flex mx-6 cursor-pointer Lato-light text-white max-md:mx-4 "
+            className="flex cursor-pointer Lato-light text-white max-md:mx-3  max-sm:mx-1"
           >
-            <img src={Instagram} alt="location" className=" h-7 mr-2 p-1 max-md:h-5 " />{" "}
-            {info && info.instagram_id}
+            <img src={Instagram} alt="instagram" className=" h-7 mx-2 p-1 max-md:h-6" />{" "}
+            
           </a>
-          <a
-            href={`tel:${info && info.phone_number}`}
-            className="flex mx-6 cursor-pointer text-white iranyekan max-md:mx-3 "
+         
+          
+          <div className=" text-gray-50 iranyekan flex justify-center items-center  w-full max-sm:ml-4">
+          Powered by:
+            <a
+            href='#'
+            className=" mx-3 cursor-pointer max-md:mx-1 text-white "
           >
-            <img src={CallIcon} alt="location" className=" w-6 mr-2 h-7 p-1 max-md:h-5 max-md:w-5 max-md:mr-1" />
-            {info && convertNumberToFarsi(info.phone_number)}
+            Nova__spark
           </a>
+          </div>
+          
         </div>
       </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     
+
+
+
+
+
+
     </footer>
   );
 };
+
+

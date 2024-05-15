@@ -22,7 +22,7 @@ export const Order = ({ order, index }) => {
       </td>
       <td className="w-52 ">
         {" "}
-        {order && order.payment_status === "P" ? (
+        {order && order.rest_pay === "0"?order && order.payment_status === "P" ? (
           <span className="text-orange-300">درحال آماده سازی</span>
         ) : order.payment_status === "C" ? (
           <span className="text-green-600"> آماده </span>
@@ -32,7 +32,8 @@ export const Order = ({ order, index }) => {
           order.payment_status === "O" && (
             <span className="text-orange-300"> معلق </span>
           )
-        )}
+        ):<button  className="iranyekan-low-bold  my-4 mx-5 bg-primary text-font-white rounded-xl shadow-lg py-2 px-7"
+        >تسویه حساب</button>}
       </td>
       <td className="w-52 ">
         {convertNumberToFarsi(order && order.total_paid)} تومان
@@ -40,7 +41,7 @@ export const Order = ({ order, index }) => {
       <td className="w-52">
         {order && order.rest_pay === "0"
           ? "-"
-          : convertNumberToFarsi(order && order.rest_pay)}
+          : `${convertNumberToFarsi(order && order.rest_pay)} تومان`}
       </td>
       <td className="w-32 max-md:hidden">
         {convertNumberToFarsi(order && order.code)}
