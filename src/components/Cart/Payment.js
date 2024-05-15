@@ -10,7 +10,7 @@ export const Payment = () => {
 
 const handlePayment=()=>{
     setCountAll(0);
-    window.location.href = "http://localhost:3000/history";
+    window.location.href = "https://bllucake.ir/history";
 }
   return (
     <div className=" mt-5 p-1 pb-0 flex justify-center min-h-96  border  rounded-2xl bg-white max-lg:block ">
