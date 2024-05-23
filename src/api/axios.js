@@ -1,6 +1,6 @@
 import axios from "axios";
 
 export default axios.create({
-    baseURL:'https://bakery.liara.run',
+    baseURL:'http://onlinelbakery.pythonanywhere.com',
  
 });

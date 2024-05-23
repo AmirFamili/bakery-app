@@ -8,7 +8,15 @@ import { GlobalContext } from "../../context/ContextWrapper";
 export const Hero = () => {
   const [images, setImages] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const { info } = useContext(GlobalContext);
+  const { info, loggedIn, navigate } = useContext(GlobalContext);
+
+  const checkedLoggedIn = () => {
+    if (loggedIn) {
+      navigate("/customer-order");
+    } else {
+      navigate("/login");
+    }
+  };
 
   const second = 10000;
   useEffect(() => {
@@ -53,10 +61,16 @@ export const Hero = () => {
           <h4 className="vazir-light text-primary ">
             {info && info.explanation}
           </h4>
-          
-          <h5 className="mt-10 max-md:mt-5 "><Link className=" bg-primary text-font-white rounded-xl shadow-lg py-2 px-9  vazir-regular max-sm:px-3  max-sm:py-1.5 ">
-            کیک خودتو بساز
-          </Link></h5>
+
+          <h5 className="mt-10 max-md:mt-5 ">
+         
+            <span
+              onClick={checkedLoggedIn}
+              className=" bg-primary cursor-pointer text-font-white rounded-xl shadow-lg py-2 px-9  vazir-regular max-sm:px-3  max-sm:py-1.5 "
+            >
+              کیک خودتو بساز
+            </span>
+          </h5>
         </div>
       </div>
       <div className="px-1 relative max-sm:px-0 w-3/12 overflow-hidden rounded-3xl max-xl:hidden">
