@@ -117,7 +117,7 @@ function App() {
           ></Route>
         </Route>
         <Route path="/singup" element={<SignUp />}></Route>
-        <Route path="/login" element={<Login />}></Route>
+        <Route path="/login/:id" element={<Login />}></Route>
         <Route path="/change-password" element={<ChangePassword />}></Route>
         <Route path="/confirm-new-password/:id" element={<ConfirmNewPassword/>}></Route>
 

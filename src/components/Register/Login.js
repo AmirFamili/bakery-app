@@ -1,9 +1,9 @@
-import React, { useState, useContext,useEffect} from "react";
+import React, { useState, useContext, useEffect } from "react";
 import EmailGrayIcon from "../../images/icons/email-gray.png";
 import KeyIcon from "../../images/icons/key.png";
 import EyeIcon from "../../images/icons/eye.png";
 import GoogleIcon from "../../images/icons/google.png";
-import { Link} from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "../../api/axios";
 import { GlobalContext } from "../../context/ContextWrapper";
 import { useForm } from "react-hook-form";
@@ -13,7 +13,6 @@ import * as Yup from "yup";
 // import "react-toastify/dist/ReactToastify.css";
 
 export const Login = () => {
-
   const initialTime = 5 * 60;
 
   const [showPassword, setShowPassword] = useState(false);
@@ -23,15 +22,14 @@ export const Login = () => {
   const [time, setTime] = useState(initialTime);
   const [timerActive, setTimerActive] = useState(false);
 
-  const { loggedIn,setLoggedIn, logo,navigate } = useContext(GlobalContext);
+  const { loggedIn, setLoggedIn, logo, navigate } = useContext(GlobalContext);
+  const params = useParams();
 
-
-  useEffect(()=>{
-    if(loggedIn){
-      navigate('/');
+  useEffect(() => {
+    if (loggedIn) {
+      navigate("/");
     }
-  },[])
-
+  }, []);
 
   useEffect(() => {
     let interval;
@@ -65,6 +63,23 @@ export const Login = () => {
   };
 
   useEffect(() => {
+    if (params) {
+      const activate = async () => {
+        await axios
+          .post(`/auth/activate/${params.id.split(":")[1]}/`)
+          .then((response) => {
+            console.log(response);
+          });
+        setTime(initialTime);
+        setTimerActive(true);
+        setButtonDisabled(true);
+      };
+
+      activate();
+    }
+  }, []);
+
+  useEffect(() => {
     const email = localStorage.getItem("email");
     if (email) {
       setEmail(email);
@@ -76,13 +91,13 @@ export const Login = () => {
       .post("/auth/verify_email/", {
         email: email,
       })
-      .then((response) => {console.log(response);});
+      .then((response) => {
+        console.log(response);
+      });
     setTime(initialTime);
     setTimerActive(true);
     setButtonDisabled(true);
   };
-
-
 
   const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -103,7 +118,7 @@ export const Login = () => {
 
   const onSubmit = async (values) => {
     setEmail(values.email);
-    localStorage.setItem('email',values.email);
+    localStorage.setItem("email", values.email);
     await axios
       .post("/auth/login/", {
         email: values.email,
@@ -137,7 +152,7 @@ export const Login = () => {
               message: "رمز عبور صحیح نمی باشد.",
             });
           }
-          if (response.data.error === 'Verify your account') {
+          if (response.data.error === "Verify your account") {
             setShowVerify(true);
             // notify();
           }
@@ -145,7 +160,6 @@ export const Login = () => {
       })
       .catch((err) => console.log(err));
   };
-
 
   // const notify = () =>
   // toast.error("مشکلی در ورود داشتیم دوباره انجام دهید.", {
@@ -158,7 +172,6 @@ export const Login = () => {
   //   progress: undefined,
   //   theme: "light",
   // });
-
 
   return (
     <section className="bg-gray-main py-10 w-full flex justify-center items-center">
