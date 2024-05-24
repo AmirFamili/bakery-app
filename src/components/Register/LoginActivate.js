@@ -3,7 +3,7 @@ import EmailGrayIcon from "../../images/icons/email-gray.png";
 import KeyIcon from "../../images/icons/key.png";
 import EyeIcon from "../../images/icons/eye.png";
 import GoogleIcon from "../../images/icons/google.png";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "../../api/axios";
 import { GlobalContext } from "../../context/ContextWrapper";
 import { useForm } from "react-hook-form";
@@ -12,7 +12,7 @@ import * as Yup from "yup";
 // import { ToastContainer, toast } from "react-toastify";
 // import "react-toastify/dist/ReactToastify.css";
 
-export const Login = () => {
+export const LoginActivate = () => {
   const initialTime = 5 * 60;
 
   const [showPassword, setShowPassword] = useState(false);
@@ -23,6 +23,7 @@ export const Login = () => {
   const [timerActive, setTimerActive] = useState(false);
 
   const { loggedIn, setLoggedIn, logo, navigate } = useContext(GlobalContext);
+  const params = useParams();
 
   useEffect(() => {
     if (loggedIn) {
@@ -61,6 +62,20 @@ export const Login = () => {
       .padStart(2, "0")}`;
   };
 
+  useEffect(() => {
+    console.log(params);
+    if (params) {
+      const activate = async () => {
+        await axios
+          .post(`/auth/activate/${params.id.split(":")[1]}/`)
+          .then((response) => {
+            console.log(response);
+          });
+      };
+
+      activate();
+    }
+  }, []);
 
   useEffect(() => {
     const email = localStorage.getItem("email");
