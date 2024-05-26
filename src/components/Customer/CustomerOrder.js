@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect,useRef } from "react";
 import UploadIcon from "../../images/icons/document-upload.png";
 import ArrowLeftIcon from "../../images/icons/arrow-left.png";
 import AddIcon from "../../images/icons/add.png";
@@ -21,8 +21,13 @@ export const CustomerOrder = () => {
   const [showFilling, setShowFilling] = useState(null);
   const [showTaste, setShowTaste] = useState(null);
   const [showWeight, setShowWeight] = useState(null);
-  const [useWeight, setUseWeight] = useState();
-  const [price, setPrice] = useState(0);
+
+const [priceWeight,setPriceWeight]=useState(0);
+const [priceFilling,setPriceFilling]=useState(0);
+const [priceCover,setPriceCover]=useState(0);
+const [priceTaste,setPriceTaste]=useState(0);
+
+  const [totalPrice,  setTotalPrice] = useState(0);
 
   const goBackBox = () => {
     setTimeout(() => {
@@ -65,7 +70,7 @@ export const CustomerOrder = () => {
           )
           .then((response) => {
             setShowFilling(response.data);
-          })
+         })
           .catch((err) => console.log(err));
 
         await axios
@@ -97,6 +102,7 @@ export const CustomerOrder = () => {
           )
           .then((response) => {
             setShowWeight(response.data);
+           
           })
           .catch((err) => console.log(err));
 
@@ -120,9 +126,22 @@ export const CustomerOrder = () => {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
     setError,
     reset,
   } = useForm({ resolver: yupResolver(validationSchema) });
+
+//   const watchWeight=watch('Weight', []);
+//   const watchFilling=watch('filling', []);
+// useEffect(()=>{
+//   const calculateTotalPrice=()=>{
+// let currentPrice=0;
+// watchFilling.forEach(checkboxName=>{
+
+// })
+// }
+// },[])
+
 
   const onSubmit = async (values) => {
     console.log(values.weight);
@@ -131,7 +150,7 @@ export const CustomerOrder = () => {
     console.log(values.taste);
     axios
       .post(
-        "/profile/costomize_cake/",
+        "/profile/customize_cake/",
         {
           weight: values.weight,
           filling: values.filling,
@@ -156,6 +175,35 @@ export const CustomerOrder = () => {
       });
   };
 
+  const handleCheckboxChangeFilling = (event) => {
+    const priceValue = parseFloat(event.target.getAttribute('data-price'));
+    setPriceFilling((prevTotal) =>
+      event.target.checked ? prevTotal + priceValue : prevTotal - priceValue
+    );
+  };
+
+
+  const handleRadioChangeCover = (event) => {
+    const priceValue = parseFloat(event.target.getAttribute('data-price'));
+    setPriceCover(priceValue);
+  };
+  const handleRadioChangeTaste = (event) => {
+    const priceValue = parseFloat(event.target.getAttribute('data-price'));
+    setPriceTaste(priceValue);
+  };
+  
+  const handleDropdownChangeWeight = (event) => {
+    const selectedOption =showWeight && showWeight.find(weight => weight.id === parseInt(event.target.value));
+    if (selectedOption) {
+      setPriceWeight(selectedOption.price);
+    } 
+  };
+  
+  useEffect(()=>{
+    setTotalPrice(priceFilling+priceCover+priceTaste+priceWeight)
+  },[priceFilling,priceCover,priceTaste,priceWeight])
+
+
   return (
     <section className="py-6 px-10 pt-48 max-md:px-5 max-lg:mt-0  max-lg:pt-5 relative overflow-hidden">
       <div className="flex justify-center px-5 border  rounded-2xl">
@@ -168,16 +216,20 @@ export const CustomerOrder = () => {
                     {...register("weight")}
                     disabled={birthDayStep === 2 && true}
                     name="weight"
-                   
+                    defaultValue=''
+                    onChange={handleDropdownChangeWeight}
                     className={` outline-none w-full p-2 cursor-pointer  bg-gray-main iranyekan-little-light text-gray-400 ${
                       birthDayStep === 2 && "opacity-50"
                     }`}
                   >
-                    <option >وزن کیک</option>
+                    <option value='' disabled>وزن کیک</option>
                     {showWeight &&
                       showWeight.map((weight) => (
                         <option
                           key={weight.id}
+                          value={weight.id}
+                          data-price={weight.price}
+                         
                         >
                           {weight.int}
                         </option>
@@ -208,6 +260,8 @@ export const CustomerOrder = () => {
                           disabled={birthDayStep === 2 && true}
                           type="checkbox"
                           name="filling"
+                          data-price={filling.price}
+                          onChange={handleCheckboxChangeFilling}
                           value={filling.id}
                           className="checkbox text-gray-200 border w-3.5 h-3.5 rounded checked:bg-secondry checked:border-none   border-gray-500 "
                         />
@@ -241,6 +295,8 @@ export const CustomerOrder = () => {
                           key={cover.id}
                           type="radio"
                           name="cover"
+                          data-price={cover.price}
+                          onChange={handleRadioChangeCover}
                           value={cover.id}
                           className="checkbox text-gray-200 border  w-3.5 h-3.5 rounded checked:bg-secondry checked:border-none  border-gray-500 "
                         />
@@ -275,6 +331,8 @@ export const CustomerOrder = () => {
                           key={taste.id}
                           type="radio"
                           name="taste"
+                          data-price={taste.price}
+                          onChange={handleRadioChangeTaste}
                           value={taste.id}
                           className="checkbox text-gray-200 border  w-3.5 h-3.5 rounded checked:bg-secondry checked:border-none  border-gray-500 "
                         />
@@ -661,7 +719,7 @@ export const CustomerOrder = () => {
             {" "}
             <h3 className="iranyekan-little-light "> قیمت:</h3>
             <h3 className="iranyekan-little-light">
-              {convertNumberToFarsi(5700000)} تومان
+              {convertNumberToFarsi(totalPrice)} تومان
             </h3>
           </div>
 
