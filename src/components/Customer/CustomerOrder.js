@@ -3,15 +3,14 @@ import UploadIcon from "../../images/icons/document-upload.png";
 import ArrowLeftIcon from "../../images/icons/arrow-left.png";
 import AddIcon from "../../images/icons/add.png";
 import SuccessIcon from "../../images/icons/success.png";
-import { Formik, Form, Field, ErrorMessage } from "formik";
 import { GlobalContext } from "../../context/ContextWrapper";
 import axios from "../../api/axios";
-import { useForm,Controller } from "react-hook-form";
+import { useForm, } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
 export const CustomerOrder = () => {
-  const { convertNumberToFarsi, dispatchCalCart, accessToken, deliveryId } =
+  const { convertNumberToFarsi, dispatchCalCart, accessToken, deliveryId,navigate  } =
     useContext(GlobalContext);
 
   const [birthDayStep, setBirthDayStep] = useState(1);
@@ -131,23 +130,10 @@ const [priceTaste,setPriceTaste]=useState(0);
     reset,
   } = useForm({ resolver: yupResolver(validationSchema) });
 
-//   const watchWeight=watch('Weight', []);
-//   const watchFilling=watch('filling', []);
-// useEffect(()=>{
-//   const calculateTotalPrice=()=>{
-// let currentPrice=0;
-// watchFilling.forEach(checkboxName=>{
-
-// })
-// }
-// },[])
 
 
   const onSubmit = async (values) => {
-    console.log(values.weight);
-    console.log(values.filling);
-    console.log(values.cover);
-    console.log(values.taste);
+    
     axios
       .post(
         "/profile/customize_cake/",
@@ -168,6 +154,7 @@ const [priceTaste,setPriceTaste]=useState(0);
       )
       .then((response) => {
         console.log(response);
+        navigate('/cart');
       })
       .catch((error) => {
         console.error(error);
@@ -400,7 +387,7 @@ const [priceTaste,setPriceTaste]=useState(0);
                   type="submit"
                   className="z-10 flex absolute bottom-5 left-24 my-4 mx-5 bg-primary text-font-white rounded-xl shadow-xl py-3 px-3 vazir-regular "
                 >
-                  تایید و تکمیل سفارش
+                   افزودن به سبد خرید
                   <img
                     src={ArrowLeftIcon}
                     alt=" Arrow Left"
@@ -409,281 +396,6 @@ const [priceTaste,setPriceTaste]=useState(0);
                 </button>
               )}
             </form>
-
-            {/* <Formik
-              initialValues={{
-                weight: "",
-                filling: [],
-                cover: "",
-                taste: "",
-                image: "",
-                explanation: "",
-              }}
-              onSubmit={(values) => {
-                // console.log(values.weight);
-                // console.log(values.filing);
-                // console.log(values.cover);
-                // console.log(values.taste);
-                // console.log(values.explain);
-                 axios
-                .post("/profile/costomize_cake/",{
-                  weight: values.weight,
-                  filling: values.filling,
-                  cover: values.cover,
-                  taste: values.taste,
-                  // image: values.image,
-                  // explanation: values.explanation,
-                }, {
-                  headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${accessToken}`,
-                  },
-                })
-                .then((response) => {
-                  console.log(response);
-                })
-                .catch((error) => {
-                  console.error( error);
-                  setBirthDayStep(2);
-                });
-                
-                // const birthDayCake = {
-                //   weight: values.weight,
-                //   filing: values.filing,
-                //   cover: values.cover,
-                //   taste: values.taste,
-                //   // image: values.image,
-                //   explanation: values.explanation,
-                // };
-
-                // localStorage.setItem(
-                //   "birthDayCake",
-                //   JSON.stringify(birthDayCake)
-                // );
-                
-              }}
-              validate={(values) => {
-                const errors = {};
-
-                if (!values.filling.length) {
-                  errors.filling = "لطفا این قسمت را خالی نگذارید.";
-                }
-
-                if (!values.cover.length) {
-                  errors.cover = "لطفا این قسمت را خالی نگذارید.";
-                }
-
-                if (!values.taste.length) {
-                  errors.taste = "لطفا این قسمت را خالی نگذارید.";
-                }
-                // if (values.explanation.length===0) {
-                //   errors.explanation = "لطفا این قسمت را خالی نگذارید.";
-                // }
-
-                return errors;
-              }}
-            >
-              {({ setFieldValue }) => (
-                <Form
-
-                // action="index.html"
-                // enctype="multipart/form-data"
-                >
-                  <div className="pl-10">
-                    <div className=" mb-8 px-2 border rounded-xl bg-gray-main ">
-                      <Field
-                        as="select"
-                        disabled={birthDayStep === 2 && true}
-                        name="weight"
-                        value={useWeight}
-                        className={` outline-none w-full p-2 cursor-pointer  bg-gray-main iranyekan-little-light text-gray-400 ${
-                          birthDayStep === 2 && "opacity-50"
-                        }`}
-                      >
-                        <option value="وزن کیک">
-                          وزن کیک
-                        </option>
-                        {showWeight &&
-                          showWeight.map((weight) => (
-                            <option
-                            key={weight.id}
-                              onChange={(e) => setUseWeight(e.target.value)}
-                            >
-                              {weight.int}
-                            </option>
-                          ))}
-                      </Field>
-                    </div>
-                  </div>
-
-                  <div>
-                    <h3 className="iranyekan-little-light mb-3 ">فیلینگ:</h3>
-                    <div className="flex justify-between items-start flex-wrap">
-                      {showFilling &&
-                        showFilling.map((filling) => (
-                          <label
-                            key={filling.id}
-                            className={`flex w-32  my-2 ${
-                              birthDayStep === 2 && "opacity-50 text-gray-400 "
-                            }`}
-                          >
-                            <Field
-                              disabled={birthDayStep === 2 && true}
-                              type="checkbox"
-                              name="filling"
-                              value={filling.name}
-                              className="checkbox text-gray-200 border w-3.5 h-3.5 rounded checked:bg-secondry checked:border-none   border-gray-500 "
-                            />
-                            <p className="iranyekan-very-light-white pr-2 ">
-                              {filling.name}
-                            </p>
-                          </label>
-                        ))}
-                    </div>
-                    <ErrorMessage name="filling">
-                      {(errorMsg) => (
-                        <div className="mb-2 mt-1 text-red-600 iranyekan-very-light-white">
-                          {errorMsg}
-                        </div>
-                      )}
-                    </ErrorMessage>
-                  </div>
-
-                  <div>
-                    <h3 className="iranyekan-little-light mb-3 mt-5">روکش:</h3>
-                    <div className="flex  items-start flex-wrap   ">
-                      {showCovers &&
-                        showCovers.map((cover) => (
-                          <div
-                            key={cover.id}
-                            className={`flex w-32  my-2 ${
-                              birthDayStep === 2 && "opacity-50 text-gray-400"
-                            }`}
-                          >
-                            <Field
-                              disabled={birthDayStep === 2 && true}
-                              key={cover.id}
-                              type="radio"
-                              name="cover"
-                              value={cover.name}
-                              className="checkbox text-gray-200 border  w-3.5 h-3.5 rounded checked:bg-secondry checked:border-none  border-gray-500 "
-                            />
-                            <p className="iranyekan-very-light-white pr-2">
-                              {cover.name}
-                            </p>
-                          </div>
-                        ))}
-
-                      <ErrorMessage name="cover">
-                        {(errorMsg) => (
-                          <div className="mb-2 mt-1 text-red-600 iranyekan-very-light-white">
-                            {errorMsg}
-                          </div>
-                        )}
-                      </ErrorMessage>
-                    </div>
-                  </div>
-
-                  <div>
-                    <h3 className="iranyekan-little-light mb-3 mt-5">
-                      مزه کیک:
-                    </h3>
-                    <div className="flex  items-start flex-wrap   ">
-                      {showTaste &&
-                        showTaste.map((taste) => (
-                          <div
-                            key={taste.id}
-                            className={`flex w-32  my-2 ${
-                              birthDayStep === 2 && "opacity-50 text-gray-400"
-                            }`}
-                          >
-                            <Field
-                              disabled={birthDayStep === 2 && true}
-                              key={taste.id}
-                              type="radio"
-                              name="taste"
-                              value={taste.name}
-                              className="checkbox text-gray-200 border  w-3.5 h-3.5 rounded checked:bg-secondry checked:border-none  border-gray-500 "
-                            />
-                            <p className="iranyekan-very-light-white pr-2">
-                              {taste.name}
-                            </p>
-                          </div>
-                        ))}
-
-                      <ErrorMessage name="taste">
-                        {(errorMsg) => (
-                          <div className="mb-2 mt-1 text-red-600 iranyekan-very-light-white">
-                            {errorMsg}
-                          </div>
-                        )}
-                      </ErrorMessage>
-                    </div>
-                  </div>
-
-                  <div className="pl-10 ">
-                    <label
-                      className={` text-center border border-dashed block rounded-xl mt-5 p-4 iranyekan-very-light ${
-                        birthDayStep === 2 && "opacity-50"
-                      }`}
-                    >
-                      ایده کیک خود را درصورت نیاز اپلود کنید.
-                      <input
-                        disabled={birthDayStep === 2 && true}
-                        type="file"
-                        name="image"
-                        accept=".jpg, .jpeg, .png, .gif"
-                        className="hidden"
-                        onChange={(event) => {
-                          const file = event.target.files[0];
-                          setFieldValue("image", file);
-                          setFileName(file.name);
-                        }}
-                      />
-                      <span className="flex flex-col justify-center items-center cursor-pointer">
-                        <img className="m-2 w-5" src={UploadIcon} />
-                        {fileName}
-                      </span>
-                    </label>
-                  </div>
-
-                  <div className="pl-10 ">
-                    <Field
-                      disabled={birthDayStep === 2 && true}
-                      as="textarea"
-                      name=" explanation"
-                      cols="30"
-                      rows="3"
-                      placeholder="توضیحات..."
-                      className={`outline-none w-full p-3 border rounded-xl bg-gray-main mt-5 vazir-very-little ${
-                        birthDayStep === 2 && "opacity-50"
-                      }`}
-                    ></Field>
-                     <ErrorMessage name="explanation">
-                      {(errorMsg) => (
-                        <div className="mb-2 mt-1 text-red-600 iranyekan-very-light-white">
-                          {errorMsg}
-                        </div>
-                      )}
-                    </ErrorMessage>
-                  </div>
-
-                  {birthDayStep === 1 && (
-                    <button
-                      type="submit"
-                      className="z-10 flex absolute bottom-5 left-24 my-4 mx-5 bg-primary text-font-white rounded-xl shadow-xl py-3 px-3 vazir-regular "
-                    >
-                      تایید و تکمیل سفارش
-                      <img
-                        src={ArrowLeftIcon}
-                        alt=" Arrow Left"
-                        className="w-6 mr-3"
-                      />
-                    </button>
-                  )}
-                </Form>
-              )}
-            </Formik> */}
           </div>
         </div>
 
@@ -763,7 +475,7 @@ const [priceTaste,setPriceTaste]=useState(0);
             </div>
           )} */}
 
-          <div className="absolute bottom-5 right-2 flex  ">
+          {/* <div className="absolute bottom-5 right-2 flex  ">
             {birthDayStep === 2 && (
               <button
                 onClick={() => birthDayStep === 2 && setBirthDayStep(1)}
@@ -789,7 +501,7 @@ const [priceTaste,setPriceTaste]=useState(0);
                 افزودن به سبد خرید
               </button>
             )}
-          </div>
+          </div> */}
         </div>
       </div>
       <div
