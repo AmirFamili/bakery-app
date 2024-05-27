@@ -247,7 +247,7 @@ export const InfoSend = () => {
                   className="border w-full mb-4 rounded-md h-10 mt-1  py-2 px-5 outline-none iranyekan-very-light max-md:px-4"
                 >
                   <option value="انتخاب آدرس">انتخاب آدرس</option>
-                  {addresses &&
+                  {addresses && !addresses &&
                     addresses.map((address) => (
                       <option key={address.id} value={address && address.id}>
                         {address && address.address}

@@ -12,7 +12,7 @@ export const Cart = () => {
   const isActive_2 = useMatch({ path: "/cart/show-info", end: true });
   const isActive_3 = useMatch({ path: "/cart/payment", end: true });
 
-  const { loggedIn, navigate, countAll } = useContext(GlobalContext);
+  const { loggedIn, navigate, countAll ,customizeProducts} = useContext(GlobalContext);
 
   useEffect(() => {
     if (!loggedIn) {
@@ -25,7 +25,7 @@ export const Cart = () => {
       <h1 className="py-5 iranyekan-very-bold ">سبد خرید شما</h1>
      {!isActive_3 && <div
         className={`absolute flex flex-col justify-center items-center h-1/2 w-11/12 ${
-          countAll > 0 && "hidden"
+          countAll > 0 &&  "hidden"
         }`}
       >
         <h2 className="iranyekan-medium text-gray-400">

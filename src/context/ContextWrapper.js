@@ -42,6 +42,7 @@ const ContextWrapper = (props) => {
   const [imageProfile, setImageProfile] = useState(null);
   const [activeMeasure, setActiveMeasure] = useState();
   const [products, setProducts] = useState(null);
+  const [customizeProducts, setCustomizeProducts] = useState(null);
   const [countAll, setCountAll] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalPayment, setTotalPayment] = useState(0);
@@ -167,15 +168,21 @@ const ContextWrapper = (props) => {
               setTotalPayment(response.data[0].total_payment);
               setTotalPrice(response.data[0].total_price);
               setProducts(response.data[0].items);
+              setCustomizeProducts(response.data[0].customize)
               setCart(response.data[0].id);
 
               var x = 0;
               for (let i = 0; i < response.data[0].items.length; i++) {
                 x += response.data[0].items[i].quantity;
               }
-
+             
+              for (let i = 0; i < response.data[0].customize.length; i++) {
+                x ++;
+              }
               setCountAll(x);
             }
+
+            
           })
           .catch((err) => console.log(err));
 
@@ -254,6 +261,7 @@ const ContextWrapper = (props) => {
         activeMeasure,
         setActiveMeasure,
         products,
+        customizeProducts,
         countAll,
         setCountAll,
         totalPrice,

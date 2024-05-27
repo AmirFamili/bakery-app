@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import ArrowLeftIcon from "../../images/icons/arrow-left.png";
 import { GlobalContext } from "../../context/ContextWrapper";
 import { CartProduct } from "./CartProduct";
+import { CartCustomizeProduct } from "./CartCustomizeProduct";
 import axios from "../../api/axios";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
@@ -16,6 +17,7 @@ export const InfoCart = () => {
     cart,
     navigate,
     deliveryId,
+    customizeProducts
   } = useContext(GlobalContext);
 
   const validationSchema = Yup.object().shape({
@@ -28,6 +30,7 @@ export const InfoCart = () => {
       time: Yup.string()
       .required("لطفا این قسمت را خالی نگذارید.")
   });
+
 
   const {
     register,
@@ -131,6 +134,9 @@ export const InfoCart = () => {
             {products &&
               products.map((product, int) => (
                 <CartProduct key={product.id} number={int} product={product} />
+              ))}
+              {customizeProducts &&  customizeProducts.map((product, int) => (
+                <CartCustomizeProduct key={product.id} number={int} product={product} />
               ))}
           </tbody>
         </table>

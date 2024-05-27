@@ -10,7 +10,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
 export const CustomerOrder = () => {
-  const { convertNumberToFarsi, dispatchCalCart, accessToken, deliveryId,navigate  } =
+  const { convertNumberToFarsi, dispatchCalCart, accessToken,navigate,countAll, setCountAll,  } =
     useContext(GlobalContext);
 
   const [birthDayStep, setBirthDayStep] = useState(1);
@@ -154,6 +154,7 @@ const [priceTaste,setPriceTaste]=useState(0);
       )
       .then((response) => {
         console.log(response);
+        setCountAll(countAll+1)
         navigate('/cart');
       })
       .catch((error) => {

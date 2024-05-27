@@ -134,7 +134,7 @@ export const CartProduct = ({ product, number }) => {
           <p className="text-right">{product.cake.title}</p>
         </div>
       </td>
-      <td className="w-52 max-sm:hidden">{price} تومان</td>
+      <td className="w-52 max-sm:hidden">{convertNumberToFarsi(price)} تومان</td>
       <td className="w-52 ">
         {" "}
         <div className="flex justify-center items-center">
@@ -156,7 +156,7 @@ export const CartProduct = ({ product, number }) => {
           </button>
         </div>
       </td>
-      <td className="w-52 ">{product.total_price} تومان</td>
+      <td className="w-52 ">{convertNumberToFarsi(product.total_price)} تومان</td>
       <td className="w-32 max-sm:hidden">
         <button onClick={handlerDelete}>
           <img src={TrashIcon} alt="trash" className="w-6 m-auto" />
