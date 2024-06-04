@@ -44,7 +44,7 @@ export const History = () => {
       getProduct();
     }
   }, [accessToken]);
-
+console.log(orders);
   return (
     <section className="  mt-2 px-10 py-28 max-md:px-5  h-full min-h-screen max-lg:pt-5 max-lg:mt-20 ">
       <h1 className="py-5 iranyekan-very-bold ">سفارشات شما</h1>
@@ -62,6 +62,7 @@ export const History = () => {
             </tr>
           </thead>
           <tbody>
+            
             {orders &&
               orders.map((order, index) => (
               <Order key={order.id} order={order} index={index} />

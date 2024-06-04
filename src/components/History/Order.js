@@ -14,8 +14,8 @@ export const Order = ({ order, index }) => {
           {order &&
             order.items.map((item) => (
               <li key={item.id} className="text-right py-0.5 ">
-                {item.cake.title} - {convertNumberToFarsi(item.quantity)}{" "}
-                {item.cake.unit_measure}
+                {item.cake? item.cake.title:'کیک سفارشی'} - {convertNumberToFarsi(item.quantity)}{" "}
+                {item.cake?item.cake.unit_measure:'عدد'}
               </li>
             ))}
         </ul>

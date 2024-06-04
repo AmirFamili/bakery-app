@@ -629,8 +629,8 @@ export const InfoSend = () => {
                 انصراف
               </button>
               
-              <button className="my-4  bg-primary text-font-white rounded-xl shadow-lg py-2 px-14 max-md:px-8 vazir-regular">
-              پرداخت
+              <button type="submit" className="my-4  bg-primary text-font-white rounded-xl shadow-lg py-2 px-14 max-md:px-8 vazir-regular">
+              تایید
               </button>
             </div>
           </form>
