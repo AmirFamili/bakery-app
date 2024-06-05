@@ -335,7 +335,7 @@ export const SignUp = () => {
           </div>
         </form>
 
-        <div className=" flex items-center mx-auto my-7 w-4/6  max-md:w-5/6">
+        {/* <div className=" flex items-center mx-auto my-7 w-4/6  max-md:w-5/6">
           <div className="border-b border-gray-300 w-1/2"></div>
           <div className="iranyekan-little-light px-3"> یا </div>
           <div className="border-b border-gray-300 w-1/2"></div>
@@ -346,7 +346,7 @@ export const SignUp = () => {
             <img src={GoogleIcon} alt="گوگل" className="w-7 ml-3 max-md:w-6" />
             ثبت نام با حساب کاربری گوگل
           </button>
-        </div>
+        </div> */}
         <h3 className="iranyekan-little-light text-center mt-10">
           حساب کاربری دارید؟{" "}
           <Link to="/login" className="border-b border-gray-500 text-gray-600">
