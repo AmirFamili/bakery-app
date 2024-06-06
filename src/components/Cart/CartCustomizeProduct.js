@@ -132,10 +132,10 @@ export const CartCustomizeProduct = ({ product, number }) => {
         </div>
       </td>
       <td className="w-52 max-sm:hidden">
-        {/* {product.total_price} تومان */}
+      {convertNumberToFarsi(product.total_price)} تومان
         </td>
       <td className="w-52 ">
-        {" "}
+      {convertNumberToFarsi(1)}
         {/* <div className="flex justify-center items-center">
           <button
             onClick={handlerDecrease}
