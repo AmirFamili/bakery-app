@@ -1,6 +1,6 @@
 import axios from "axios";
 
 export default axios.create({
-    baseURL:'http://bakery.liara.run',
+    baseURL:'https://bakery.liara.run',
  
 });

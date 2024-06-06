@@ -193,10 +193,10 @@ const [priceTaste,setPriceTaste]=useState(0);
 
 
   return (
-    <section className="py-6 px-10 pt-48 max-md:px-5 max-lg:mt-0  max-lg:pt-5 relative overflow-hidden">
-      <div className="flex justify-center px-5 border  rounded-2xl">
-        <div className="w-2/3 py-5 border-l">
-          <div className="w-1/2 py-2 ">
+    <section className="py-6 px-10 pt-48 max-md:px-5 max-lg:mt-0  max-lg:pt-36 relative overflow-hidden">
+      <div className="flex justify-center px-5 border  rounded-2xl max-md:block">
+        <div className="w-2/3 py-5 border-l max-md:border-0 max-md:w-full">
+          <div className="w-1/2 py-2 max-md:w-full">
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="pl-10">
                 <div className=" mb-8 px-2 border rounded-xl bg-gray-main ">
@@ -386,7 +386,7 @@ const [priceTaste,setPriceTaste]=useState(0);
               {birthDayStep === 1 && (
                 <button
                   type="submit"
-                  className="z-10 flex absolute bottom-5 left-24 my-4 mx-5 bg-primary text-font-white rounded-xl shadow-xl py-3 px-3 vazir-regular "
+                  className="z-10 flex absolute bottom-5 left-24 max-md:left-5 my-4 mx-5 bg-primary text-font-white rounded-xl shadow-xl py-3 px-3 vazir-regular "
                 >
                    افزودن به سبد خرید
                   <img
@@ -400,7 +400,7 @@ const [priceTaste,setPriceTaste]=useState(0);
           </div>
         </div>
 
-        <div className="w-1/3 p-5 relative">
+        <div className="w-1/3 p-5 relative max-md:w-1/2 max-md:pr-2">
           {/* {birthDayStep === 1 && (
             <div className="mt-3">
               <h3 className="iranyekan-little-light"> نحوه تحویل سفارش:</h3>

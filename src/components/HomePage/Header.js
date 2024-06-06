@@ -57,7 +57,7 @@ export const Header = () => {
             value={search}
             onChange={handleSearch}
             className=" rounded-3xl px-4 w-full outline-none bg-gray-main "
-            placeholder="جستوجو..."
+            placeholder="جستجو..."
           />
           <div className="w-6">
             <svg
@@ -148,7 +148,7 @@ export const Header = () => {
 
         {!loggedIn && (
           <Link
-            to="/singup"
+            to="/login"
             className="my-4 mx-5 bg-primary text-font-white rounded-xl shadow-lg py-2 px-9"
           >
             ورود

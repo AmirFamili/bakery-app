@@ -81,7 +81,7 @@ export const HeaderMobile = () => {
               value={search}
               onChange={handleSearch}
               className=" rounded-3xl px-4 w-full outline-none bg-gray-main iranyekan-very-light"
-              placeholder="جستوجو..."
+              placeholder="جستجو..."
             />
             <div className="w-6">
               <svg
