@@ -145,7 +145,7 @@ export const Product = ({ product }) => {
       <img
         src={product.image}
         alt="cup cake"
-        className="-mt-16 w-28 h-28 mx-auto shadow-md rounded-full max-md:w-20 max-md:h-20 max-md:-mt-12"
+        className="-mt-16 w-28 h-28 object-cover mx-auto shadow-md rounded-full max-md:w-20 max-md:h-20 max-md:-mt-12"
       />
       <h3 className="iranyekan-bold my-5 max-md:my-4">{product.title} </h3>
       <h4 className=" my-4 iranyekan-very-light   group-hover:text-white max-md:mb-3">

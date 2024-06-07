@@ -392,7 +392,7 @@ const [priceTaste,setPriceTaste]=useState(0);
                   <img
                     src={ArrowLeftIcon}
                     alt=" Arrow Left"
-                    className="w-6 mr-3"
+                    className="w-6 mr-3 max-md:hidden"
                   />
                 </button>
               )}

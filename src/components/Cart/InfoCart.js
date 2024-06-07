@@ -179,7 +179,7 @@ export const InfoCart = () => {
                     type="text"
                     name="date"
                     placeholder="مثال ۲۵-۷-۱۴۰۳"
-                    className={` border w-full rounded-md h-10   py-2 px-6 outline-none iranyekan-very-light max-md:px-4 ${
+                    className={` border w-full rounded-md h-10 py-2 px-6 outline-none iranyekan-very-light max-md:px-4 ${
                       errors.date ? "border-red-500" : ""
                     }`}
                   />
@@ -200,7 +200,7 @@ export const InfoCart = () => {
                     type="time"
                     name="time"
                     placeholder="مثال ۱۵:۳۰"
-                    className={` border w-full rounded-md h-10   py-2 px-6 outline-none iranyekan-very-light max-md:px-4 ${
+                    className={` border w-full rounded-md h-10 py-2 px-6 outline-none iranyekan-very-light max-md:px-4 ${
                       errors.time ? "border-red-500" : ""
                     }`}
                   />
