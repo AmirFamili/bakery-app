@@ -23,23 +23,28 @@ import { SeeAllDiscount } from "./components/SeeAll/SeeAllDiscount";
 import { SeeAllNewProduct } from "./components/SeeAll/SeeAllNew";
 import { GlobalContext } from "./context/ContextWrapper";
 import { Product } from "./components/Product/Product";
-import {ConfirmNewPassword } from "./components/Register/ConfirmNewPassword";
+import { ConfirmNewPassword } from "./components/Register/ConfirmNewPassword";
 import axios from "./api/axios";
 import BackIcon from "./images/icons/arrow-right.png";
 import { Payment } from "./components/Cart/Payment";
+import Loading from "./images/icons/loading.gif";
+import NoProducts from "./images/icons/no_products.webp";
 
 function App() {
-  const { showSearchPage, search, setSearch } =
-    useContext(GlobalContext);
+  const { showSearchPage, search, setSearch } = useContext(GlobalContext);
+
   const [searchProduct, setSearchProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         const response = await axios.get(
           `/bakery/search_cake/?search=${search}`
         );
         setSearchProduct(response.data);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -84,12 +89,37 @@ function App() {
                         بازگشت
                       </button>
 
-                      <div className="flex justify-start  flex-wrap p-5">
-                        {searchProduct &&
-                          searchProduct.map((product) => (
-                            <Product product={product} />
-                          ))}
-                      </div>
+                      {loading ? (
+                        <div className=" w-full h-screen ">
+                          {" "}
+                          <div className="flex justify-center items-center ">
+                            <img
+                              src={Loading}
+                              alt="loading"
+                              className="w-10 mt-36 "
+                            />
+                          </div>
+                        </div>
+                      ) : !searchProduct.length ? (
+                        <div className=" w-full  ">
+                          <div className="flex justify-center items-center   ">
+                            <div className="">
+                              <img
+                                src={NoProducts}
+                                alt="no products"
+                                className=" "
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="flex justify-start  flex-wrap p-5">
+                          {searchProduct &&
+                            searchProduct.map((product) => (
+                              <Product product={product} />
+                            ))}
+                        </div>
+                      )}
                     </div>
                   </main>
                 </div>
@@ -121,8 +151,10 @@ function App() {
         <Route path="/login/:id" element={<LoginActivate />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/change-password" element={<ChangePassword />}></Route>
-        <Route path="/confirm-new-password/:id" element={<ConfirmNewPassword/>}></Route>
-
+        <Route
+          path="/confirm-new-password/:id"
+          element={<ConfirmNewPassword />}
+        ></Route>
       </Routes>
     </div>
   );

@@ -129,7 +129,7 @@ export const CartProduct = ({ product, number }) => {
           <img
             src={product.cake.image}
             alt={product.cake.title}
-            className="w-10 h-10 ml-2 rounded-full max-md:min-w-7  max-md:min-h-7 "
+            className="w-10 h-10 ml-2 object-cover rounded-full max-md:min-w-7  max-md:min-h-7 "
           />
           <p className="text-right">{product.cake.title}</p>
         </div>
