@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Routes, Route, Outlet } from "react-router-dom";
 import { Login } from "./components/Register/Login";
+import { LoginActivate } from "./components/Register/LoginActivate";
 import { SignUp } from "./components/Register/SingUp";
 import { ChangePassword } from "./components/Register/ChangePassword";
 import { Category } from "./components/Category/Category";
@@ -117,6 +118,7 @@ function App() {
           ></Route>
         </Route>
         <Route path="/singup" element={<SignUp />}></Route>
+        <Route path="/login/:id" element={<LoginActivate />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/change-password" element={<ChangePassword />}></Route>
         <Route path="/confirm-new-password/:id" element={<ConfirmNewPassword/>}></Route>

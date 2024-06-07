@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import ArrowLeftIcon from "../../images/icons/arrow-left.png";
 import { GlobalContext } from "../../context/ContextWrapper";
 import { CartProduct } from "./CartProduct";
+import { CartCustomizeProduct } from "./CartCustomizeProduct";
 import axios from "../../api/axios";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
@@ -16,6 +17,7 @@ export const InfoCart = () => {
     cart,
     navigate,
     deliveryId,
+    customizeProducts
   } = useContext(GlobalContext);
 
   const validationSchema = Yup.object().shape({
@@ -28,6 +30,7 @@ export const InfoCart = () => {
       time: Yup.string()
       .required("لطفا این قسمت را خالی نگذارید.")
   });
+
 
   const {
     register,
@@ -132,6 +135,9 @@ export const InfoCart = () => {
               products.map((product, int) => (
                 <CartProduct key={product.id} number={int} product={product} />
               ))}
+              {customizeProducts &&  customizeProducts.map((product, int) => (
+                <CartCustomizeProduct key={product.id} number={int} product={product} />
+              ))}
           </tbody>
         </table>
         <div className=""></div>
@@ -172,8 +178,8 @@ export const InfoCart = () => {
                     {...register("date")}
                     type="text"
                     name="date"
-                    placeholder="مثال ۱۴۰۳-۰۲-۲۵"
-                    className={` border w-full rounded-md h-10   py-2 px-6 outline-none iranyekan-very-light max-md:px-4 ${
+                    placeholder="مثال ۲۵-۷-۱۴۰۳"
+                    className={` border w-full rounded-md h-10 py-2 px-6 outline-none iranyekan-very-light max-md:px-4 ${
                       errors.date ? "border-red-500" : ""
                     }`}
                   />
@@ -194,7 +200,7 @@ export const InfoCart = () => {
                     type="time"
                     name="time"
                     placeholder="مثال ۱۵:۳۰"
-                    className={` border w-full rounded-md h-10   py-2 px-6 outline-none iranyekan-very-light max-md:px-4 ${
+                    className={` border w-full rounded-md h-10 py-2 px-6 outline-none iranyekan-very-light max-md:px-4 ${
                       errors.time ? "border-red-500" : ""
                     }`}
                   />

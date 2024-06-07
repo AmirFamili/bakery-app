@@ -11,7 +11,7 @@ export const Product = ({ product }) => {
   const [buttonDisabled, setButtonDisabled] = useState(false);
 
   const {
-  loggedIn,
+    loggedIn,
     convertNumberToFarsi,
     showProductModel,
     setShowProductModel,
@@ -20,7 +20,7 @@ export const Product = ({ product }) => {
     countAll,
     setCountAll,
     accessToken,
-    navigate
+    navigate,
   } = useContext(GlobalContext);
 
   useEffect(() => {
@@ -46,10 +46,9 @@ export const Product = ({ product }) => {
         .post(
           `/order/items/`,
           {
-            cake_id:product.id,
-            quantity:product.limitation,
-            unit_measure:product.pricemodel_set[0].unit_measure_id,
-          
+            cake_id: product.id,
+            quantity: product.limitation,
+            unit_measure: product.pricemodel_set[0].unit_measure_id,
           },
           {
             headers: {
@@ -71,7 +70,7 @@ export const Product = ({ product }) => {
             `/order/items/${id}/`,
             {
               quantity: count + 1,
-              unit_measure:product.pricemodel_set[0].unit_measure_id,
+              unit_measure: product.pricemodel_set[0].unit_measure_id,
             },
             {
               headers: {
@@ -84,35 +83,29 @@ export const Product = ({ product }) => {
             setCount(count + 1);
             console.log(response);
             setCountAll(countAll + 1);
-           
           });
       }
     }
   };
 
   const handlerIncrease = () => {
-    if(loggedIn){
-       CheckCart();
-    }else{
-navigate('/login')
+    if (loggedIn) {
+      CheckCart();
+    } else {
+      navigate("/login");
     }
-   
-  
-   
   };
-  
+
   const handlerDecrease = async () => {
     if (count > 0) {
       if (count > product.limitation) {
         if (id) {
-         
-         
           await axios
             .patch(
               `/order/items/${id}/`,
               {
                 quantity: count - 1,
-                unit_measure:product.pricemodel_set[0].unit_measure_id,
+                unit_measure: product.pricemodel_set[0].unit_measure_id,
               },
               {
                 headers: {
@@ -122,9 +115,9 @@ navigate('/login')
               }
             )
             .then((response) => {
-              setCount(count-1);
-               setCountAll(countAll - 1);
-             });
+              setCount(count - 1);
+              setCountAll(countAll - 1);
+            });
         }
       } else if (count === product.limitation) {
         setButtonDisabled(true);
@@ -136,14 +129,13 @@ navigate('/login')
             },
           })
           .then((response) => {
-            setCount(count -  product.limitation);
+            setCount(count - product.limitation);
             console.log(response);
-            setCountAll(countAll -  product.limitation);
-           
+            setCountAll(countAll - product.limitation);
           });
-          setTimeout(() => {
-            setButtonDisabled(false);
-          }, 3000);
+        setTimeout(() => {
+          setButtonDisabled(false);
+        }, 3000);
       }
     }
   };
@@ -153,7 +145,7 @@ navigate('/login')
       <img
         src={product.image}
         alt="cup cake"
-        className="-mt-16 w-28 h-28 mx-auto shadow-md rounded-full max-md:w-20 max-md:h-20 max-md:-mt-12"
+        className="-mt-16 w-28 h-28 object-cover mx-auto shadow-md rounded-full max-md:w-20 max-md:h-20 max-md:-mt-12"
       />
       <h3 className="iranyekan-bold my-5 max-md:my-4">{product.title} </h3>
       <h4 className=" my-4 iranyekan-very-light   group-hover:text-white max-md:mb-3">

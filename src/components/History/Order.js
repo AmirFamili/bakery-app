@@ -14,8 +14,8 @@ export const Order = ({ order, index }) => {
           {order &&
             order.items.map((item) => (
               <li key={item.id} className="text-right py-0.5 ">
-                {item.cake.title} - {convertNumberToFarsi(item.quantity)}{" "}
-                {item.cake.unit_measure}
+                {item.cake? item.cake.title:'کیک سفارشی'} - {convertNumberToFarsi(item.quantity)}{" "}
+                {item.cake?item.cake.unit_measure:'عدد'}
               </li>
             ))}
         </ul>
@@ -28,9 +28,11 @@ export const Order = ({ order, index }) => {
           <span className="text-green-600"> آماده </span>
         ) : order.payment_status === "R" ? (
           <span className=""> تحویل </span>
-        ) : (
+        ) : order.payment_status === "A" ? (
+          <span className="">ثبت شده </span>
+        ): (
           order.payment_status === "O" && (
-            <span className="text-orange-300"> معلق </span>
+            <span className="text-orange-300"> درحال بررسی پرداخت</span>
           )
         ):<button  className="iranyekan-low-bold  my-4 mx-5 bg-primary text-font-white rounded-xl shadow-lg py-2 px-7"
         >تسویه حساب</button>}

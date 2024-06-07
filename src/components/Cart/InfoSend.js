@@ -247,7 +247,7 @@ export const InfoSend = () => {
                   className="border w-full mb-4 rounded-md h-10 mt-1  py-2 px-5 outline-none iranyekan-very-light max-md:px-4"
                 >
                   <option value="انتخاب آدرس">انتخاب آدرس</option>
-                  {addresses &&
+                  {addresses && 
                     addresses.map((address) => (
                       <option key={address.id} value={address && address.id}>
                         {address && address.address}
@@ -259,7 +259,7 @@ export const InfoSend = () => {
 
             <div
               onClick={() => setEdit(true)}
-              className="flex  items-center pb-3 cursor-pointer"
+              className={chooseAddress?`flex  items-center pb-3 cursor-pointer `:`hidden`}
             >
               <img src={EditIcon} alt="edit" className="w-4 h-4 " />
               <h5 className="iranyekan-very-light-white pr-2 text-gray-600">
@@ -515,11 +515,9 @@ export const InfoSend = () => {
         </div>
       </div>
 
-      <div
-        className={`fixed top-0 right-0  w-screen h-screen  justify-center items-center z-50 border text-black ${
+      <div className={`fixed top-0 right-0  w-screen h-screen  justify-center items-center z-50 border text-black ${
           edit ? "flex" : "hidden"
-        }`}
-      >
+        }`}>
         <div className="bg-white rounded-lg  border w-2/6 max-lg:w-3/6 max-md:w-5/6">
           <h3 className="iranyekan-bold  text-center py-3 border-b">
             ویرایش آدرس
@@ -629,8 +627,8 @@ export const InfoSend = () => {
                 انصراف
               </button>
               
-              <button className="my-4  bg-primary text-font-white rounded-xl shadow-lg py-2 px-14 max-md:px-8 vazir-regular">
-              پرداخت
+              <button type="submit" className="my-4  bg-primary text-font-white rounded-xl shadow-lg py-2 px-14 max-md:px-8 vazir-regular">
+              تایید
               </button>
             </div>
           </form>
