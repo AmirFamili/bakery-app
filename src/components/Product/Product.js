@@ -34,11 +34,6 @@ export const Product = ({ product }) => {
     }
   }, [products]);
 
-  const handlerCheckCount = () => {
-    if (count > 0) {
-      return "group-hover:block max-md:block";
-    }
-  };
 
   const CheckCart = async () => {
     if (count === 0) {
@@ -191,18 +186,18 @@ export const Product = ({ product }) => {
           )}
 
           <div className="flex">
-            <button
+         {count > 0 && <button
               onClick={handlerDecrease}
               disabled={buttonDisabled}
-              className={`minus rounded-full w-7 bg-blue-light hidden max-md:w-5 ${handlerCheckCount()} `}
+              className={`minus rounded-full w-7 bg-blue-light  max-md:w-5 } `}
             >
               <img src={MinusIcon} alt="minus" />
-            </button>
-            <p
-              className={` w-7 text-center hidden iranyekan max-md:w-5 ${handlerCheckCount()}`}
+            </button>}   
+            {count > 0 && <p
+              className={` w-7 text-center  iranyekan max-md:w-5 }`}
             >
               {convertNumberToFarsi(count)}
-            </p>
+            </p>}
             <button
               onClick={handlerIncrease}
               className="bg-primary rounded-full w-7 group-hover:bg-blue-light max-md:w-5"
