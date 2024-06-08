@@ -17,7 +17,7 @@ export const InfoCart = () => {
     cart,
     navigate,
     deliveryId,
-    customizeProducts
+    customizeProducts,
   } = useContext(GlobalContext);
 
   const validationSchema = Yup.object().shape({
@@ -27,10 +27,11 @@ export const InfoCart = () => {
         /1[4][0-9][0-9]\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])/,
         "تاریخ مورد نظر صحیح نمی باشد."
       ),
-      time: Yup.string()
-      .required("لطفا این قسمت را خالی نگذارید.")
+    time: Yup.string().required("لطفا این قسمت را خالی نگذارید."),
+   
+      
+    
   });
-
 
   const {
     register,
@@ -39,6 +40,7 @@ export const InfoCart = () => {
   } = useForm({ resolver: yupResolver(validationSchema) });
 
   const [delivery, setDelivery] = useState();
+  const [deliveryError, setDeliveryError] = useState(false);
   const [selectedDelivery, setSelectedDelivery] = useState(deliveryId);
 
   useEffect(() => {
@@ -72,43 +74,48 @@ export const InfoCart = () => {
   }, [accessToken]);
 
   const clickHandler = async (value) => {
-   
-    if (cart) {
-      await axios
-        .patch(
-          `/order/cart/${cart}/`,
-          {
-            delivery_method: selectedDelivery,
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        )
-        .then(async (response) => {
-          await axios
-            .patch(
-              `/order/cart/${cart}/date_time/`,
-              {
-                delivery_date_time: value.date +' '+ value.time ,
-              },
-              {
-                headers: {
-                  "Content-Type": "application/json",
-                  Authorization: `Bearer ${accessToken}`,
-                },
-              }
-            )
-            .then((response) => {
-              console.log(response.data);
-            })
-            .catch((err) => console.log(err));
-        })
-        .catch((err) => console.log(err));
+    if (!selectedDelivery) {
+      setDeliveryError(true);
+    } else {
+      setDeliveryError(false);
 
-      navigate("/cart/show-info");
+      if (cart) {
+        await axios
+          .patch(
+            `/order/cart/${cart}/`,
+            {
+              delivery_method: selectedDelivery,
+            },
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${accessToken}`,
+              },
+            }
+          )
+          .then(async (response) => {
+            await axios
+              .patch(
+                `/order/cart/${cart}/date_time/`,
+                {
+                  delivery_date_time: value.date + " " + value.time,
+                },
+                {
+                  headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${accessToken}`,
+                  },
+                }
+              )
+              .then((response) => {
+                console.log(response.data);
+              })
+              .catch((err) => console.log(err));
+          })
+          .catch((err) => console.log(err));
+
+        navigate("/cart/show-info");
+      }
     }
   };
 
@@ -135,8 +142,13 @@ export const InfoCart = () => {
               products.map((product, int) => (
                 <CartProduct key={product.id} number={int} product={product} />
               ))}
-              {customizeProducts &&  customizeProducts.map((product, int) => (
-                <CartCustomizeProduct key={product.id} number={int} product={product} />
+            {customizeProducts &&
+              customizeProducts.map((product, int) => (
+                <CartCustomizeProduct
+                  key={product.id}
+                  number={int}
+                  product={product}
+                />
               ))}
           </tbody>
         </table>
@@ -147,7 +159,7 @@ export const InfoCart = () => {
           <h3 className="iranyekan-little-light"> نحوه تحویل سفارش:</h3>
           {delivery &&
             delivery.map((delivey) => (
-              <div key={delivey.id} className="flex mt-5 z-30">
+              <div key={delivey.id} className="flex mt-5 z-30 mb-2">
                 <input
                   type="radio"
                   checked={selectedDelivery === delivey.id}
@@ -167,10 +179,13 @@ export const InfoCart = () => {
                 </p>
               </div>
             ))}
+          <span className=" text-red-600 iranyekan-very-light-white ">
+            {deliveryError && "نحوه تحویل را انتخاب کنید."}
+          </span>
           <div className="border-t my-5"></div>
-          
-            <form  onSubmit={handleSubmit(clickHandler)}>
-              <div className=" flex justify-between items-cente max-md:block ">
+
+          <form onSubmit={handleSubmit(clickHandler)}>
+            <div className=" flex justify-between items-cente max-md:block ">
               <h3 className="iranyekan">تاریخ تحویل:</h3>
               <div className="max-md:my-5 max-md:w-3/4 ">
                 <div className="flex relative">
@@ -189,9 +204,10 @@ export const InfoCart = () => {
                     {errors.date.message}
                   </span>
                 )}
-              </div></div>
+              </div>
+            </div>
 
-              <div className=" flex mt-2 justify-between items-cente max-md:block ">
+            <div className=" flex mt-2 justify-between items-cente max-md:block ">
               <h3 className="iranyekan">ساعت تحویل:</h3>
               <div className="max-md:my-5 max-md:w-3/4 ">
                 <div className="flex relative">
@@ -210,16 +226,15 @@ export const InfoCart = () => {
                     {errors.time.message}
                   </span>
                 )}
-              </div></div>
-            </form>
-          
-         
+              </div>
+            </div>
+          </form>
         </div>
 
         <div className="absolute inset-x-0 bottom-5 flex justify-center items-end max-md:static max-md:mt-10 ">
           <button
             onClick={handleSubmit(clickHandler)}
-            disabled={countAll === 0 ? true : selectedDelivery ? false : true}
+            // disabled={countAll === 0 ? true : false}
             className=" text-center w-52 flex justify-center items-center my-5 bg-primary text-font-white  rounded-xl shadow-xl py-2 px-3 vazir-regular  max-lg:max-w-48  max-md:w-32"
           >
             تایید و تکمیل سفارش{" "}
