@@ -28,15 +28,13 @@ export const InfoCart = () => {
         "تاریخ مورد نظر صحیح نمی باشد."
       ),
     time: Yup.string().required("لطفا این قسمت را خالی نگذارید."),
-   
-      
-    
   });
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm({ resolver: yupResolver(validationSchema) });
 
   const [delivery, setDelivery] = useState();
@@ -108,13 +106,30 @@ export const InfoCart = () => {
                 }
               )
               .then((response) => {
-                console.log(response.data);
+                   navigate("/cart/show-info");
               })
-              .catch((err) => console.log(err));
+              .catch((err) => {
+                if (err.response.data.error === "Please select a valid date.") {
+                  setError("date", {
+                    type: "server",
+                    message: "این تاریخ گذشته است.",
+                  });
+                }else if (err.response.data.error === "Delivery date has limit.") {
+                  setError("date", {
+                    type: "server",
+                    message: `این سفارش را می توانید ${err.response.data.preparation_days} سفارش دهید`,
+                  });
+                }else if (err.response.data.error === "Selected delivery date is close.") {
+                  setError("date", {
+                    type: "server",
+                    message: 'برای این روز سفارشی ثبت نمی کنیم.',
+                  });
+                }
+              });
           })
           .catch((err) => console.log(err));
 
-        navigate("/cart/show-info");
+     
       }
     }
   };

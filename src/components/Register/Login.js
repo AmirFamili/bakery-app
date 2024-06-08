@@ -122,7 +122,7 @@ export const Login = () => {
           reset();
           return;
         } else {
-          console.log(response);
+       
           if (response.data.error === "Email not found.") {
             setError("email", {
               type: "server",
