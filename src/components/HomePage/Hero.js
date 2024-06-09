@@ -91,7 +91,7 @@ export const Hero = () => {
           </h5>
 
           <Link
-            to="#"
+           to={`see-all-promotion/:${images && images[currentImageIndex].id}`}
             className="flex justify-center items-center cursor-pointer mt-3 max-md:mt-1"
           >
             <p className=" vazir-regular ">مشاهده</p>

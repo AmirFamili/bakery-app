@@ -21,6 +21,7 @@ import { CustomerOrder } from "./components/Customer/CustomerOrder";
 import { Menu } from "./components/HomePage/Mobile/Menu";
 import { SeeAllDiscount } from "./components/SeeAll/SeeAllDiscount";
 import { SeeAllNewProduct } from "./components/SeeAll/SeeAllNew";
+import { SeeAllPromotion} from "./components/SeeAll/SeeAllPromotion";
 import { GlobalContext } from "./context/ContextWrapper";
 import { Product } from "./components/Product/Product";
 import { ConfirmNewPassword } from "./components/Register/ConfirmNewPassword";
@@ -145,6 +146,10 @@ function App() {
           <Route
             path="see-all-new-product"
             element={<SeeAllNewProduct />}
+          ></Route>
+           <Route
+            path="see-all-promotion/:id"
+            element={< SeeAllPromotion />}
           ></Route>
         </Route>
         <Route path="/singup" element={<SignUp />}></Route>
