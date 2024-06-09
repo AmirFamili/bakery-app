@@ -34,7 +34,6 @@ export const Product = ({ product }) => {
     }
   }, [products]);
 
-
   const CheckCart = async () => {
     if (count === 0) {
       axios
@@ -180,24 +179,26 @@ export const Product = ({ product }) => {
             <h5 className="my-2 iranyekan-low-bold">
               {convertNumberToFarsi(product.pricemodel_set[0].price_per_unit)}
               <span className="text-gray-400  group-hover:text-white">
-                تومان
+                تومان 
               </span>
             </h5>
           )}
 
           <div className="flex">
-         {count > 0 && <button
-              onClick={handlerDecrease}
-              disabled={buttonDisabled}
-              className={`minus rounded-full w-7 bg-blue-light  max-md:w-5 } `}
-            >
-              <img src={MinusIcon} alt="minus" />
-            </button>}   
-            {count > 0 && <p
-              className={` w-7 text-center  iranyekan max-md:w-5 }`}
-            >
-              {convertNumberToFarsi(count)}
-            </p>}
+            {count > 0 && (
+              <button
+                onClick={handlerDecrease}
+                disabled={buttonDisabled}
+                className={`minus rounded-full w-7 bg-blue-light  max-md:w-5 } `}
+              >
+                <img src={MinusIcon} alt="minus" />
+              </button>
+            )}
+            {count > 0 && (
+              <p className={` w-7 text-center  iranyekan max-md:w-5 }`}>
+                {convertNumberToFarsi(count)}
+              </p>
+            )}
             <button
               onClick={handlerIncrease}
               className="bg-primary rounded-full w-7 group-hover:bg-blue-light max-md:w-5"
