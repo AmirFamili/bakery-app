@@ -1,6 +1,8 @@
 import React, { useContext,useEffect,useState } from "react";
 import KeyIcon from "../../images/icons/key.png";
 import EyeIcon from "../../images/icons/eye.png";
+import Loading from "../../images/icons/loading.gif";
+
 import axios from "../../api/axios";
 import {useParams } from 'react-router-dom'
 import { GlobalContext } from "../../context/ContextWrapper";
@@ -16,6 +18,8 @@ export const ConfirmNewPassword = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showRePassword, setShowRePassword] = useState(false);
   const [token,setToken]=useState(null)
+  const [loading, setLoading] = useState(false);
+
   const params = useParams();
 
 
@@ -55,12 +59,14 @@ export const ConfirmNewPassword = () => {
   } = useForm({ resolver: yupResolver(validationSchema) });
 
   const onSubmit = async (values) => {
+    setLoading(true);
     await axios
       .post(`/auth/password_reset_confirm/${token}/`, {
        new_password: values.Newpassword,
        confirm_new_password: values.confirmNewPassword,
       })
       .then((response) => {
+        setLoading(false);
         navigate("/login");
       });
   };
@@ -143,11 +149,16 @@ export const ConfirmNewPassword = () => {
           </div>
 
           <div className="flex justify-center items-center mt-6">
-            <button
-              className=" vazir-very-light  shadow-lg  bg-primary text-white py-3 px-14 rounded-2xl max-md:px-10 max-md:py-3 "
-              type="submit"
+          <button
+              className={loading?'  shadow-lg  bg-gray-200  py-3 px-14 rounded-2xl max-md:px-10 max-md:py-3 ':'vazir-very-light  shadow-lg  bg-primary text-white py-3 px-14 rounded-2xl max-md:px-10 max-md:py-3 '}
+             
             >
-              تایید
+          
+              {loading ? (
+           <img src={ Loading} alt=" Loading" className="w-6" />
+              ) : (
+                " تایید"
+              )}
             </button>
           </div>
         </form>

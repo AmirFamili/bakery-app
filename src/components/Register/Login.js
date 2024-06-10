@@ -3,12 +3,15 @@ import EmailGrayIcon from "../../images/icons/email-gray.png";
 import KeyIcon from "../../images/icons/key.png";
 import EyeIcon from "../../images/icons/eye.png";
 import GoogleIcon from "../../images/icons/google.png";
+import Loading from "../../images/icons/loading.gif";
+
 import { Link } from "react-router-dom";
 import axios from "../../api/axios";
 import { GlobalContext } from "../../context/ContextWrapper";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
+
 // import { ToastContainer, toast } from "react-toastify";
 // import "react-toastify/dist/ReactToastify.css";
 
@@ -21,6 +24,7 @@ export const Login = () => {
   const [showVerify, setShowVerify] = useState(false);
   const [time, setTime] = useState(initialTime);
   const [timerActive, setTimerActive] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { loggedIn, setLoggedIn, logo, navigate } = useContext(GlobalContext);
 
@@ -61,7 +65,6 @@ export const Login = () => {
       .padStart(2, "0")}`;
   };
 
-
   useEffect(() => {
     const email = localStorage.getItem("email");
     if (email) {
@@ -101,6 +104,7 @@ export const Login = () => {
 
   const onSubmit = async (values) => {
     setEmail(values.email);
+    setLoading(true);
     localStorage.setItem("email", values.email);
     await axios
       .post("/auth/login/", {
@@ -108,6 +112,7 @@ export const Login = () => {
         password: values.password,
       })
       .then((response) => {
+        setLoading(false);
         if (response.data.status === 200) {
           localStorage.setItem(
             "access",
@@ -122,7 +127,6 @@ export const Login = () => {
           reset();
           return;
         } else {
-       
           if (response.data.error === "Email not found.") {
             setError("email", {
               type: "server",
@@ -134,9 +138,11 @@ export const Login = () => {
               type: "server",
               message: "رمز عبور صحیح نمی باشد.",
             });
+           
           }
           if (response.data.error === "Verify your account") {
             setShowVerify(true);
+           
             // notify();
           }
         }
@@ -237,10 +243,15 @@ export const Login = () => {
 
           <div className="flex justify-center items-center mt-10">
             <button
-              className=" vazir-very-light  shadow-lg  bg-primary text-white py-3 px-14 rounded-2xl max-md:px-10 max-md:py-3 "
-              // type="submit"
+              className={loading?'  shadow-lg  bg-gray-200  py-3 px-14 rounded-2xl max-md:px-10 max-md:py-3 ':'vazir-very-light  shadow-lg  bg-primary text-white py-3 px-14 rounded-2xl max-md:px-10 max-md:py-3 '}
+             
             >
-              ورود
+          
+              {loading ? (
+           <img src={ Loading} alt=" Loading" className="w-6" />
+              ) : (
+                "ورود"
+              )}
             </button>
           </div>
         </form>

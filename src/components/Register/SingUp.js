@@ -3,6 +3,8 @@ import EmailGrayIcon from "../../images/icons/email-gray.png";
 import KeyIcon from "../../images/icons/key.png";
 import EyeIcon from "../../images/icons/eye.png";
 import GoogleIcon from "../../images/icons/google.png";
+import Loading from "../../images/icons/loading.gif";
+
 import { Link } from "react-router-dom";
 import axios from "../../api/axios";
 import { GlobalContext } from "../../context/ContextWrapper";
@@ -20,6 +22,7 @@ export const SignUp = () => {
   const [showVerify, setShowVerify] = useState(false);
   const [time, setTime] = useState(initialTime);
   const [timerActive, setTimerActive] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { logo ,loggedIn, navigate,} = useContext(GlobalContext);
 
@@ -115,6 +118,7 @@ export const SignUp = () => {
   } = useForm({ resolver: yupResolver(validationSchema) });
 
   const onSubmit = async (values) => {
+    setLoading(true);
     await axios
       .post("/auth/register/", {
         first_name: values.firstName,
@@ -125,13 +129,13 @@ export const SignUp = () => {
         confirm_password: values.confirmPassword,
       })
       .then((response) => {
-        console.log(response.data);
+        setLoading(false);
         if (response.data.success === true) {
           localStorage.setItem("email", response.data.message.email);
           setEmail(response.data.message.email);
           setShowVerify(true);
           setTimerActive(true);
-
+         
           reset();
         } else {
           if (response.data.error === "Email already exists") {
@@ -139,6 +143,7 @@ export const SignUp = () => {
               type: "server",
               message: "شما قبلا با این ایمیل ثبت نام کردید.",
             });
+           
           } else if (
             response.data.error === "user with this phone number already exists"
           ) {
@@ -146,6 +151,7 @@ export const SignUp = () => {
               type: "server",
               message: "شما قبلا با این تلفن ثبت نام کردید.",
             });
+            
           }
         }
       })
@@ -326,11 +332,16 @@ export const SignUp = () => {
             )}
           </div>
           <div className="flex justify-center items-center mt-5 ">
-            <button
-              className=" vazir-very-light  shadow-lg  bg-primary text-white py-3 px-14 rounded-2xl max-md:px-10 max-md:py-3 "
-              // type="submit"
+          <button
+              className={loading?'  shadow-lg  bg-gray-200  py-3 px-14 rounded-2xl max-md:px-10 max-md:py-3 ':'vazir-very-light  shadow-lg  bg-primary text-white py-3 px-14 rounded-2xl max-md:px-10 max-md:py-3 '}
+             
             >
-              ثبت نام
+          
+          {loading ? (
+           <img src={ Loading} alt=" Loading" className="w-6" />
+              ) : (
+                "ثبت نام"
+              )}
             </button>
           </div>
         </form>

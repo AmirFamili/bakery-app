@@ -3,6 +3,8 @@ import EmailGrayIcon from "../../images/icons/email-gray.png";
 import KeyIcon from "../../images/icons/key.png";
 import EyeIcon from "../../images/icons/eye.png";
 import GoogleIcon from "../../images/icons/google.png";
+import Loading from "../../images/icons/loading.gif";
+
 import { Link, useParams } from "react-router-dom";
 import axios from "../../api/axios";
 import { GlobalContext } from "../../context/ContextWrapper";
@@ -21,6 +23,7 @@ export const LoginActivate = () => {
   const [showVerify, setShowVerify] = useState(false);
   const [time, setTime] = useState(initialTime);
   const [timerActive, setTimerActive] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { loggedIn, setLoggedIn, logo, navigate } = useContext(GlobalContext);
   const params = useParams();
@@ -115,6 +118,7 @@ export const LoginActivate = () => {
   } = useForm({ resolver: yupResolver(validationSchema) });
 
   const onSubmit = async (values) => {
+    setLoading(true);
     setEmail(values.email);
     localStorage.setItem("email", values.email);
     await axios
@@ -123,6 +127,7 @@ export const LoginActivate = () => {
         password: values.password,
       })
       .then((response) => {
+        setLoading(false);
         if (response.data.status === 200) {
           localStorage.setItem(
             "access",
@@ -252,10 +257,17 @@ export const LoginActivate = () => {
 
           <div className="flex justify-center items-center mt-10">
             <button
-              className=" vazir-very-light  shadow-lg  bg-primary text-white py-3 px-14 rounded-2xl max-md:px-10 max-md:py-3 "
-              // type="submit"
+              className={
+                loading
+                  ? "  shadow-lg  bg-gray-200  py-3 px-14 rounded-2xl max-md:px-10 max-md:py-3 "
+                  : "vazir-very-light  shadow-lg  bg-primary text-white py-3 px-14 rounded-2xl max-md:px-10 max-md:py-3 "
+              }
             >
-              ورود
+              {loading ? (
+                <img src={Loading} alt=" Loading" className="w-6" />
+              ) : (
+                "ورود"
+              )}
             </button>
           </div>
         </form>

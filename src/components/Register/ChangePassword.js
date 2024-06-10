@@ -1,6 +1,8 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import EmailGrayIcon from "../../images/icons/email-gray.png";
 import ArrowRightIcon from "../../images/icons/arrow-right.png";
+import Loading from "../../images/icons/loading.gif";
+
 import { Link } from "react-router-dom";
 import axios from "../../api/axios";
 import { GlobalContext } from "../../context/ContextWrapper";
@@ -13,6 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 export const ChangePassword = () => {
   const { logo, navigate,loggedIn} = useContext(GlobalContext);
 
+  const [loading, setLoading] = useState(false);
 
   useEffect(()=>{
     if(loggedIn){
@@ -35,12 +38,13 @@ export const ChangePassword = () => {
   } = useForm({ resolver: yupResolver(validationSchema) });
 
   const onSubmit = async (values) => {
+    setLoading(true);
     await axios
       .post("/auth/password_reset/", {
         email: values.email,
       })
-      .then((response) => {
-        console.log(response);
+      .then((response) => { 
+        setLoading(false);
         if (response.data.status === 200) {
           showSuccessMessage();
         } else {
@@ -106,12 +110,19 @@ export const ChangePassword = () => {
           </div>
 
           <div className="flex justify-center items-center mt-6">
-            <button
-              className=" vazir-very-light  shadow-lg  bg-primary text-white py-3 px-14 rounded-2xl max-md:px-10 max-md:py-3 "
-              // type="submit"
+          <button
+              className={loading?'  shadow-lg  bg-gray-200  py-3 px-14 rounded-2xl max-md:px-10 max-md:py-3 ':'vazir-very-light  shadow-lg  bg-primary text-white py-3 px-14 rounded-2xl max-md:px-10 max-md:py-3 '}
+             
             >
-              تایید
+          
+              {loading ? (
+           <img src={ Loading} alt=" Loading" className="w-6" />
+              ) : (
+                " تایید"
+              )}
             </button>
+             
+           
           </div>
         </form>
         <ToastContainer
